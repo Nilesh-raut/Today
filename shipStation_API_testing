@@ -1,0 +1,147 @@
+string standalone.shipStation_API_testing()
+{
+// shipment = Map();
+// shipment.put("external_shipment_id","TEST-002");
+// shipment.put("shipment_number","TEST-002");
+// shipment.put("create_sales_order",true);
+// // SHIP TO
+// ship_to = Map();
+// ship_to.put("name","Test Customer");
+// ship_to.put("phone","1234567890");
+// ship_to.put("address_line1","123 Main Street");
+// ship_to.put("city_locality","New York");
+// ship_to.put("state_province","NY");
+// ship_to.put("postal_code","10001");
+// ship_to.put("country_code","US");
+// shipment.put("ship_to",ship_to);
+// // SHIP FROM
+// ship_from = Map();
+// ship_from.put("name","Persia Gallery");
+// ship_from.put("phone","1234567890");
+// ship_from.put("address_line1","100 Example Street");
+// ship_from.put("city_locality","New York");
+// ship_from.put("state_province","NY");
+// ship_from.put("postal_code","10002");
+// ship_from.put("country_code","US");
+// shipment.put("ship_from",ship_from);
+// // PACKAGE
+// package = Map();
+// package.put("weight",{"value":10,"unit":"ounce"});
+// package.put("dimensions",{"length":10,"width":10,"height":10,"unit":"inch"});
+// packages = List();
+// packages.add(package);
+// shipment.put("packages",packages);
+// // REQUEST
+// shipments = List();
+// shipments.add(shipment);
+// body = Map();
+// body.put("shipments",shipments);
+// response = invokeurl
+// [
+// 	url :"https://api.shipstation.com/v2/shipments"
+// 	type :POST
+// 	body:body.toString()
+// 	headers:{"API-Key":"+T2mN2LDZPAiXLFxfyEc1RTkIgLbQoONYEbfdcKqRYc","Content-Type":"application/json"}
+// ];
+// info response;
+// info "Nil";
+// return "";
+// --------------------------------------------------------------------------------------------------
+// ============================================
+// SHIPMENT
+// ============================================
+shipment = Map();
+shipment.put("external_shipment_id","TEST_Nilesh_5");
+shipment.put("shipment_number","TEST_Nilesh_5");
+shipment.put("create_sales_order",true);
+// 	shipment.put("carrier_id","se-318854");
+shipment.put("service_code","ups_worldwide_expedited");
+// ============================================
+// SHIP TO
+// ============================================
+ship_to = Map();
+ship_to.put("name","TEST_Nilesh_5");
+ship_to.put("phone","+123456789");
+ship_to.put("email","nileshraut6000@gmail.com");
+ship_to.put("company_name","C/O ALBANY DEVELOPER LTD");
+ship_to.put("address_line1","Lot 110, 127 S Ocean Rd");
+ship_to.put("address_line2","New providence");
+ship_to.put("address_line3","Bahamas");
+ship_to.put("city_locality","Nassau");
+ship_to.put("state_province","New providence");
+ship_to.put("postal_code","0000");
+ship_to.put("country_code","BS");
+ship_to.put("address_residential_indicator","unknown");
+shipment.put("ship_to",ship_to);
+// ============================================
+// SHIP FROM
+// ============================================
+ship_from = Map();
+ship_from.put("name","Maryam Gholamhosseini");
+ship_from.put("phone","99300372802");
+ship_from.put("email","nileshraut6000@gmail.com");
+ship_from.put("company_name","A&M Rugs Ltd");
+ship_from.put("address_line1","Unit 007, Solent Business Centre");
+ship_from.put("address_line2","343 Millbrook Rd W");
+ship_from.put("city_locality","Southampton");
+ship_from.put("state_province","Hampshire");
+ship_from.put("postal_code","SO15 0HW");
+ship_from.put("country_code","GB");
+ship_from.put("address_residential_indicator","no");
+shipment.put("ship_from",ship_from);
+// ============================================
+// PACKAGE
+// ============================================
+package = Map();
+package.put("weight",{"value":3000,"unit":"gram"});
+package.put("dimensions",{"unit":"centimeter","length":30,"width":25,"height":20});
+packages = List();
+packages.add(package);
+shipment.put("packages",packages);
+// ============================================
+// CUSTOMS
+// ============================================
+customs = Map();
+customs.put("contents","gift");
+customs.put("non_delivery","return_to_sender");
+customs_item = Map();
+customs_item.put("description","Small Decorative Model Car DEC28-DEC219");
+customs_item.put("quantity",1);
+customs_item.put("value",300);
+customs_item.put("value_currency","GBP");
+customs_item.put("country_of_origin","GB");
+customs_items = List();
+customs_items.add(customs_item);
+customs.put("customs_items",customs_items);
+shipment.put("customs",customs);
+// ============================================
+// ITEM
+// ============================================
+item = Map();
+item.put("quantity",1);
+item.put("name","Small Decorative Model Car DEC219");
+item.put("sku","ID 200508612 - DEC28 - B");
+item.put("unit_price",300);
+items = List();
+items.add(item);
+shipment.put("items",items);
+// ============================================
+// SHIPMENTS ARRAY
+// ============================================
+shipments = List();
+shipments.add(shipment);
+body = Map();
+body.put("shipments",shipments);
+// ============================================
+// CREATE SHIPMENT
+// ============================================
+response = invokeurl
+[
+	url :"https://api.shipstation.com/v2/shipments"
+	type :POST
+	body:body.toString()
+	headers:{"API-Key":"+T2mN2LDZPAiXLFxfyEc1RTkIgLbQoONYEbfdcKqRYc","Content-Type":"application/json"}
+];
+info response;
+return response.toString();
+}
