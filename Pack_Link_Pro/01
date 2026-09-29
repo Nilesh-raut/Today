@@ -1,0 +1,247 @@
+string standalone.packlinkpro_test1()
+{
+//-------------------------------------------------------------------------------
+// // ==========================================
+// // PACKLINK - GET SHIPPING SERVICES
+// // ==========================================
+// from_country = "GB";
+// from_postcode = "PL14 6DH";
+// to_country = "GB";
+// to_postcode = "SO15 0HW";
+// // Package
+// package = Map();
+// package.put("width",40);
+// package.put("height",30);
+// package.put("length",60);
+// package.put("weight",12);
+// // Build query parameters
+// params = Map();
+// params.put("from[country]",from_country);
+// params.put("from[zip]",from_postcode);
+// params.put("to[country]",to_country);
+// params.put("to[zip]",to_postcode);
+// params.put("packages[0][width]",40);
+// params.put("packages[0][height]",30);
+// params.put("packages[0][length]",60);
+// params.put("packages[0][weight]",12);
+// // Show request
+// info "PACKLINK PARAMETERS:";
+// info params;
+// // API call
+// response = invokeurl
+// [
+// 	url :"https://api.packlink.com/v1/services"
+// 	type :GET
+// 	parameters:params
+// 	headers:
+// 	{
+// 		"Authorization":"44ae292a26b902f12d71e25ef7a5adc0b6e72b27d12ea4f305bbb8e6fb6588b2"
+// 	}
+// ];
+// // Response
+// info "PACKLINK RESPONSE:";
+// info response;
+//--------------------------------------------------------------------------------------
+// 	// ==========================================
+// // PACKLINK - GET NEAREST PICKUP/DROPOFF POINTS
+// // ==========================================
+// service_id = "22719";
+// country_code = "GB";
+// postcode = "SO15 0HW";
+// // ------------------------------------------
+// // API CALL
+// // ------------------------------------------
+// response = invokeurl
+// [
+// 	url :"https://api.packlink.com/v1/dropoffs/" + service_id + "/" + country_code + "/" + postcode
+// 	type :GET
+// 	headers:
+// 	{
+// 		"Authorization":"44ae292a26b902f12d71e25ef7a5adc0b6e72b27d12ea4f305bbb8e6fb6588b2"
+// 	}
+// ];
+// // ------------------------------------------
+// // RESPONSE
+// // ------------------------------------------
+// info "PACKLINK PICKUP/DROPOFF RESPONSE:";
+// info response;
+// // return response;
+//----------------------------------------------------------------------------------------	
+// // 	lets create draft
+// 	// ======================================================
+// // PACKLINK - CREATE SHIPPING ORDER
+// // ======================================================
+// // Your Packlink API key
+// api_key = "44ae292a26b902f12d71e25ef7a5adc0b6e72b27d12ea4f305bbb8e6fb6588b2";
+// // ------------------------------------------------------
+// // 1. SERVICE SELECTED
+// // ------------------------------------------------------
+// service_id = 22719;
+// service_name = "Standard Access Point™";
+// carrier = "UPS";
+// // ------------------------------------------------------
+// // 2. DROP-OFF POINT
+// // ------------------------------------------------------
+// dropoff_point_id = "U49089027";
+// // ------------------------------------------------------
+// // 3. SENDER
+// // ------------------------------------------------------
+// from_address = Map();
+// from_address.put("name","Faith");
+// from_address.put("surname","Jenkins");
+// from_address.put("company","Sowena");
+// from_address.put("street1","Old Road");
+// from_address.put("street2","");
+// from_address.put("zip_code","PL14 6DH");
+// from_address.put("city","Liskeard");
+// from_address.put("country","GB");
+// from_address.put("state","");
+// from_address.put("phone","07966 217619");
+// from_address.put("email","faithjenkins58@gmail.com");
+// // ------------------------------------------------------
+// // 4. RECIPIENT
+// // ------------------------------------------------------
+// to_address = Map();
+// to_address.put("name","Maryam");
+// to_address.put("surname","Gholamhosseini");
+// to_address.put("company","Pars Rug Gallery");
+// to_address.put("street1","Unit 021, Basement Floor");
+// to_address.put("street2","");
+// to_address.put("zip_code","SO15 0HW");
+// to_address.put("city","Southampton");
+// to_address.put("country","GB");
+// to_address.put("state","");
+// to_address.put("phone","07710021726");
+// to_address.put("email","maryam@parsruggallery.co.uk");
+// // ------------------------------------------------------
+// // 5. PACKAGE
+// // ------------------------------------------------------
+// package = Map();
+// package.put("weight",12);
+// package.put("length",60);
+// package.put("width",40);
+// package.put("height",30);
+// packages = List();
+// packages.add(package);
+// // ------------------------------------------------------
+// // 6. SHIPMENT
+// // ------------------------------------------------------
+// shipment = Map();
+// shipment.put("from",from_address);
+// shipment.put("to",to_address);
+// shipment.put("packages",packages);
+// shipment.put("service_id",service_id);
+// shipment.put("dropoff_point_id",dropoff_point_id);
+// shipment.put("content","Clothing");
+// // IMPORTANT:
+// // Change 100 to the actual declared value
+// shipment.put("contentvalue",100);
+// shipment.put("contentValue_currency","GBP");
+// shipment.put("content_second_hand",false);
+// shipment.put("priority",false);
+// // Your own reference
+// shipment.put("shipment_custom_reference","ZOHO-TEST-001");
+// shipment.put("source","zoho_crm");
+// // ------------------------------------------------------
+// // 7. CREATE ORDER
+// // ------------------------------------------------------
+// shipments = List();
+// shipments.add(shipment);
+// order = Map();
+// order.put("order_custom_reference","ZOHO-TEST-002");
+// order.put("shipments",shipments);
+// // ------------------------------------------------------
+// // 8. CONVERT TO JSON
+// // ------------------------------------------------------
+// payload = order.toString();
+// info "PACKLINK REQUEST:";
+// info payload;
+// // ------------------------------------------------------
+// // 9. SEND TO PACKLINK
+// // ------------------------------------------------------
+// response = invokeurl
+// [
+//     url :"https://api.packlink.com/v1/orders"
+//     type :POST
+//     headers:
+//     {
+//         "Authorization":api_key,
+//         "Content-Type":"application/json"
+//     }
+//     body:payload
+// ];
+// info "PACKLINK RESPONSE:";
+// info response;
+// -------------------------------------------------------------------------------------------working code 
+api_key = "44ae292a26b902f12d71e25ef7a5adc0b6e72b27d12ea4f305bbb8e6fb6588b2";
+draft_payload = Map();
+from_map = Map();
+from_map.put("name","Faith");
+from_map.put("surname","Jenkins");
+from_map.put("company","Sowena");
+from_map.put("street1","Old Road");
+from_map.put("street2","");
+from_map.put("zip_code","PL14 6DH");
+from_map.put("city","Liskeard");
+from_map.put("country","GB");
+from_map.put("state","");
+from_map.put("phone","07966 217619");
+from_map.put("email","faithjenkins58@gmail.com");
+to_map = Map();
+to_map.put("name","Maryam");
+to_map.put("surname","Gholamhosseini");
+to_map.put("company","Pars Rug Gallery");
+to_map.put("street1","Unit 021, Basement Floor");
+to_map.put("street2","");
+to_map.put("zip_code","SO15 0HW");
+to_map.put("city","Southampton");
+to_map.put("country","GB");
+to_map.put("state","");
+to_map.put("phone","07710021726");
+to_map.put("email","maryam@parsruggallery.co.uk");
+package = Map();
+package.put("weight",12);
+package.put("length",60);
+package.put("width",40);
+package.put("height",30);
+packages = List();
+packages.add(package);
+draft_payload.put("from",from_map);
+draft_payload.put("to",to_map);
+draft_payload.put("packages",packages);
+draft_payload.put("service_id",22719);
+draft_payload.put("dropoff_point_id","U49089027");
+draft_payload.put("content","Clothing");
+draft_payload.put("contentvalue",100);
+// IMPORTANT
+draft_payload.put("shipment_custom_reference","ZOHO-TEST-002");
+draft_payload.put("source","zoho_crm");
+response = invokeurl
+[
+	url :"https://api.packlink.com/v1/shipments"
+	type :POST
+	body:draft_payload.toString()
+	headers:{"Authorization":api_key,"Content-Type":"application/json"}
+];
+info "PACKLINK DRAFT RESPONSE:";
+info response;
+// 	------------------------------------------------------------------
+// // ==========================================
+// // PACKLINK - GET SINGLE SHIPMENT
+// // ==========================================
+// // Use your regenerated Packlink API key
+// api_key = "44ae292a26b902f12d71e25ef7a5adc0b6e72b27d12ea4f305bbb8e6fb6588b2";
+// // This is the reference returned when the shipment was created
+// shipment_reference = "UN2026PRO0003401992";
+// // ------------------------------------------
+// // GET ONE SHIPMENT
+// // ------------------------------------------
+// response = invokeurl
+// [
+// 	url :"https://api.packlink.com/v1/shipments/" + shipment_reference
+// 	type :GET
+// 	headers:{"Authorization":api_key,"Content-Type":"application/json"}
+// ];
+// info response;
+return "";
+}
