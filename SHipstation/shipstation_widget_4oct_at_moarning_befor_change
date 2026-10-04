@@ -1,0 +1,2848 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Shipment</title>
+
+    <!-- Zoho CRM Widget SDK -->
+    <script src="https://live.zwidgets.com/js-sdk/1.5/ZohoEmbededAppSDK.min.js"></script>
+
+    <style>
+
+        /* =========================================================
+           GLOBAL
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --text: #172033;
+            --muted: #667085;
+            --border: #e4e7ec;
+            --background: #f7f8fc;
+            --white: #ffffff;
+            --danger: #dc2626;
+            --success: #16a34a;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background: var(--background);
+            color: var(--text);
+        }
+
+        /* =========================================================
+           MAIN CONTAINER
+        ========================================================= */
+
+        .container {
+            width: 100%;
+            max-width: 1500px;
+            margin: auto;
+            padding: 24px;
+        }
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-icon {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(
+                135deg,
+                #6366f1,
+                #4f46e5
+            );
+
+            color: white;
+
+            font-size: 25px;
+
+            box-shadow:
+                0 8px 20px rgba(79, 70, 229, 0.25);
+        }
+
+        .page-title {
+            margin: 0;
+
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+        }
+
+        .page-subtitle {
+            margin: 4px 0 0;
+
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* =========================================================
+           CARD
+        ========================================================= */
+
+        .card {
+            background: var(--white);
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            margin-bottom: 18px;
+
+            box-shadow:
+                0 3px 12px rgba(16, 24, 40, 0.04);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            padding-bottom: 14px;
+
+            border-bottom: 1px solid #eef0f4;
+        }
+
+        .section-icon {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: #eef2ff;
+
+            color: var(--primary);
+
+            font-size: 16px;
+        }
+
+        .section-title {
+            margin: 0;
+
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .section-description {
+            margin: 3px 0 0;
+
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+        /* =========================================================
+           GRID
+        ========================================================= */
+
+        .grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(12, 1fr);
+
+            gap: 16px;
+        }
+
+        .col-12 {
+            grid-column: span 12;
+        }
+
+        .col-8 {
+            grid-column: span 8;
+        }
+
+        .col-6 {
+            grid-column: span 6;
+        }
+
+        .col-4 {
+            grid-column: span 4;
+        }
+
+        .col-3 {
+            grid-column: span 3;
+        }
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        label {
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: #344054;
+        }
+
+        .required {
+            color: var(--danger);
+        }
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            height: 42px;
+
+            border: 1px solid #d9dee8;
+
+            border-radius: 8px;
+
+            padding: 0 12px;
+
+            outline: none;
+
+            background: white;
+
+            color: #101828;
+
+            font-size: 13px;
+
+            transition: 0.2s;
+        }
+
+        textarea {
+            height: 80px;
+            padding-top: 10px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px rgba(79, 70, 229, 0.10);
+        }
+
+        input.error,
+        select.error,
+        textarea.error {
+            border-color: var(--danger);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 11px;
+            display: none;
+        }
+
+        /* =========================================================
+           TWO COLUMN LAYOUT
+        ========================================================= */
+
+        .two-column {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 18px;
+        }
+
+        /* =========================================================
+           SWITCH
+        ========================================================= */
+
+        .switch-wrapper {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            height: 42px;
+        }
+
+        .switch {
+            position: relative;
+
+            width: 42px;
+            height: 24px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+
+            position: absolute;
+
+            inset: 0;
+
+            cursor: pointer;
+
+            background: #d0d5dd;
+
+            border-radius: 30px;
+
+            transition: 0.2s;
+        }
+
+        .slider:before {
+
+            content: "";
+
+            position: absolute;
+
+            height: 18px;
+            width: 18px;
+
+            left: 3px;
+            top: 3px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            transition: 0.2s;
+
+            box-shadow:
+                0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .switch input:checked + .slider {
+            background: var(--primary);
+        }
+
+        .switch input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+
+        /* =========================================================
+           SUBFORM
+        ========================================================= */
+
+        .subform-wrapper {
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .subform-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 12px 14px;
+
+            background: #f8f9fc;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .subform-title {
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .item-row {
+
+            display: grid;
+
+            grid-template-columns:
+                2fr
+                2fr
+                100px
+                120px
+                45px;
+
+            gap: 10px;
+
+            padding: 12px;
+
+            border-bottom: 1px solid #eef0f4;
+
+            align-items: end;
+        }
+
+        .item-row:last-child {
+            border-bottom: none;
+        }
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+
+        button {
+
+            border: none;
+
+            cursor: pointer;
+
+            font-family: inherit;
+        }
+
+        .btn {
+
+            height: 40px;
+
+            padding: 0 16px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+
+            background: var(--primary);
+
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+
+            background: white;
+
+            color: #344054;
+
+            border: 1px solid #d0d5dd;
+        }
+
+        .btn-secondary:hover {
+            background: #f9fafb;
+        }
+
+        .btn-add {
+
+            width: 100%;
+
+            border: 1px dashed #a5b4fc;
+
+            background: #f8f9ff;
+
+            color: var(--primary);
+
+            border-radius: 8px;
+
+            height: 40px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            margin-top: 12px;
+        }
+
+        .btn-add:hover {
+            background: #eef2ff;
+        }
+
+        .btn-delete {
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 8px;
+
+            background: #fff1f2;
+
+            color: var(--danger);
+
+            font-size: 15px;
+        }
+
+        .btn-delete:hover {
+            background: #ffe4e6;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        .footer {
+
+            position: sticky;
+
+            bottom: 0;
+
+            z-index: 10;
+
+            background: rgba(247, 248, 252, 0.95);
+
+            backdrop-filter: blur(8px);
+
+            border-top: 1px solid var(--border);
+
+            padding: 14px 24px;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+        }
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        .toast {
+
+            position: fixed;
+
+            right: 20px;
+
+            bottom: 80px;
+
+            min-width: 280px;
+
+            padding: 14px 16px;
+
+            background: #101828;
+
+            color: white;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.2);
+
+            transform: translateY(30px);
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition: 0.25s;
+
+            z-index: 100;
+        }
+
+        .toast.show {
+
+            transform: translateY(0);
+
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media(max-width: 900px) {
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .col-6,
+            .col-4,
+            .col-3,
+            .col-8 {
+                grid-column: span 12;
+            }
+
+            .item-row {
+
+                grid-template-columns:
+                    1fr
+                    1fr;
+            }
+
+            .item-row .delete-container {
+                grid-column: span 2;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+
+    <div class="page-header">
+
+        <div class="header-left">
+
+            <div class="header-icon">
+                🚚
+            </div>
+
+            <div>
+
+                <h1 class="page-title">
+                    Create Shipment
+                </h1>
+
+                <p class="page-subtitle">
+                    Enter shipment details to create an order in ShipStation.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         SHIPMENT INFORMATION
+    ========================================================= -->
+
+    <div class="card">
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                #
+            </div>
+
+            <div>
+
+                <h2 class="section-title">
+                    Shipment Information
+                </h2>
+
+                <p class="section-description">
+                    Basic information about this shipment.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="grid">
+
+            <!-- External Shipment ID -->
+
+            <div class="form-group col-3">
+
+                <label>
+                    External Shipment ID
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    id="external_shipment_id"
+                    type="text"
+                    placeholder="e.g. ORDER-1001"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Shipment Number -->
+
+            <div class="form-group col-3">
+
+                <label>
+                    Shipment Number
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    id="shipment_number"
+                    type="text"
+                    placeholder="e.g. SHIP-1001"
+                    required
+                >
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         SHIP TO + PACKAGE
+    ========================================================= -->
+
+    <div class="two-column">
+
+
+
+        <!-- =================================================
+             SHIP FROM
+        ================================================= -->
+
+        <div class="card">
+
+                <div class="section-header">
+
+                    <div class="section-icon">
+                        🏢
+                    </div>
+
+                    <div>
+
+                        <h2 class="section-title">
+                            Ship From
+                        </h2>
+
+                        <p class="section-description">
+                            Sender / pickup address
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="grid">
+
+
+                    <div class="form-group col-6">
+
+                        <label>
+                            Name <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="from_name"
+                            type="text"
+                            placeholder="Sender name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group col-6">
+
+                        <label>
+                            Phone <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="from_phone"
+                            type="text"
+                            placeholder="+44..."
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group col-12">
+
+                        <label>
+                            Email <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="from_email"
+                            type="email"
+                            placeholder="sender@example.com"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group col-12">
+
+                        <label>
+                            Company Name
+                        </label>
+
+                        <input
+                            id="from_company"
+                            type="text"
+                            placeholder="Company name"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group col-12">
+
+                        <label>
+                            Address Line 1
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="from_address1"
+                            type="text"
+                            placeholder="Street address"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group col-12">
+
+                        <label>
+                            Address Line 2
+                        </label>
+
+                        <input
+                            id="from_address2"
+                            type="text"
+                            placeholder="Additional address"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group col-6">
+
+                        <label>
+                            City / Locality
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="from_city"
+                            type="text"
+                            placeholder="City"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group col-6">
+
+                        <label>
+                            State / Province
+                        </label>
+
+                        <input
+                            id="from_state"
+                            type="text"
+                            placeholder="State"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group col-6">
+
+                        <label>
+                            Postal Code
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="from_postal"
+                            type="text"
+                            placeholder="SO15 0HW"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group col-6">
+
+                        <label>
+                            Country
+                            <span class="required">*</span>
+                        </label>
+
+                        <select id="from_country" required>
+                            <option value="">Select Country</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group col-12">
+
+                        <label>
+                            Address Residential Indicator
+                        </label>
+
+                        <select id="from_residential">
+
+                            <option value="no">
+                                No
+                            </option>
+
+                            <option value="yes">
+                                Yes
+                            </option>
+
+                            <option value="unknown">
+                                Unknown
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             SHIP TO
+        ===================================================== -->
+
+        <div class="card">
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    👤
+                </div>
+
+                <div>
+
+                    <h2 class="section-title">
+                        Ship To
+                    </h2>
+
+                    <p class="section-description">
+                        Receiver / delivery address
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="grid">
+
+
+                <!-- Name -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Name <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_name"
+                        type="text"
+                        placeholder="Receiver name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Phone -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Phone <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_phone"
+                        type="text"
+                        placeholder="+1 123456789"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="form-group col-12">
+
+                    <label>
+                        Email <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_email"
+                        type="email"
+                        placeholder="receiver@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Company -->
+
+                <div class="form-group col-12">
+
+                    <label>
+                        Company Name
+                    </label>
+
+                    <input
+                        id="to_company"
+                        type="text"
+                        placeholder="Company name"
+                    >
+
+                </div>
+
+
+                <!-- Address 1 -->
+
+                <div class="form-group col-12">
+
+                    <label>
+                        Address Line 1
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_address1"
+                        type="text"
+                        placeholder="Street address"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Address 2 -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Address Line 2
+                    </label>
+
+                    <input
+                        id="to_address2"
+                        type="text"
+                        placeholder="Apartment / area"
+                    >
+
+                </div>
+
+
+
+
+
+                <!-- City -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        City / Locality
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_city"
+                        type="text"
+                        placeholder="City"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- State -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        State / Province
+                    </label>
+
+                    <input
+                        id="to_state"
+                        type="text"
+                        placeholder="State / Province"
+                    >
+
+                </div>
+
+
+                <!-- Postal -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Postal Code
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_postal"
+                        type="text"
+                        placeholder="Postal code"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Country -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Country
+                        <span class="required">*</span>
+                    </label>
+
+                    <select id="to_country" required>
+                        <option value="">Select Country</option>
+                    </select>
+
+                </div>
+
+                <!-- Residential -->
+
+                <div class="form-group col-12">
+
+                    <label>
+                        Address Residential Indicator
+                    </label>
+
+                    <select id="to_residential">
+
+                        <option value="unknown">
+                            Unknown
+                        </option>
+
+                        <option value="yes">
+                            Yes
+                        </option>
+
+                        <option value="no">
+                            No
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+
+
+<!-- =========================================================
+     CUSTOMS + PACKAGE
+========================================================= -->
+
+<div class="two-column">
+
+    <!-- =====================================================
+         CUSTOMS
+    ===================================================== -->
+
+    <div class="card">
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                📄
+            </div>
+
+            <div>
+
+                <h2 class="section-title">
+                    Customs Information
+                </h2>
+
+                <p class="section-description">
+                    Required information for international shipments
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="grid">
+
+            <!-- Contents -->
+
+            <div class="form-group col-6">
+
+                <label>
+                    Contents
+                    <span class="required">*</span>
+                </label>
+
+                <select id="customs_contents">
+
+                    <option value="merchandise">
+                        Merchandise
+                    </option>
+
+                    <option value="gift">
+                        Gift
+                    </option>
+
+                    <option value="documents">
+                        Documents
+                    </option>
+
+                    <option value="sample">
+                        Sample
+                    </option>
+
+                     <option value="Return, Repair, or Warranty">
+                        Return, Repair, or Warranty
+                    </option>
+
+                    <option value="other">
+                        Other
+                    </option>
+
+                   <option value="E-commerce goods">
+                        E-commerce goods
+                    </option>
+                    
+                    <option value="Commercial sale of goods (B2B)">
+                       Commercial sale of goods (B2B)
+                    </option>
+
+
+                </select>
+
+            </div>
+
+
+            <!-- Non Delivery -->
+
+            <div class="form-group col-6">
+
+                <label>
+                    Non-Delivery Option
+                    <span class="required">*</span>
+                </label>
+
+                <select id="customs_non_delivery">
+
+                    <option value="return_to_sender">
+                        Return to Sender
+                    </option>
+
+                    <option value="treat_as_abandoned">
+                        Treat as Abandoned
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Customs Item -->
+
+            <div class="col-12">
+
+                <label style="display:block;margin-bottom:8px">
+                    Customs Item
+                </label>
+
+                <div class="subform-wrapper">
+
+                    <div style="padding:16px">
+
+                        <div class="grid">
+
+                            <div class="form-group col-12">
+
+                                <label>
+                                    Description
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="customs_description"
+                                    type="text"
+                                    placeholder="Item description"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group col-4">
+
+                                <label>
+                                    Quantity
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="customs_quantity"
+                                    type="number"
+                                    value="1"
+                                    min="1"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group col-4">
+
+                                <label>
+                                    Value
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="customs_value"
+                                    type="number"
+                                    value="300"
+                                    min="0"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group col-4">
+
+                                <label>
+                                    Currency
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input
+                                    id="customs_currency"
+                                    type="text"
+                                    value="GBP"
+                                    maxlength="3"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group col-12">
+
+                                <label>
+                                    Country of Origin
+                                    <span class="required">*</span>
+                                </label>
+                                 <select id="customs_origin" required>
+                                    <option value="">Select Country</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PACKAGE
+    ===================================================== -->
+
+    <div class="card">
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                📦
+            </div>
+
+            <div>
+
+                <h2 class="section-title">
+                    Package Details
+                </h2>
+
+                <p class="section-description">
+                    Weight and dimensions of the shipment
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="subform-wrapper">
+
+            <div class="subform-header">
+
+                <span class="subform-title">
+                    Package 1
+                </span>
+
+            </div>
+
+
+            <div style="padding:16px">
+
+                <div class="grid">
+
+                    <!-- Weight -->
+
+                    <div class="form-group col-6">
+
+                        <label>
+                            Weight
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="weight"
+                            type="number"
+                             placeholder="kg"
+                            min="0"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Weight Unit -->
+
+               <div class="form-group col-6">
+
+                    <label>       &nbsp;
+                    </label>
+
+                    <input
+                        id="weight_unit"
+                        type="number"
+                         min="0"
+                        
+                        placeholder="g"
+                       
+                    >
+
+                </div>
+
+                    <!-- Length -->
+
+                    <div class="form-group col-4">
+
+                        <label>
+                            Length
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="length"
+                            type="number"
+                           
+                            min="0"
+                            placeholder="L"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Width -->
+
+                    <div class="form-group col-4">
+
+                        <label>
+                            Width
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="width"
+                            type="number"
+                           
+                            min="0"
+                            placeholder="W"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Height -->
+
+                    <div class="form-group col-4">
+
+                        <label>
+                            Height
+                            <span class="required">*</span>
+                        </label>
+
+                        <input
+                            id="height"
+                            type="number"
+                           
+                            min="0"
+                            placeholder="H"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Dimension Unit -->
+<!-- 
+                    <div class="form-group col-12">
+
+                        <label>
+                            Dimension Unit
+                        </label>
+
+                        <select id="dimension_unit">
+
+                            <option value="centimeter">
+                                Centimeter
+                            </option>
+
+                            <option value="meter">
+                                Meter
+                            </option>
+
+                            <option value="inch">
+                                Inch
+                            </option>
+
+                        </select>
+
+                    </div> -->
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- =========================================================
+         ITEMS SUBFORM
+    ========================================================= -->
+
+    <div class="card">
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                📦
+            </div>
+
+            <div>
+
+                <h2 class="section-title">
+                    Items
+                </h2>
+
+                <p class="section-description">
+                    Add one or more items to this shipment
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="subform-wrapper">
+
+
+            <!-- Subform Header -->
+
+            <div class="subform-header">
+
+                <span class="subform-title">
+                    Shipment Items
+                </span>
+
+                <span
+                    id="itemCount"
+                    style="
+                        font-size:11px;
+                        color:#667085;
+                    "
+                >
+                    1 item
+                </span>
+
+            </div>
+
+
+            <!-- Dynamic Items -->
+
+            <div id="itemsContainer"></div>
+
+
+        </div>
+
+
+        <!-- Add Item -->
+
+        <button
+            type="button"
+            class="btn-add"
+            onclick="addItem()"
+        >
+
+            ＋ Add Another Item
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =============================================================
+     FOOTER
+============================================================= -->
+
+<div class="footer">
+
+    <button
+        type="button"
+        class="btn btn-secondary"
+        onclick="resetForm()"
+    >
+        Reset
+    </button>
+
+
+    <button
+        type="button"
+        class="btn btn-primary"
+        onclick="createShipment()">
+
+        🚀 Create Shipment
+
+    </button>
+
+</div>
+
+
+<!-- Toast -->
+
+<div
+    id="toast"
+    class="toast"
+></div>
+
+
+<script>
+
+
+const countries = [
+    { name: "Afghanistan", code: "AF" },
+    { name: "Albania", code: "AL" },
+    { name: "Algeria", code: "DZ" },
+    { name: "Andorra", code: "AD" },
+    { name: "Angola", code: "AO" },
+    { name: "Antigua and Barbuda", code: "AG" },
+    { name: "Argentina", code: "AR" },
+    { name: "Armenia", code: "AM" },
+    { name: "Australia", code: "AU" },
+    { name: "Austria", code: "AT" },
+    { name: "Azerbaijan", code: "AZ" },
+
+    { name: "Bahamas", code: "BS" },
+    { name: "Bahrain", code: "BH" },
+    { name: "Bangladesh", code: "BD" },
+    { name: "Barbados", code: "BB" },
+    { name: "Belarus", code: "BY" },
+    { name: "Belgium", code: "BE" },
+    { name: "Belize", code: "BZ" },
+    { name: "Benin", code: "BJ" },
+    { name: "Bhutan", code: "BT" },
+    { name: "Bolivia", code: "BO" },
+    { name: "Bosnia and Herzegovina", code: "BA" },
+    { name: "Botswana", code: "BW" },
+    { name: "Brazil", code: "BR" },
+    { name: "Brunei", code: "BN" },
+    { name: "Bulgaria", code: "BG" },
+    { name: "Burkina Faso", code: "BF" },
+    { name: "Burundi", code: "BI" },
+
+    { name: "Cabo Verde", code: "CV" },
+    { name: "Cambodia", code: "KH" },
+    { name: "Cameroon", code: "CM" },
+    { name: "Canada", code: "CA" },
+    { name: "Central African Republic", code: "CF" },
+    { name: "Chad", code: "TD" },
+    { name: "Chile", code: "CL" },
+    { name: "China", code: "CN" },
+    { name: "Colombia", code: "CO" },
+    { name: "Comoros", code: "KM" },
+    { name: "Congo", code: "CG" },
+    { name: "Costa Rica", code: "CR" },
+    { name: "Côte d’Ivoire", code: "CI" },
+    { name: "Croatia", code: "HR" },
+    { name: "Cuba", code: "CU" },
+    { name: "Cyprus", code: "CY" },
+    { name: "Czechia", code: "CZ" },
+
+    { name: "Democratic Republic of the Congo", code: "CD" },
+    { name: "Denmark", code: "DK" },
+    { name: "Djibouti", code: "DJ" },
+    { name: "Dominica", code: "DM" },
+    { name: "Dominican Republic", code: "DO" },
+
+    { name: "Ecuador", code: "EC" },
+    { name: "Egypt", code: "EG" },
+    { name: "El Salvador", code: "SV" },
+    { name: "Equatorial Guinea", code: "GQ" },
+    { name: "Eritrea", code: "ER" },
+    { name: "Estonia", code: "EE" },
+    { name: "Eswatini", code: "SZ" },
+    { name: "Ethiopia", code: "ET" },
+
+    { name: "Fiji", code: "FJ" },
+    { name: "Finland", code: "FI" },
+    { name: "France", code: "FR" },
+
+    { name: "Gabon", code: "GA" },
+    { name: "Gambia", code: "GM" },
+    { name: "Georgia", code: "GE" },
+    { name: "Germany", code: "DE" },
+    { name: "Ghana", code: "GH" },
+    { name: "Greece", code: "GR" },
+    { name: "Grenada", code: "GD" },
+    { name: "Guatemala", code: "GT" },
+    { name: "Guinea", code: "GN" },
+    { name: "Guinea-Bissau", code: "GW" },
+    { name: "Guyana", code: "GY" },
+
+    { name: "Haiti", code: "HT" },
+    { name: "Honduras", code: "HN" },
+    { name: "Holy See", code: "VA" },
+    { name: "Hungary", code: "HU" },
+
+    { name: "Iceland", code: "IS" },
+    { name: "India", code: "IN" },
+    { name: "Indonesia", code: "ID" },
+    { name: "Iran", code: "IR" },
+    { name: "Iraq", code: "IQ" },
+    { name: "Ireland", code: "IE" },
+    { name: "Israel", code: "IL" },
+    { name: "Italy", code: "IT" },
+
+    { name: "Jamaica", code: "JM" },
+    { name: "Japan", code: "JP" },
+    { name: "Jordan", code: "JO" },
+
+    { name: "Kazakhstan", code: "KZ" },
+    { name: "Kenya", code: "KE" },
+    { name: "Kiribati", code: "KI" },
+    { name: "Kuwait", code: "KW" },
+    { name: "Kyrgyzstan", code: "KG" },
+
+    { name: "Laos", code: "LA" },
+    { name: "Latvia", code: "LV" },
+    { name: "Lebanon", code: "LB" },
+    { name: "Lesotho", code: "LS" },
+    { name: "Liberia", code: "LR" },
+    { name: "Libya", code: "LY" },
+    { name: "Liechtenstein", code: "LI" },
+    { name: "Lithuania", code: "LT" },
+    { name: "Luxembourg", code: "LU" },
+
+    { name: "Madagascar", code: "MG" },
+    { name: "Malawi", code: "MW" },
+    { name: "Malaysia", code: "MY" },
+    { name: "Maldives", code: "MV" },
+    { name: "Mali", code: "ML" },
+    { name: "Malta", code: "MT" },
+    { name: "Marshall Islands", code: "MH" },
+    { name: "Mauritania", code: "MR" },
+    { name: "Mauritius", code: "MU" },
+    { name: "Mexico", code: "MX" },
+    { name: "Micronesia", code: "FM" },
+    { name: "Moldova", code: "MD" },
+    { name: "Monaco", code: "MC" },
+    { name: "Mongolia", code: "MN" },
+    { name: "Montenegro", code: "ME" },
+    { name: "Morocco", code: "MA" },
+    { name: "Mozambique", code: "MZ" },
+    { name: "Myanmar", code: "MM" },
+
+    { name: "Namibia", code: "NA" },
+    { name: "Nauru", code: "NR" },
+    { name: "Nepal", code: "NP" },
+    { name: "Netherlands", code: "NL" },
+    { name: "New Zealand", code: "NZ" },
+    { name: "Nicaragua", code: "NI" },
+    { name: "Niger", code: "NE" },
+    { name: "Nigeria", code: "NG" },
+    { name: "North Korea", code: "KP" },
+    { name: "North Macedonia", code: "MK" },
+    { name: "Norway", code: "NO" },
+
+    { name: "Oman", code: "OM" },
+
+    { name: "Pakistan", code: "PK" },
+    { name: "Palau", code: "PW" },
+    { name: "Panama", code: "PA" },
+    { name: "Papua New Guinea", code: "PG" },
+    { name: "Paraguay", code: "PY" },
+    { name: "Peru", code: "PE" },
+    { name: "Philippines", code: "PH" },
+    { name: "Poland", code: "PL" },
+    { name: "Portugal", code: "PT" },
+
+    { name: "Qatar", code: "QA" },
+
+    { name: "Romania", code: "RO" },
+    { name: "Russia", code: "RU" },
+    { name: "Rwanda", code: "RW" },
+
+    { name: "Saint Kitts and Nevis", code: "KN" },
+    { name: "Saint Lucia", code: "LC" },
+    { name: "Saint Vincent and the Grenadines", code: "VC" },
+    { name: "Samoa", code: "WS" },
+    { name: "San Marino", code: "SM" },
+    { name: "Sao Tome and Principe", code: "ST" },
+    { name: "Saudi Arabia", code: "SA" },
+    { name: "Senegal", code: "SN" },
+    { name: "Serbia", code: "RS" },
+    { name: "Seychelles", code: "SC" },
+    { name: "Sierra Leone", code: "SL" },
+    { name: "Singapore", code: "SG" },
+    { name: "Slovakia", code: "SK" },
+    { name: "Slovenia", code: "SI" },
+    { name: "Solomon Islands", code: "SB" },
+    { name: "Somalia", code: "SO" },
+    { name: "South Africa", code: "ZA" },
+    { name: "South Korea", code: "KR" },
+    { name: "South Sudan", code: "SS" },
+    { name: "Spain", code: "ES" },
+    { name: "Sri Lanka", code: "LK" },
+    { name: "Sudan", code: "SD" },
+    { name: "Suriname", code: "SR" },
+    { name: "Sweden", code: "SE" },
+    { name: "Switzerland", code: "CH" },
+    { name: "Syria", code: "SY" },
+
+    { name: "Tajikistan", code: "TJ" },
+    { name: "Tanzania", code: "TZ" },
+    { name: "Thailand", code: "TH" },
+    { name: "Timor-Leste", code: "TL" },
+    { name: "Togo", code: "TG" },
+    { name: "Tonga", code: "TO" },
+    { name: "Trinidad and Tobago", code: "TT" },
+    { name: "Tunisia", code: "TN" },
+    { name: "Türkiye", code: "TR" },
+    { name: "Turkmenistan", code: "TM" },
+    { name: "Tuvalu", code: "TV" },
+
+    { name: "Uganda", code: "UG" },
+    { name: "Ukraine", code: "UA" },
+    { name: "United Arab Emirates", code: "AE" },
+    { name: "United Kingdom", code: "GB" },
+    { name: "United States", code: "US" },
+    { name: "Uruguay", code: "UY" },
+    { name: "Uzbekistan", code: "UZ" },
+
+    { name: "Vanuatu", code: "VU" },
+    { name: "Venezuela", code: "VE" },
+    { name: "Vietnam", code: "VN" },
+
+    { name: "Yemen", code: "YE" },
+
+    { name: "Zambia", code: "ZM" },
+    { name: "Zimbabwe", code: "ZW" }
+];
+
+
+    /* =========================================================
+       ITEM SUBFORM
+    ========================================================= */
+
+    let itemCounter = 0;
+
+
+    function addItem(defaultValues = {}) {
+
+        itemCounter++;
+
+        const itemId = itemCounter;
+
+        const container = document.getElementById(
+                "itemsContainer"
+            );
+
+
+        const row =
+            document.createElement("div");
+
+        row.className = "item-row";
+
+        row.dataset.itemId = itemId;
+
+
+        row.innerHTML = `
+
+            <div class="form-group">
+
+                <label>
+                    Item Name
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    class="item-name"
+                    placeholder="Item name"
+                    value="${escapeHtml(
+                        defaultValues.name || ""
+                    )}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    SKU
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    class="item-sku"
+                    placeholder="SKU"
+                    value="${escapeHtml(
+                        defaultValues.sku || ""
+                    )}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Quantity
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="number"
+                    class="item-quantity"
+                    min="1"
+                    value="${defaultValues.quantity || 1}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Unit Price
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="number"
+                    class="item-price"
+                    min="0"
+                    step="0.01"
+                    placeholder="0.00"
+                    value="${defaultValues.unit_price || ""}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="delete-container">
+
+                <button
+                    type="button"
+                    class="btn-delete"
+                    onclick="removeItem(${itemId})"
+                    title="Remove item"
+                >
+                    🗑
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(row);
+
+        updateItemCount();
+    }
+
+
+    function removeItem(itemId) {
+
+        const row =
+            document.querySelector(
+                `[data-item-id="${itemId}"]`
+            );
+
+
+        if (!row) {
+            return;
+        }
+
+
+        const rows =
+            document.querySelectorAll(
+                ".item-row"
+            );
+
+
+        if (rows.length === 1) {
+
+            showToast(
+                "At least one item is required.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        row.remove();
+
+        updateItemCount();
+    }
+
+
+    function updateItemCount() {
+
+        const count =
+            document.querySelectorAll(
+                ".item-row"
+            ).length;
+
+
+        document.getElementById(
+            "itemCount"
+        ).innerText =
+            `${count} ${count === 1 ? "item" : "items"}`;
+    }
+
+
+    /* =========================================================
+       HELPER
+    ========================================================= */
+
+    function value(id) {
+
+        return document
+            .getElementById(id)
+            .value
+            .trim();
+    }
+
+
+    function escapeHtml(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    /* =========================================================
+       GET ITEMS
+    ========================================================= */
+
+    function getItems() {
+
+        const rows =
+            document.querySelectorAll(
+                ".item-row"
+            );
+
+        const items = [];
+
+
+        rows.forEach(function(row) {
+
+            items.push({
+
+                quantity:
+                    Number(
+                        row.querySelector(
+                            ".item-quantity"
+                        ).value
+                    ),
+
+                name:
+                    row.querySelector(
+                        ".item-name"
+                    ).value.trim(),
+
+                sku:
+                    row.querySelector(
+                        ".item-sku"
+                    ).value.trim(),
+
+                unit_price:
+                    Number(
+                        row.querySelector(
+                            ".item-price"
+                        ).value
+                    )
+
+            });
+
+        });
+
+
+        return items;
+    }
+
+
+    /* =========================================================
+       BUILD SHIPMENT OBJECT
+    ========================================================= */
+
+    function buildShipmentPayload() {
+
+
+        /* ============================================
+           SHIP TO
+        ============================================ */
+
+        const shipTo = {
+
+            name:
+                value("to_name"),
+
+            phone:
+                value("to_phone"),
+
+            email:
+                value("to_email"),
+
+            company_name:
+                value("to_company"),
+
+            address_line1:
+                value("to_address1"),
+
+            address_line2:
+                value("to_address2"),
+
+            address_line3:
+                value("to_address3"),
+
+            city_locality:
+                value("to_city"),
+
+            state_province:
+                value("to_state"),
+
+            postal_code:
+                value("to_postal"),
+
+            country_code:
+                value("to_country").toUpperCase(),
+
+            address_residential_indicator:
+                value("to_residential")
+
+        };
+
+
+        /* ============================================
+           SHIP FROM
+        ============================================ */
+
+        const shipFrom = {
+
+            name:
+                value("from_name"),
+
+            phone:
+                value("from_phone"),
+
+            email:
+                value("from_email"),
+
+            company_name:
+                value("from_company"),
+
+            address_line1:
+                value("from_address1"),
+
+            address_line2:
+                value("from_address2"),
+
+            city_locality:
+                value("from_city"),
+
+            state_province:
+                value("from_state"),
+
+            postal_code:
+                value("from_postal"),
+
+            country_code:
+                value("from_country").toUpperCase(),
+
+            address_residential_indicator:
+                value("from_residential")
+
+        };
+
+
+        /* ============================================
+           PACKAGE
+        ============================================ */
+
+        const packageData = {
+
+            weight: {
+
+                value:
+                    Number(
+                        value("weight")
+                    ),
+
+                unit:
+                    value("weight_unit")
+
+            },
+
+            dimensions: {
+
+                unit:
+                    value("dimension_unit"),
+
+                length:
+                    Number(
+                        value("length")
+                    ),
+
+                width:
+                    Number(
+                        value("width")
+                    ),
+
+                height:
+                    Number(
+                        value("height")
+                    )
+
+            }
+
+        };
+
+
+        /* ============================================
+           CUSTOMS ITEM
+        ============================================ */
+
+        const customsItem = {
+
+            description:
+                value("customs_description"),
+
+            quantity:
+                Number(
+                    value("customs_quantity")
+                ),
+
+            value:
+                Number(
+                    value("customs_value")
+                ),
+
+            value_currency:
+                value("customs_currency")
+                    .toUpperCase(),
+
+            country_of_origin:
+                value("customs_origin")
+                    .toUpperCase()
+
+        };
+
+
+        /* ============================================
+           CUSTOMS
+        ============================================ */
+
+        const customs = {
+
+            contents:
+                value("customs_contents"),
+
+            non_delivery:
+                value("customs_non_delivery"),
+
+            customs_items: [
+                customsItem
+            ]
+
+        };
+
+
+        /* ============================================
+           FINAL PAYLOAD
+        ============================================ */
+
+        const shipment = {
+
+            external_shipment_id:
+                value("external_shipment_id"),
+
+            shipment_number:
+                value("shipment_number"),
+
+            create_sales_order: true,
+
+            service_code: "ups_worldwide_expedited",
+
+            ship_to: shipTo,
+
+            ship_from: shipFrom,
+
+            packages: [
+                packageData
+            ],
+
+            customs: customs,
+
+            items: getItems()
+        };
+
+
+
+        return shipment;
+    }
+
+
+    /* =========================================================
+       VALIDATION
+    ========================================================= */
+
+    function validateForm() {
+
+        const requiredFields =
+            document.querySelectorAll(
+                "input[required], select[required]"
+            );
+
+
+        let valid = true;
+
+
+        requiredFields.forEach(function(field) {
+
+            field.classList.remove(
+                "error"
+            );
+
+
+            if (!field.value.trim()) {
+
+                field.classList.add(
+                    "error"
+                );
+
+                valid = false;
+            }
+
+        });
+
+
+        /* Email validation */
+
+        const emails = [
+            "to_email",
+            "from_email"
+        ];
+
+
+        emails.forEach(function(id) {
+
+            const field =
+                document.getElementById(id);
+
+
+            if (
+                field.value &&
+                !field.checkValidity()
+            ) {
+
+                field.classList.add(
+                    "error"
+                );
+
+                valid = false;
+            }
+
+        });
+
+
+        if (!valid) {
+
+            showToast(
+                "Please complete all required fields.",
+                "error"
+            );
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+
+    /* =========================================================
+       CREATE SHIPMENT
+       CURRENTLY NO API CALL
+    ========================================================= */
+
+    function createShipment() {
+
+
+        if (!validateForm()) {
+            return;
+        }
+
+
+        const shipment =
+            buildShipmentPayload();
+
+
+        /*
+
+            IMPORTANT:
+
+            At this stage we are NOT calling
+            ShipStation / ShipEngine.
+
+            We are only generating the object.
+
+        */
+
+
+        console.log(
+            "================================"
+        );
+
+        console.log(
+            "SHIPMENT PAYLOAD"
+        );
+
+        console.log(
+            shipment
+        );
+
+        console.log(
+            JSON.stringify(
+                shipment,
+                null,
+                4
+            )
+        );
+
+        console.log(
+            "================================"
+        );
+
+
+        showToast(
+            "Shipment information captured successfully.",
+            "success"
+        );
+
+
+        /*
+         * Later we will replace this section with:
+         *
+         * ZOHO.CRM.FUNCTIONS.execute(...)
+         *
+         * OR
+         *
+         * ZOHO.CRM.HTTP.post(...)
+         *
+         * depending on how we decide to connect
+         * ShipStation.
+         */
+    }
+
+
+    /* =========================================================
+       RESET
+    ========================================================= */
+
+    function resetForm() {
+
+        if (
+            !confirm(
+                "Are you sure you want to reset the shipment form?"
+            )
+        ) {
+            return;
+        }
+
+
+        document
+            .querySelectorAll(
+                "input"
+            )
+            .forEach(function(input) {
+
+                if (
+                    input.type !== "checkbox"
+                ) {
+                    input.value = "";
+                }
+
+            });
+
+
+        document
+            .getElementById(
+                "create_sales_order"
+            )
+            .checked = true;
+
+
+        document
+            .getElementById(
+                "itemsContainer"
+            )
+            .innerHTML = "";
+
+
+        itemCounter = 0;
+
+        addItem();
+
+
+        document
+            .getElementById(
+                "weight_unit"
+            )
+            .value = "gram";
+
+
+        document
+            .getElementById(
+                "dimension_unit"
+            )
+            .value = "centimeter";
+
+
+        document.getElementById(
+                "customs_contents"
+            )
+            .value = "merchandise";
+
+
+        document
+            .getElementById(
+                "customs_non_delivery"
+            )
+            .value = "return_to_sender";
+
+
+        showToast(
+            "Form has been reset.",
+            "success"
+        );
+    }
+
+
+    /* =========================================================
+       TOAST
+    ========================================================= */
+
+    function showToast(
+        message,
+        type = "success"
+    ) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        toast.innerText =
+            message;
+
+
+        toast.className =
+            `toast ${type} show`;
+
+
+        setTimeout(function() {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        }, 3000);
+    }
+   
+    /* =========================================================
+       Populate country in the dropdown 
+    ========================================================= */
+
+    function populateCountryDropdowns() {
+
+    const dropdowns = [
+        document.getElementById("from_country"),
+        document.getElementById("to_country"),
+        document.getElementById("customs_origin")
+    ];
+
+    dropdowns.forEach(function(dropdown) {
+
+        if (!dropdown) return;
+
+        countries.forEach(function(country) {
+
+            const option = document.createElement("option");
+
+            option.value = country.code;
+
+            option.textContent =
+                `${country.name} (${country.code})`;
+
+            dropdown.appendChild(option);
+
+        });
+
+    });
+
+}
+
+
+
+
+
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            populateCountryDropdowns();
+
+            // addItem({
+            //     name: "Small Decorative Model Car DEC219",
+            //     sku: "ID 200508612 - DEC28 - B",
+            //     quantity: 1,
+            //     unit_price: 300
+            // });
+
+        }
+    );
+
+
+    /* =========================================================
+       SALES ORDER SWITCH
+    ========================================================= */
+
+    document
+        .getElementById(
+            "create_sales_order"
+        )
+        .addEventListener(
+            "change",
+            function() {
+
+                document
+                    .getElementById(
+                        "salesOrderText"
+                    )
+                    .innerText =
+                    this.checked
+                        ? "Yes"
+                        : "No";
+
+            }
+        );
+
+
+    /* =========================================================
+       ZOHO CRM WIDGET INITIALIZATION
+    ========================================================= */
+
+    ZOHO.embeddedApp.on(
+        "PageLoad",
+        function(data) {
+
+            console.log(
+                "Zoho CRM PageLoad:",
+                data
+            );
+
+        }
+    );
+
+
+    ZOHO.embeddedApp.init()
+        .then(function() {
+
+            console.log(
+                "Zoho CRM Widget initialized successfully."
+            );
+
+        })
+        .catch(function(error) {
+
+            console.error(
+                "Zoho Widget initialization failed:",
+                error
+            );
+
+        });
+
+
+    /* =========================================================
+       INITIAL ITEM
+    ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            addItem({
+
+                name:
+                    "Small Decorative Model Car DEC219",
+
+                sku:
+                    "ID 200508612 - DEC28 - B",
+
+                quantity:
+                    1,
+
+                unit_price:
+                    300
+
+            });
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
