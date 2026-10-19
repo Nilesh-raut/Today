@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Webhook Test</title>
+
+    <script src="https://live.zwidgets.com/js-sdk/1.5/ZohoEmbededAppSDK.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #4338ca;
+        }
+
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Webhook Test</h2>
+
+    <label>Full Name</label>
+
+    <input
+        type="text"
+        id="full_name"
+        placeholder="Enter full name"
+    >
+
+    <button type="button" onclick="sendToWebhook()">
+        Submit
+    </button>
+
+    <div id="response"></div>
+
+</div>
+
+
+<script>
+
+const FLOW_WEBHOOK_URL = "https://www.zohoapis.eu/crm/v7/functions/test3/actions/execute?auth_type=apikey&zapikey=1003.3cee923177d72801544b9c98f2a86984.833b3aa1b5dbab8dbc65ed955b06c29f";
+
+
+
+async function sendToWebhook() {
+
+    const fullName = document
+        .getElementById("full_name")
+        .value
+        .trim();
+
+    if (!fullName) {
+        document.getElementById("response").innerText =
+            "Please enter your full name.";
+        return;
+    }
+
+    const test = {
+        full_name: fullName
+    };
+
+    console.log("Sending payload:");
+    console.log(test);
+
+    const request = {
+        url: FLOW_WEBHOOK_URL,
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: {
+            arguments: JSON.stringify({
+                A: fullName
+            })
+        }
+    };
+
+
+    console.log("Sending request through ZOHO.CRM.HTTP...");
+
+    ZOHO.CRM.HTTP.post(request)
+    .then(function(response) {
+        console.log("Full webhook response:", response);
+        console.log("Response type:", typeof response);
+        console.log("Response JSON:", JSON.stringify(response));
+        console.log("Response length:",
+            typeof response === "string" ? response.length : "not a string");
+    })
+    .catch(function(error) {
+        console.error("Webhook request failed:", error);
+    });
+}
+
+
+ZOHO.embeddedApp.on(
+    "PageLoad",
+    function(data) {
+
+        console.log("Zoho Widget loaded:", data);
+
+    }
+);
+
+
+ZOHO.embeddedApp.init()
+    .then(function() {
+
+        console.log(
+            "Zoho Widget initialized successfully."
+        );
+
+    })
+    .catch(function(error) {
+
+        console.error(
+            "Zoho Widget initialization failed:",
+            error
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
