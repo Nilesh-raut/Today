@@ -1,0 +1,15 @@
+string standalone.test3(Map crmAPIRequest)
+{
+sendmail
+[
+	from :zoho.loginuserid
+	to :"masop50995@ensproxy.com"
+	subject :"tst-1"
+	message :crmAPIRequest
+]
+body = crmAPIRequest.get("body");
+args = body.get("arguments").toMap();
+fullName = args.get("A");
+info "Received Name: " + fullName;
+return "Received Name: " + fullName;
+}
