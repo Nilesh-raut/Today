@@ -1,0 +1,123 @@
+string standalone.creating_order_in_shipStation_test_1(Map crmAPIRequest)
+{
+body = crmAPIRequest.get("body");
+// sendmail
+// [
+// 	from :zoho.loginuserid
+// 	to :"tijefa5408@goldlicai.com"
+// 	subject :"Thank you for the payment"
+// 	message :crmAPIRequest
+// ]
+args = body.get("arguments").toMap();
+shipmet_data_ = args.get("shipment_data");
+ship_to = args.get("ship_to");
+weight_data = args.get("shipment_data").get("packages").get(0).get("weight");
+dimensions_data = args.get("shipment_data").get("packages").get(0).get("dimensions");
+customs_data = args.get("shipment_data").get("customs");
+// // --------------------------------------------------------------------------------------------------------
+shipment = Map();
+shipment.put("external_shipment_id",shipmet_data_.get("external_shipment_id"));
+shipment.put("shipment_number",shipmet_data_.get("shipment_number"));
+shipment.put("create_sales_order",true);
+shipment.put("carrier_id","se-318854");
+// shipment.put("service_code","ups_worldwide_expedited");
+shipment.put("warehouse_id","se-7020821");
+// // ============================================
+// // SHIP TO
+// // ============================================
+/* ============================================
+   SHIP TO
+============================================ */
+ship_to_data = shipmet_data_.get("ship_to");
+ship_to = Map();
+ship_to.put("name",ship_to_data.get("name"));
+ship_to.put("phone",ship_to_data.get("phone"));
+ship_to.put("email",ship_to_data.get("email"));
+ship_to.put("company_name",ship_to_data.get("company_name"));
+ship_to.put("address_line1",ship_to_data.get("address_line1"));
+ship_to.put("address_line2",ship_to_data.get("address_line2"));
+ship_to.put("address_line3",ship_to_data.get("address_line3"));
+ship_to.put("city_locality",ship_to_data.get("city_locality"));
+ship_to.put("state_province",ship_to_data.get("state_province"));
+ship_to.put("postal_code",ship_to_data.get("postal_code"));
+ship_to.put("country_code",ship_to_data.get("country_code"));
+residential_indicator = ship_to_data.get("address_residential_indicator");
+if(residential_indicator == null || residential_indicator == "")
+{
+	residential_indicator = "unknown";
+}
+ship_to.put("address_residential_indicator",residential_indicator);
+shipment.put("ship_to",ship_to);
+// // ============================================
+// // PACKAGE
+// // ============================================
+package = Map();
+// ----
+weight_map = Map();
+weight_map.put("value",weight_data.get("gram"));
+weight_map.put("unit","gram");
+//-----
+dimension_map = Map();
+dimension_map.put("unit","centimeter");
+dimension_map.put("length",dimensions_data.get("length"));
+dimension_map.put("width",dimensions_data.get("width"));
+dimension_map.put("height",dimensions_data.get("height"));
+// ------
+package.put("weight",weight_map);
+package.put("dimensions",dimension_map);
+packages = List();
+packages.add(package);
+shipment.put("packages",packages);
+// // ============================================
+// // CUSTOMS
+// // ============================================
+customs = Map();
+customs.put("contents",customs_data.get("contents"));
+customs.put("non_delivery",customs_data.get("non_delivery"));
+customs_item = Map();
+customs_items_list = customs_data.get("customs_items").get(0);
+customs_item.put("description",customs_items_list.get("description"));
+customs_item.put("quantity",customs_items_list.get("quantity"));
+customs_item.put("value",customs_items_list.get("value"));
+customs_item.put("value_currency",customs_items_list.get("value_currency"));
+customs_item.put("country_of_origin",customs_items_list.get("country_of_origin"));
+customs_items = List();
+customs_items.add(customs_item);
+customs.put("customs_items",customs_items);
+shipment.put("customs",customs);
+// // ============================================
+// // ITEM
+// // ============================================
+line_items_data = args.get("shipment_data").get("items");
+items = List();
+for each  line_item_data in line_items_data
+{
+	item = Map();
+	item.put("quantity",line_item_data.get("quantity"));
+	item.put("name",line_item_data.get("name"));
+	item.put("sku",line_item_data.get("sku"));
+	item.put("unit_price",line_item_data.get("unit_price"));
+	items.add(item);
+}
+shipment.put("items",items);
+// // ============================================
+// // SHIPMENTS ARRAY
+// // ============================================
+shipments = List();
+shipments.add(shipment);
+body = Map();
+body.put("shipments",shipments);
+// // ============================================
+// // CREATE SHIPMENT
+// // ============================================
+response = invokeurl
+[
+	url :"https://api.shipstation.com/v2/shipments"
+	type :POST
+	body:body.toString()
+	headers:{"API-Key":"+T2mN2LDZPAiXLFxfyEc1RTkIgLbQoONYEbfdcKqRYc","Content-Type":"application/json"}
+];
+// info response;
+// return incoming_payload.toString();
+return response;
+}
