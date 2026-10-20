@@ -1,0 +1,3812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Shipment | Aurora Signature</title>
+
+    <!-- Zoho CRM Widget SDK -->
+    <script src="https://live.zwidgets.com/js-sdk/1.5/ZohoEmbededAppSDK.min.js"></script>
+
+    <style>
+
+        /* =========================================================
+           GLOBAL
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --text: #172033;
+            --muted: #667085;
+            --border: #e4e7ec;
+            --background: #f7f8fc;
+            --white: #ffffff;
+            --danger: #dc2626;
+            --success: #16a34a;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            background: var(--background);
+            color: var(--text);
+        }
+
+        /* =========================================================
+           MAIN CONTAINER
+        ========================================================= */
+
+        .container {
+            width: 100%;
+            max-width: 1500px;
+            margin: auto;
+            padding: 24px;
+        }
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-icon {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(
+                135deg,
+                #6366f1,
+                #4f46e5
+            );
+
+            color: white;
+
+            font-size: 25px;
+
+            box-shadow:
+                0 8px 20px rgba(79, 70, 229, 0.25);
+        }
+
+        .page-title {
+            margin: 0;
+
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+        }
+
+        .page-subtitle {
+            margin: 4px 0 0;
+
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        /* =========================================================
+           CARD
+        ========================================================= */
+
+        .card {
+            background: var(--white);
+
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+
+            padding: 20px;
+
+            margin-bottom: 18px;
+
+            box-shadow:
+                0 3px 12px rgba(16, 24, 40, 0.04);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+            padding-bottom: 14px;
+
+            border-bottom: 1px solid #eef0f4;
+        }
+
+        .section-icon {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: #eef2ff;
+
+            color: var(--primary);
+
+            font-size: 16px;
+        }
+
+        .section-title {
+            margin: 0;
+
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .section-description {
+            margin: 3px 0 0;
+
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+        /* =========================================================
+           GRID
+        ========================================================= */
+
+        .grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(12, 1fr);
+
+            gap: 16px;
+        }
+
+        .col-12 {
+            grid-column: span 12;
+        }
+
+        .col-8 {
+            grid-column: span 8;
+        }
+
+        .col-6 {
+            grid-column: span 6;
+        }
+
+        .col-4 {
+            grid-column: span 4;
+        }
+
+        .col-3 {
+            grid-column: span 3;
+        }
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        label {
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: #344054;
+        }
+
+        .required {
+            color: var(--danger);
+        }
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            height: 42px;
+
+            border: 1px solid #d9dee8;
+
+            border-radius: 8px;
+
+            padding: 0 12px;
+
+            outline: none;
+
+            background: white;
+
+            color: #101828;
+
+            font-size: 13px;
+
+            transition: 0.2s;
+        }
+
+        textarea {
+            height: 80px;
+            padding-top: 10px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px rgba(79, 70, 229, 0.10);
+        }
+
+        input.error,
+        select.error,
+        textarea.error {
+            border-color: var(--danger);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 11px;
+            display: none;
+        }
+
+        /* =========================================================
+           TWO COLUMN LAYOUT
+        ========================================================= */
+
+        .two-column {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 18px;
+        }
+
+        /* =========================================================
+           SWITCH
+        ========================================================= */
+
+        .switch-wrapper {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            height: 42px;
+        }
+
+        .switch {
+            position: relative;
+
+            width: 42px;
+            height: 24px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+
+            position: absolute;
+
+            inset: 0;
+
+            cursor: pointer;
+
+            background: #d0d5dd;
+
+            border-radius: 30px;
+
+            transition: 0.2s;
+        }
+
+        .slider:before {
+
+            content: "";
+
+            position: absolute;
+
+            height: 18px;
+            width: 18px;
+
+            left: 3px;
+            top: 3px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            transition: 0.2s;
+
+            box-shadow:
+                0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .switch input:checked + .slider {
+            background: var(--primary);
+        }
+
+        .switch input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+
+        /* =========================================================
+           SUBFORM
+        ========================================================= */
+
+        .subform-wrapper {
+
+            border: 1px solid var(--border);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .subform-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 12px 14px;
+
+            background: #f8f9fc;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .subform-title {
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .item-row {
+
+            display: grid;
+
+            grid-template-columns:
+                2fr
+                2fr
+                100px
+                120px
+                45px;
+
+            gap: 10px;
+
+            padding: 12px;
+
+            border-bottom: 1px solid #eef0f4;
+
+            align-items: end;
+        }
+
+        .item-row:last-child {
+            border-bottom: none;
+        }
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+
+        button {
+
+            border: none;
+
+            cursor: pointer;
+
+            font-family: inherit;
+        }
+
+        .btn {
+
+            height: 40px;
+
+            padding: 0 16px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            transition: 0.2s;
+        }
+
+        .btn-primary {
+
+            background: var(--primary);
+
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+
+            background: white;
+
+            color: #344054;
+
+            border: 1px solid #d0d5dd;
+        }
+
+        .btn-secondary:hover {
+            background: #f9fafb;
+        }
+
+        .btn-add {
+
+            width: 100%;
+
+            border: 1px dashed #a5b4fc;
+
+            background: #f8f9ff;
+
+            color: var(--primary);
+
+            border-radius: 8px;
+
+            height: 40px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            margin-top: 12px;
+        }
+
+        .btn-add:hover {
+            background: #eef2ff;
+        }
+
+        .btn-delete {
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 8px;
+
+            background: #fff1f2;
+
+            color: var(--danger);
+
+            font-size: 15px;
+        }
+
+        .btn-delete:hover {
+            background: #ffe4e6;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        .footer {
+
+            position: sticky;
+
+            bottom: 0;
+
+            z-index: 10;
+
+            background: rgba(247, 248, 252, 0.95);
+
+            backdrop-filter: blur(8px);
+
+            border-top: 1px solid var(--border);
+
+            padding: 14px 24px;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+        }
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        .toast {
+
+            position: fixed;
+
+            right: 20px;
+
+            bottom: 80px;
+
+            min-width: 280px;
+
+            padding: 14px 16px;
+
+            background: #101828;
+
+            color: white;
+
+            border-radius: 10px;
+
+            font-size: 13px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.2);
+
+            transform: translateY(30px);
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition: 0.25s;
+
+            z-index: 100;
+        }
+
+        .toast.show {
+
+            transform: translateY(0);
+
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media(max-width: 900px) {
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .col-6,
+            .col-4,
+            .col-3,
+            .col-8 {
+                grid-column: span 12;
+            }
+
+            .item-row {
+
+                grid-template-columns:
+                    1fr
+                    1fr;
+            }
+
+            .item-row .delete-container {
+                grid-column: span 2;
+            }
+        }
+
+
+
+
+
+
+        .shipment-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    align-items: start;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    min-width: 0;
+}
+
+.right-column .card {
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    .shipment-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+        /* ===== Refined ShipStation UI ===== */
+        body {
+            background:
+                radial-gradient(circle at 8% 0%, rgba(99, 102, 241, .10), transparent 28rem),
+                radial-gradient(circle at 100% 12%, rgba(14, 165, 233, .08), transparent 25rem),
+                #f5f7fb;
+            color: #182230;
+        }
+
+        .container {
+            max-width: 1440px;
+            padding: 28px clamp(14px, 2.5vw, 36px) 110px;
+        }
+
+        .page-header {
+            position: relative;
+            overflow: hidden;
+            padding: 22px 24px;
+            margin-bottom: 22px;
+            border: 1px solid rgba(226, 232, 240, .9);
+            border-radius: 18px;
+            background: linear-gradient(120deg, #ffffff 0%, #f4f6ff 68%, #eef7ff 100%);
+            box-shadow: 0 8px 28px rgba(15, 23, 42, .045);
+        }
+
+        .page-header::after {
+            content: "";
+            position: absolute;
+            width: 210px;
+            height: 210px;
+            right: -75px;
+            top: -120px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, .09);
+            pointer-events: none;
+        }
+
+        .header-icon {
+            width: 58px;
+            height: 58px;
+            flex: 0 0 58px;
+            border-radius: 17px;
+            background: linear-gradient(145deg, #6366f1, #4338ca);
+            box-shadow: 0 10px 22px rgba(79, 70, 229, .24);
+        }
+
+        .page-title {
+            font-size: clamp(22px, 2vw, 28px);
+            letter-spacing: -.7px;
+            color: #101828;
+        }
+
+        .page-subtitle {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #667085;
+        }
+
+        .card {
+            padding: clamp(16px, 2vw, 24px);
+            border: 1px solid #e7eaf1;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .96);
+            box-shadow: 0 5px 18px rgba(16, 24, 40, .035);
+            transition: box-shadow .2s ease, border-color .2s ease;
+        }
+
+        .card:hover {
+            border-color: #dce1f4;
+            box-shadow: 0 8px 24px rgba(16, 24, 40, .055);
+        }
+
+        .section-header {
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #edf0f5;
+        }
+
+        .section-icon {
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            border: 1px solid #e0e7ff;
+            border-radius: 11px;
+            background: linear-gradient(145deg, #f1f4ff, #e9edff);
+            font-size: 17px;
+        }
+
+        .section-title {
+            color: #1d2939;
+            font-size: 15px;
+            letter-spacing: -.15px;
+        }
+
+        .section-description {
+            line-height: 1.5;
+            font-size: 12px;
+        }
+
+        label {
+            font-size: 12px;
+            color: #475467;
+            letter-spacing: .05px;
+        }
+
+        input, select, textarea {
+            height: 43px;
+            border-color: #dfe3eb;
+            border-radius: 9px;
+            background-color: #fff;
+            color: #182230;
+            font-size: 13px;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, .025);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #98a2b3;
+        }
+
+        input:hover, select:hover, textarea:hover {
+            border-color: #b8c0d0;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, .13);
+        }
+
+        .two-column, .shipment-layout {
+            gap: 20px;
+        }
+
+        .subform-wrapper {
+            border-color: #e5e9f1;
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        .subform-header {
+            padding: 13px 15px;
+            background: linear-gradient(90deg, #f8f9ff, #fbfcfe);
+            border-bottom-color: #e9edf4;
+        }
+
+        .subform-title {
+            color: #344054;
+            font-size: 12px;
+            letter-spacing: .15px;
+        }
+
+        .item-row {
+            padding: 14px;
+            gap: 12px;
+        }
+
+        .btn {
+            min-height: 42px;
+            border-radius: 9px;
+            font-size: 12px;
+            letter-spacing: .1px;
+            transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+        }
+
+        .btn:active, .btn-add:active, .btn-delete:active {
+            transform: translateY(1px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #5b5ce2, #4338ca);
+            box-shadow: 0 4px 10px rgba(79, 70, 229, .18);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4f46e5, #3730a3);
+            box-shadow: 0 7px 16px rgba(79, 70, 229, .23);
+        }
+
+        .btn-secondary {
+            background: #fff;
+            border-color: #d8deea;
+        }
+
+        .btn-secondary:hover {
+            background: #f8faff;
+            border-color: #c5cbea;
+        }
+
+        .btn-add {
+            border-color: #c7d2fe;
+            background: #f7f8ff;
+            border-radius: 10px;
+        }
+
+        .btn-add:hover {
+            background: #eef2ff;
+            border-color: #a5b4fc;
+        }
+
+        .btn-delete {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ffe0e3;
+            border-radius: 9px;
+        }
+
+        .footer {
+            position: sticky;
+            bottom: 0;
+            margin: 18px -1px 0;
+            padding: 14px clamp(14px, 2.5vw, 36px);
+            border: 1px solid rgba(226, 232, 240, .9);
+            border-bottom: 0;
+            border-radius: 14px 14px 0 0;
+            background: rgba(255, 255, 255, .92);
+            box-shadow: 0 -6px 22px rgba(16, 24, 40, .055);
+            backdrop-filter: blur(12px);
+        }
+
+        .toast {
+            right: 24px;
+            bottom: 88px;
+            border-radius: 12px;
+            padding: 15px 18px;
+        }
+
+        .error-message {
+            margin-top: 2px;
+        }
+
+        @media (max-width: 900px) {
+            .container { padding: 14px 12px 100px; }
+            .page-header { padding: 18px; border-radius: 14px; }
+            .card { border-radius: 13px; }
+            .footer { margin-left: 0; margin-right: 0; }
+        }
+
+        @media (max-width: 560px) {
+            .page-header { align-items: flex-start; }
+            .header-left { align-items: flex-start; gap: 11px; }
+            .header-icon { width: 46px; height: 46px; flex-basis: 46px; border-radius: 13px; font-size: 21px; }
+            .page-title { font-size: 21px; }
+            .footer { justify-content: stretch; }
+            .footer .btn { flex: 1; }
+        }
+
+
+
+        /* =========================================================
+           POLISHED UI LAYER — visual-only overrides
+        ========================================================= */
+        :root {
+            --primary: #5145e5;
+            --primary-dark: #3f35c8;
+            --text: #17213b;
+            --muted: #74809a;
+            --border: #e5e9f3;
+            --background: #f3f5fb;
+            --white: #ffffff;
+            --danger: #dc3545;
+            --success: #159b68;
+            --soft-indigo: #eef0ff;
+            --shadow-card: 0 12px 34px rgba(31, 42, 84, .055), 0 2px 7px rgba(31, 42, 84, .025);
+        }
+
+        body {
+            background:
+                radial-gradient(ellipse at 8% 0%, rgba(99, 102, 241, .10), transparent 28rem),
+                radial-gradient(ellipse at 96% 12%, rgba(56, 189, 248, .08), transparent 25rem),
+                #f5f7fc;
+            color: var(--text);
+            letter-spacing: .005em;
+        }
+
+        .container {
+            max-width: 1560px;
+            padding: 28px clamp(14px, 2.4vw, 36px) 28px;
+        }
+
+        .page-header {
+            position: relative;
+            overflow: hidden;
+            padding: 25px 28px;
+            margin-bottom: 22px;
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 20px;
+            color: #fff;
+            background: linear-gradient(118deg, #20275d 0%, #3f3aa8 52%, #6558ef 100%);
+            box-shadow: 0 16px 38px rgba(55, 53, 145, .20);
+        }
+
+        .page-header::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            right: -60px;
+            top: -145px;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 50%;
+            box-shadow: 0 0 0 26px rgba(255,255,255,.035), 0 0 0 54px rgba(255,255,255,.025);
+            pointer-events: none;
+        }
+
+        .header-left { position: relative; z-index: 1; gap: 16px; }
+        .header-icon {
+            flex: 0 0 56px;
+            width: 56px;
+            height: 56px;
+            border: 1px solid rgba(255,255,255,.22);
+            border-radius: 16px;
+            background: rgba(255,255,255,.14);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
+            backdrop-filter: blur(8px);
+            font-size: 26px;
+        }
+        .page-title { color: #fff; font-size: clamp(22px, 2.2vw, 29px); letter-spacing: -.7px; }
+        .page-subtitle { color: rgba(255,255,255,.76); font-size: 13px; line-height: 1.6; }
+
+        .card {
+            position: relative;
+            padding: clamp(17px, 1.8vw, 25px);
+            margin-bottom: 20px;
+            border: 1px solid rgba(223,228,241,.95);
+            border-radius: 17px;
+            background: rgba(255,255,255,.96);
+            box-shadow: var(--shadow-card);
+            transition: box-shadow .2s ease, border-color .2s ease, transform .2s ease;
+        }
+        .card:hover {
+            border-color: #d8ddf4;
+            box-shadow: 0 16px 38px rgba(31,42,84,.075), 0 3px 8px rgba(31,42,84,.025);
+        }
+
+        .section-header {
+            gap: 12px;
+            margin-bottom: 22px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #edf0f7;
+        }
+        .section-icon {
+            flex: 0 0 38px;
+            width: 38px;
+            height: 38px;
+            border: 1px solid #e0e4ff;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #f0f1ff, #e8eaff);
+            color: #4c43d7;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+        }
+        .section-title { color: #1b2542; font-size: 15px; letter-spacing: -.15px; }
+        .section-description { color: #8791a7; font-size: 12px; line-height: 1.5; }
+
+        .grid { gap: 17px 15px; }
+        .two-column, .shipment-layout { gap: 20px; }
+        .form-group { gap: 8px; min-width: 0; }
+        label { color: #46516b; font-size: 12px; font-weight: 650; letter-spacing: .01em; }
+        .required { margin-left: 2px; color: #e34e67; }
+
+        input, select, textarea {
+            min-width: 0;
+            height: 44px;
+            padding: 0 13px;
+            border: 1px solid #dfe4ef;
+            border-radius: 10px;
+            background-color: #fbfcff;
+            color: #202a44;
+            font-size: 13px;
+            box-shadow: 0 1px 2px rgba(16,24,40,.015);
+            transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+        }
+        input::placeholder, textarea::placeholder { color: #a2aabd; }
+        input:hover, select:hover, textarea:hover { border-color: #c8cfea; background-color: #fff; }
+        input:focus, select:focus, textarea:focus {
+            border-color: #8178f0;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(81,69,229,.10);
+        }
+        input.error, select.error, textarea.error { border-color: #e34e67; background: #fffafb; }
+        .error-message { margin-top: 2px; }
+
+        .subform-wrapper {
+            border: 1px solid #e5e9f3;
+            border-radius: 13px;
+            background: #fff;
+            box-shadow: inset 0 1px 2px rgba(24,36,74,.02);
+        }
+        .subform-header {
+            padding: 14px 16px;
+            background: linear-gradient(180deg, #fafbff, #f5f7fc);
+            border-bottom: 1px solid #e8ecf5;
+        }
+        .subform-title { color: #34405d; font-size: 12px; letter-spacing: .02em; }
+        .item-row { padding: 16px; gap: 12px; }
+        .item-row + .item-row { background: #fcfcff; }
+
+        .btn {
+            min-height: 42px;
+            height: 42px;
+            padding: 0 18px;
+            border-radius: 10px;
+            font-size: 12px;
+            letter-spacing: .01em;
+            transition: transform .16s ease, box-shadow .16s ease, background .16s ease;
+        }
+        .btn:active, .btn-add:active, .btn-delete:active { transform: translateY(1px); }
+        .btn-primary {
+            background: linear-gradient(135deg, #5b50ed, #4438ca);
+            box-shadow: 0 5px 13px rgba(79,70,229,.22), inset 0 1px 0 rgba(255,255,255,.15);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4f46df, #382fb6);
+            box-shadow: 0 7px 17px rgba(79,70,229,.28);
+        }
+        .btn-secondary { background: #fff; border-color: #dce2ef; color: #47516b; }
+        .btn-secondary:hover { background: #f8f9ff; border-color: #cbd2e6; }
+        .btn-add {
+            height: 43px;
+            border: 1px dashed #b6b8f5;
+            border-radius: 10px;
+            background: #f7f7ff;
+            color: #5145d9;
+            transition: background .18s ease, border-color .18s ease;
+        }
+        .btn-add:hover { background: #eeeeff; border-color: #8e88ed; }
+        .btn-delete {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ffe0e5;
+            border-radius: 10px;
+            background: #fff5f6;
+            color: #d63851;
+        }
+        .btn-delete:hover { background: #ffe9ed; }
+
+        .footer {
+            position: sticky;
+            bottom: 0;
+            margin-top: 8px;
+            padding: 15px clamp(14px, 2.4vw, 36px);
+            background: rgba(248,249,253,.88);
+            border-top: 1px solid rgba(221,226,239,.9);
+            backdrop-filter: blur(14px);
+        }
+        .toast {
+            right: 24px;
+            bottom: 88px;
+            min-width: 290px;
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 12px;
+            box-shadow: 0 14px 40px rgba(16,24,40,.22);
+        }
+        .toast.success { border-left: 4px solid #19b47a; }
+        .toast.error { border-left: 4px solid #ef5368; }
+
+        @media (max-width: 900px) {
+            .container { padding: 16px 12px 22px; }
+            .page-header { padding: 20px 18px; border-radius: 16px; }
+            .card { padding: 17px; border-radius: 14px; }
+            .footer { padding: 12px; }
+        }
+        @media (max-width: 560px) {
+            .page-header { align-items: flex-start; }
+            .header-icon { width: 46px; height: 46px; flex-basis: 46px; border-radius: 13px; }
+            .page-title { font-size: 22px; }
+            .page-subtitle { max-width: 270px; }
+            .footer { justify-content: stretch; }
+            .footer .btn { flex: 1; padding: 0 10px; }
+            .item-row { grid-template-columns: 1fr 1fr; }
+        }
+
+
+
+        /* SIGNATURE EDITION — visual-only refinement */
+        :root {
+            --primary: #5546e8;
+            --primary-dark: #4032c9;
+            --text: #171b35;
+            --muted: #737995;
+            --border: #e6e8f2;
+            --background: #f4f5fb;
+            --white: #ffffff;
+            --danger: #d92d4b;
+            --success: #15966a;
+        }
+        body {
+            background:
+                radial-gradient(ellipse at 8% 0%, rgba(121, 111, 255, .12), transparent 32%),
+                radial-gradient(ellipse at 95% 15%, rgba(78, 189, 219, .09), transparent 28%),
+                #f5f6fc;
+            color: var(--text);
+            letter-spacing: .01em;
+        }
+        .container { max-width: 1580px; padding: 30px clamp(16px, 2.8vw, 42px) 110px; }
+        .page-header {
+            position: relative;
+            overflow: hidden;
+            padding: 28px 30px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,.22);
+            border-radius: 22px;
+            color: #fff;
+            background: linear-gradient(118deg, #211c57 0%, #4438b9 48%, #7068f4 100%);
+            box-shadow: 0 18px 42px rgba(53, 45, 139, .20);
+        }
+        .page-header:after {
+            content: "";
+            position: absolute;
+            width: 270px; height: 270px;
+            right: -55px; top: -150px;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 50%;
+            box-shadow: 0 0 0 28px rgba(255,255,255,.045), 0 0 0 58px rgba(255,255,255,.035);
+            pointer-events: none;
+        }
+        .header-left { position: relative; z-index: 1; gap: 18px; }
+        .header-icon {
+            width: 60px; height: 60px; flex: 0 0 60px;
+            border-radius: 18px;
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.25);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 8px 22px rgba(18,14,73,.16);
+            backdrop-filter: blur(8px);
+        }
+        .page-title { color: #fff; font-size: clamp(24px, 2.3vw, 32px); letter-spacing: -.8px; }
+        .page-subtitle { color: rgba(255,255,255,.76); font-size: 13px; margin-top: 7px; }
+        .card {
+            position: relative;
+            border: 1px solid rgba(225,228,241,.95);
+            border-radius: 18px;
+            padding: 24px;
+            background: rgba(255,255,255,.94);
+            box-shadow: 0 5px 18px rgba(36,39,88,.035), 0 1px 2px rgba(36,39,88,.025);
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+        }
+        .card:hover { border-color: #d7d8f4; box-shadow: 0 12px 30px rgba(36,39,88,.07); }
+        .section-header { gap: 13px; margin-bottom: 22px; padding-bottom: 16px; border-bottom-color: #eff0f7; }
+        .section-icon {
+            width: 40px; height: 40px; flex: 0 0 40px;
+            border-radius: 13px;
+            background: linear-gradient(145deg, #f0efff, #e8eaff);
+            color: #5143d8;
+            box-shadow: inset 0 1px 0 #fff;
+        }
+        .section-title { font-size: 16px; letter-spacing: -.2px; color: #202342; }
+        .section-description { font-size: 12px; color: #8186a0; line-height: 1.5; }
+        .grid { gap: 18px; }
+        label { color: #444963; font-size: 12px; letter-spacing: .01em; }
+        input, select, textarea {
+            min-width: 0;
+            height: 45px;
+            border: 1px solid #dfe2ef;
+            border-radius: 10px;
+            padding: 0 13px;
+            background: #fcfcff;
+            color: #252844;
+            font-size: 13px;
+            box-shadow: inset 0 1px 2px rgba(25,29,70,.015);
+            transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+        }
+        input::placeholder, textarea::placeholder { color: #a0a4b8; }
+        input:hover, select:hover, textarea:hover { border-color: #c8c9e9; background: #fff; }
+        input:focus, select:focus, textarea:focus {
+            border-color: #776cf0;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(99,88,232,.11);
+        }
+        .subform-wrapper { border: 1px solid #e4e6f2; border-radius: 13px; background: #fff; }
+        .subform-header { padding: 14px 16px; background: linear-gradient(90deg,#f8f8ff,#fbfbfe); border-bottom-color: #eceef7; }
+        .subform-title { color: #353958; font-size: 13px; }
+        .item-row { padding: 16px; gap: 12px; background: #fff; transition: background .15s ease; }
+        .item-row:hover { background: #fbfbff; }
+        .btn { height: 43px; border-radius: 10px; padding: 0 18px; font-size: 13px; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+        .btn:active, .btn-add:active, .btn-delete:active { transform: translateY(1px); }
+        .btn-primary {
+            background: linear-gradient(135deg, #6557ed, #493bd0);
+            box-shadow: 0 6px 14px rgba(79,70,229,.22), inset 0 1px 0 rgba(255,255,255,.18);
+        }
+        .btn-primary:hover { background: linear-gradient(135deg, #5748e3, #3e31be); box-shadow: 0 9px 20px rgba(79,70,229,.28); transform: translateY(-1px); }
+        .btn-secondary { border-color: #e0e2ef; background: #fff; box-shadow: 0 2px 4px rgba(20,25,70,.025); }
+        .btn-secondary:hover { background: #f7f7ff; border-color: #cbc9f4; }
+        .btn-add { height: 43px; border: 1px dashed #aaa5f1; border-radius: 10px; background: #f8f7ff; color: #5143d8; }
+        .btn-add:hover { background: #f0efff; border-color: #7b70ed; }
+        .btn-delete { border: 1px solid #ffe0e5; background: #fff5f6; border-radius: 10px; }
+        .btn-delete:hover { background: #ffe9ed; }
+        .footer {
+            padding: 15px clamp(16px, 3vw, 42px);
+            background: rgba(250,250,255,.88);
+            border-top: 1px solid rgba(222,224,240,.9);
+            backdrop-filter: blur(16px);
+            box-shadow: 0 -8px 24px rgba(35,39,87,.035);
+        }
+        .toast { border-radius: 12px; box-shadow: 0 16px 36px rgba(23,27,53,.18); }
+        .required { font-weight: 700; }
+        input.error, select.error, textarea.error { border-color: #e54861; box-shadow: 0 0 0 3px rgba(229,72,97,.08); }
+        @media (max-width: 900px) {
+            .container { padding: 18px 14px 100px; }
+            .page-header { padding: 22px 20px; border-radius: 18px; }
+            .card { padding: 18px; border-radius: 15px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+        }
+
+    
+
+        /* OBSIDIAN EDITION — premium visual refinement */
+        :root {
+            --primary: #0f766e;
+            --primary-dark: #115e59;
+            --text: #172b36;
+            --muted: #657780;
+            --border: #dce7e8;
+            --background: #f2f7f6;
+            --white: #ffffff;
+            --danger: #c2414b;
+            --success: #0f9f78;
+        }
+        body {
+            background:
+                radial-gradient(ellipse at 8% 0%, rgba(13,148,136,.10), transparent 30%),
+                radial-gradient(ellipse at 100% 12%, rgba(15,118,110,.08), transparent 28%),
+                #f3f7f7;
+            color: #172b36;
+        }
+        .container { max-width: 1580px; padding: 30px clamp(16px, 3vw, 42px) 100px; }
+        .page-header {
+            position: relative; overflow: hidden; isolation: isolate;
+            padding: 30px 32px; margin: 0 0 24px; border-radius: 22px;
+            background: linear-gradient(120deg, #102c36 0%, #124b50 52%, #0f766e 100%);
+            color: #fff; box-shadow: 0 18px 44px rgba(16, 60, 67, .18);
+        }
+        .page-header:before, .page-header:after {
+            content: ""; position: absolute; z-index: -1; border-radius: 50%; pointer-events: none;
+        }
+        .page-header:before { width: 310px; height: 310px; right: -65px; top: -190px; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 0 0 28px rgba(255,255,255,.035), 0 0 0 58px rgba(255,255,255,.025); }
+        .page-header:after { width: 150px; height: 150px; right: 150px; bottom: -115px; background: rgba(255,255,255,.055); }
+        .header-left { gap: 18px; position: relative; z-index: 1; }
+        .header-icon {
+            width: 62px; height: 62px; border-radius: 18px;
+            background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.2);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 8px 24px rgba(0,0,0,.12);
+            backdrop-filter: blur(12px); font-size: 28px;
+        }
+        .page-title { color: #fff; font-size: clamp(25px, 2.4vw, 32px); letter-spacing: -.8px; }
+        .page-subtitle { color: rgba(240,253,250,.78); font-size: 13px; line-height: 1.6; }
+        .card {
+            position: relative; border: 1px solid rgba(213,227,228,.92); border-radius: 17px;
+            padding: 24px; margin-bottom: 20px; background: rgba(255,255,255,.94);
+            box-shadow: 0 4px 8px rgba(24,58,63,.025), 0 14px 34px rgba(24,58,63,.045);
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+        }
+        .card:hover { border-color: #c6dcda; box-shadow: 0 8px 14px rgba(24,58,63,.035), 0 20px 40px rgba(24,58,63,.06); }
+        .section-header { gap: 13px; margin-bottom: 22px; padding-bottom: 16px; border-bottom-color: #edf2f2; }
+        .section-icon {
+            width: 40px; height: 40px; flex: 0 0 40px; border-radius: 13px;
+            background: linear-gradient(145deg, #e4f5f1, #d8eeeb); color: #0f766e;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.9); font-size: 17px;
+        }
+        .section-title { color: #18343c; font-size: 16px; letter-spacing: -.2px; }
+        .section-description { color: #74858b; font-size: 12px; line-height: 1.5; }
+        label { color: #3a5158; font-size: 12px; font-weight: 650; letter-spacing: .05px; }
+        input, select, textarea {
+            height: 44px; border: 1px solid #d9e4e5; border-radius: 10px;
+            padding: 0 13px; background: #fcfefe; color: #203941; font-size: 13px;
+            box-shadow: 0 1px 2px rgba(19,55,61,.025); transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+        }
+        textarea { padding-top: 12px; }
+        input::placeholder, textarea::placeholder { color: #9aabad; }
+        input:hover, select:hover, textarea:hover { border-color: #b8d0d0; background: #fff; }
+        input:focus, select:focus, textarea:focus { border-color: #0f9b8e; background: #fff; box-shadow: 0 0 0 4px rgba(15,118,110,.10); }
+        input.error, select.error, textarea.error { border-color: #c2414b; box-shadow: 0 0 0 3px rgba(194,65,75,.08); }
+        .two-column, .shipment-layout { gap: 22px; }
+        .subform-wrapper { border: 1px solid #dce8e8; border-radius: 13px; background: #fff; }
+        .subform-header { padding: 14px 16px; background: linear-gradient(90deg,#f4faf9,#f8fbfb); border-bottom: 1px solid #e4eeee; }
+        .subform-title { color: #29464d; font-size: 12px; letter-spacing: .2px; }
+        .item-row { padding: 15px; transition: background .18s ease; }
+        .item-row:hover { background: #f8fcfb; }
+        .btn { height: 42px; padding: 0 18px; border-radius: 10px; font-size: 12px; letter-spacing: .1px; transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+        .btn:active, .btn-add:active, .btn-delete:active { transform: translateY(1px); }
+        .btn-primary { background: linear-gradient(135deg,#0f8b80,#0f766e); color: #fff; box-shadow: 0 5px 12px rgba(15,118,110,.20); }
+        .btn-primary:hover { background: linear-gradient(135deg,#0d7a71,#115e59); box-shadow: 0 8px 18px rgba(15,118,110,.25); transform: translateY(-1px); }
+        .btn-secondary { background: #fff; border: 1px solid #d4e1e2; color: #425a60; }
+        .btn-secondary:hover { background: #f5faf9; border-color: #b9d4d1; }
+        .btn-add { border: 1px dashed #91c8c1; background: #f2faf8; color: #0f766e; border-radius: 10px; height: 42px; }
+        .btn-add:hover { background: #e6f5f1; border-color: #58aaa0; }
+        .btn-delete { border-radius: 10px; background: #fff3f2; color: #bd4b4b; }
+        .btn-delete:hover { background: #ffe6e3; }
+        .footer {
+            background: rgba(248,252,251,.88); backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(211,228,227,.9); padding: 15px clamp(16px,3vw,42px);
+            box-shadow: 0 -8px 24px rgba(20,59,63,.035);
+        }
+        .toast { border-radius: 12px; box-shadow: 0 14px 38px rgba(14,45,50,.22); }
+        .toast.success { border-left-color: #0f9f78; }
+        @media (max-width: 900px) {
+            .container { padding: 16px 14px 92px; }
+            .page-header { padding: 22px 20px; border-radius: 17px; }
+            .card { padding: 18px; border-radius: 14px; }
+            .section-header { margin-bottom: 17px; }
+        }
+        @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+
+
+
+        /* =========================================================
+           AURORA SIGNATURE POLISH — visual-only overrides
+        ========================================================= */
+        :root {
+            --primary: #0f766e;
+            --primary-dark: #115e59;
+            --text: #172b35;
+            --muted: #718096;
+            --border: #e2e9e9;
+            --background: #f3f7f7;
+            --white: #ffffff;
+            --danger: #dc2626;
+            --success: #0f9f79;
+        }
+
+        body {
+            background:
+                radial-gradient(ellipse at 8% 0%, rgba(45, 212, 191, .12), transparent 34%),
+                radial-gradient(ellipse at 95% 10%, rgba(20, 184, 166, .09), transparent 28%),
+                #f4f8f8;
+            color: #172b35;
+            letter-spacing: .005em;
+        }
+
+        .container {
+            max-width: 1560px;
+            padding: 30px clamp(16px, 3vw, 42px) 34px;
+        }
+
+        .page-header {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            padding: 28px 30px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 22px;
+            color: #fff;
+            background: linear-gradient(118deg, #102f35 0%, #155e63 54%, #0f766e 100%);
+            box-shadow: 0 18px 42px rgba(15, 76, 80, .16);
+        }
+
+        .page-header::before,
+        .page-header::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
+        .page-header::before {
+            width: 300px;
+            height: 300px;
+            right: -70px;
+            top: -190px;
+            border: 1px solid rgba(255,255,255,.17);
+            box-shadow: 0 0 0 28px rgba(255,255,255,.035), 0 0 0 58px rgba(255,255,255,.025);
+        }
+
+        .page-header::after {
+            width: 170px;
+            height: 170px;
+            right: 100px;
+            bottom: -130px;
+            background: rgba(153, 246, 228, .10);
+            filter: blur(2px);
+        }
+
+        .header-icon {
+            width: 60px;
+            height: 60px;
+            flex: 0 0 60px;
+            border-radius: 18px;
+            background: rgba(255,255,255,.14);
+            border: 1px solid rgba(255,255,255,.2);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 8px 22px rgba(0,0,0,.12);
+            backdrop-filter: blur(12px);
+        }
+
+        .page-title { color: #fff; font-size: clamp(23px, 2.2vw, 30px); letter-spacing: -.7px; }
+        .page-subtitle { color: rgba(239,255,253,.78); font-size: 13px; line-height: 1.6; }
+
+        .card {
+            position: relative;
+            border: 1px solid rgba(213, 226, 226, .9);
+            border-radius: 18px;
+            padding: 23px;
+            background: rgba(255,255,255,.94);
+            box-shadow: 0 5px 18px rgba(25, 55, 61, .035), 0 1px 3px rgba(25,55,61,.025);
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+        }
+
+        .card:hover {
+            border-color: #c5dfdc;
+            box-shadow: 0 12px 28px rgba(25, 75, 77, .075), 0 2px 6px rgba(25,55,61,.03);
+            transform: translateY(-1px);
+        }
+
+        .section-header {
+            gap: 12px;
+            margin-bottom: 22px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #edf2f2;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            flex: 0 0 40px;
+            border-radius: 13px;
+            color: #0f766e;
+            background: linear-gradient(145deg, #e5faf6, #d9f2ee);
+            border: 1px solid #d2efea;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+        }
+
+        .section-title { color: #18343a; font-size: 16px; letter-spacing: -.2px; }
+        .section-description { color: #7a8b91; line-height: 1.5; }
+
+        label { color: #40565d; font-size: 12px; letter-spacing: .01em; }
+
+        input, select, textarea {
+            min-width: 0;
+            border: 1px solid #dce6e6;
+            border-radius: 10px;
+            background-color: #fcfefe;
+            color: #19343a;
+            box-shadow: 0 1px 2px rgba(16, 42, 46, .025);
+            transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+        }
+
+        input::placeholder, textarea::placeholder { color: #a0afb3; }
+        input:hover, select:hover, textarea:hover { border-color: #bfd3d2; background: #fff; }
+        input:focus, select:focus, textarea:focus {
+            border-color: #0f9b91;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, .12), 0 2px 5px rgba(16, 42, 46, .03);
+        }
+
+        .subform-wrapper {
+            border: 1px solid #e0eaea;
+            border-radius: 13px;
+            background: #fff;
+            box-shadow: 0 2px 7px rgba(22, 59, 62, .025);
+        }
+
+        .subform-header {
+            padding: 14px 16px;
+            background: linear-gradient(100deg, #f4fbfa, #f8fbfb);
+            border-bottom: 1px solid #e5eeee;
+        }
+
+        .subform-title { color: #29464c; }
+        .item-row { padding: 15px; transition: background .18s ease; }
+        .item-row:hover { background: #fbfefe; }
+
+        .btn {
+            min-height: 42px;
+            border-radius: 10px;
+            padding: 0 18px;
+            letter-spacing: .005em;
+            transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background: linear-gradient(135deg, #0f8b80, #116a68);
+            box-shadow: 0 5px 13px rgba(15, 118, 110, .2), inset 0 1px 0 rgba(255,255,255,.16);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #0d7d74, #105c5b);
+            box-shadow: 0 8px 18px rgba(15, 118, 110, .26);
+            transform: translateY(-1px);
+        }
+        .btn-secondary { background: rgba(255,255,255,.92); border-color: #d5e1e1; }
+        .btn-secondary:hover { background: #fff; border-color: #b8cecc; transform: translateY(-1px); }
+
+        .btn-add {
+            border-color: #9fd9d1;
+            border-radius: 10px;
+            color: #0f766e;
+            background: linear-gradient(180deg, #f5fffd, #eefaf8);
+        }
+        .btn-add:hover { background: #e5f8f5; border-color: #71c7bd; }
+        .btn-delete { border: 1px solid #ffe0e3; transition: transform .18s ease, background .18s ease; }
+        .btn-delete:hover { background: #ffe7e9; transform: scale(1.04); }
+
+        .footer {
+            background: rgba(246, 250, 250, .88);
+            backdrop-filter: blur(18px) saturate(150%);
+            border-top: 1px solid rgba(216, 230, 229, .9);
+            box-shadow: 0 -8px 25px rgba(20, 59, 61, .035);
+        }
+
+        .toast { border-radius: 12px; box-shadow: 0 16px 38px rgba(15, 35, 38, .2); }
+        .toast.success { border-left-color: #14b8a6; }
+
+        @media (max-width: 640px) {
+            .container { padding: 14px 12px 24px; }
+            .page-header { padding: 21px 18px; border-radius: 17px; }
+            .header-icon { width: 50px; height: 50px; flex-basis: 50px; border-radius: 15px; }
+            .card { padding: 17px; border-radius: 15px; }
+            .footer { padding: 12px; }
+        }
+
+    </style>
+
+    <style id="luxe-ui-overrides">
+      :root {
+        --primary:#5145e5; --primary-dark:#3f35c9; --text:#172033;
+        --muted:#738096; --border:#e5eaf3; --background:#f4f6fb;
+        --white:#fff; --danger:#dc3545; --success:#15966a;
+      }
+      html { scroll-behavior:smooth; }
+      body {
+        background:
+          radial-gradient(ellipse at 8% 0%, rgba(99,102,241,.12), transparent 34%),
+          radial-gradient(ellipse at 96% 14%, rgba(14,165,233,.09), transparent 28%),
+          #f4f6fb;
+        color:var(--text);
+      }
+      .container { max-width:1540px; padding:28px clamp(14px,2.5vw,38px) 112px; }
+      .page-header {
+        position:relative; overflow:hidden; isolation:isolate;
+        padding:26px 28px; margin-bottom:22px; border-radius:22px;
+        background:linear-gradient(118deg,#171d3d 0%,#302c72 52%,#5145e5 100%);
+        box-shadow:0 16px 38px rgba(37,38,99,.18);
+      }
+      .page-header:before,.page-header:after {
+        content:""; position:absolute; z-index:-1; border-radius:50%; pointer-events:none;
+      }
+      .page-header:before { width:270px;height:270px;right:7%;top:-170px;background:rgba(255,255,255,.09); }
+      .page-header:after { width:180px;height:180px;right:-35px;bottom:-125px;border:1px solid rgba(255,255,255,.2);box-shadow:0 0 0 24px rgba(255,255,255,.035),0 0 0 48px rgba(255,255,255,.025); }
+      .header-left { gap:17px; }
+      .header-icon { width:60px;height:60px;flex:0 0 60px;border-radius:18px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.2);box-shadow:inset 0 1px 0 rgba(255,255,255,.18);font-size:29px;backdrop-filter:blur(10px); }
+      .page-title { color:#fff;font-size:clamp(23px,2.2vw,30px);letter-spacing:-.8px; }
+      .page-subtitle { color:rgba(255,255,255,.75);font-size:13px;line-height:1.6; }
+      .card { position:relative;background:rgba(255,255,255,.94);border:1px solid rgba(224,230,242,.95);border-radius:18px;padding:23px;margin-bottom:20px;box-shadow:0 7px 22px rgba(26,38,75,.045);transition:box-shadow .22s ease,border-color .22s ease,transform .22s ease; }
+      .card:hover { box-shadow:0 12px 30px rgba(26,38,75,.075);border-color:#d9def0; }
+      .section-header { gap:13px;margin-bottom:21px;padding-bottom:16px;border-bottom:1px solid #edf0f7; }
+      .section-icon { width:40px;height:40px;border-radius:12px;background:linear-gradient(145deg,#eef0ff,#e7e9ff);color:#5145e5;font-size:18px;box-shadow:inset 0 0 0 1px rgba(81,69,229,.06); }
+      .section-title { font-size:16px;letter-spacing:-.25px;color:#1d2740; }
+      .section-description { color:#8490a5;font-size:12px;line-height:1.5; }
+      label { color:#3c4861;font-size:12px;font-weight:650;letter-spacing:.05px; }
+      input,select,textarea { height:44px;border:1px solid #dfe5ef;border-radius:10px;padding:0 13px;background:#fbfcff;color:#1e293b;font-size:13px;box-shadow:inset 0 1px 2px rgba(16,24,40,.015); }
+      input:hover,select:hover,textarea:hover { border-color:#c7d0e2;background:#fff; }
+      input:focus,select:focus,textarea:focus { border-color:#7770f0;background:#fff;box-shadow:0 0 0 4px rgba(81,69,229,.11); }
+      input::placeholder,textarea::placeholder { color:#a2acbd; }
+      .form-group { gap:8px;min-width:0; }
+      .required { font-weight:700; }
+      .two-column,.shipment-layout { gap:20px; }
+      .subform-wrapper { border:1px solid #e5eaf3;border-radius:13px;background:#fff; }
+      .subform-header { padding:14px 16px;background:linear-gradient(90deg,#f7f8ff,#fbfcff);border-bottom:1px solid #e9edf5; }
+      .subform-title { color:#303c58;font-size:12px;letter-spacing:.2px; }
+      .item-row { padding:15px;gap:11px; }
+      .btn { min-height:42px;height:42px;padding:0 18px;border-radius:10px;font-size:12px;font-weight:700;letter-spacing:.1px;transition:transform .18s ease,box-shadow .18s ease,background .18s ease; }
+      .btn:active,.btn-add:active,.btn-delete:active { transform:translateY(1px); }
+      .btn-primary { background:linear-gradient(135deg,#6257ef,#493ddd);box-shadow:0 6px 14px rgba(81,69,229,.2); }
+      .btn-primary:hover { background:linear-gradient(135deg,#5549e8,#3f35c9);box-shadow:0 9px 18px rgba(81,69,229,.28);transform:translateY(-1px); }
+      .btn-secondary { border-color:#dce2ed;background:#fff; }
+      .btn-secondary:hover { background:#f7f8fc;border-color:#cbd4e4; }
+      .btn-add { min-height:42px;border:1px dashed #b6b9f5;background:#f7f7ff;color:#5145e5;border-radius:10px; }
+      .btn-add:hover { background:#efefff;border-color:#8d86f0; }
+      .btn-delete { width:38px;height:40px;border:1px solid #ffe0e3;background:#fff5f6;border-radius:10px; }
+      .btn-delete:hover { background:#ffe9ec; }
+      .footer { position:fixed;left:0;right:0;bottom:0;padding:14px clamp(14px,2.5vw,38px);background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border-top:1px solid rgba(221,227,239,.9);box-shadow:0 -8px 28px rgba(26,38,75,.045); }
+      .toast { border-radius:12px;box-shadow:0 16px 38px rgba(16,24,40,.2); }
+      .error-message { font-weight:600; }
+      @media(max-width:900px) { .container{padding:16px 12px 100px}.page-header{padding:22px 18px;border-radius:17px}.card{padding:17px;border-radius:15px}.section-header{margin-bottom:17px}.footer{padding:12px}.btn{padding:0 13px} }
+      @media(max-width:520px) { .header-icon{width:48px;height:48px;flex-basis:48px;border-radius:14px}.page-subtitle{max-width:250px}.item-row{padding:11px}.footer{gap:8px}.footer .btn{flex:1} }
+      @media(prefers-reduced-motion:reduce) { *,*:before,*:after{scroll-behavior:auto!important;transition:none!important} }
+    </style>
+
+    <style id="atelier-premium-overrides">
+      :root {
+        --primary:#5547e8; --primary-dark:#4032c8; --text:#17223b;
+        --muted:#78849b; --border:#e5eaf4; --background:#f5f7fc;
+      }
+      body {
+        background:
+          radial-gradient(circle at 12% 4%, rgba(119,104,255,.13), transparent 25rem),
+          radial-gradient(circle at 92% 20%, rgba(53,174,220,.10), transparent 22rem),
+          linear-gradient(180deg,#f7f8fd 0%,#f2f5fb 100%);
+      }
+      .container { max-width:1600px; padding-top:30px; }
+      .page-header {
+        min-height:142px; display:flex; align-items:center;
+        background:linear-gradient(115deg,#111936 0%,#27285e 42%,#5145d8 100%);
+        border:1px solid rgba(255,255,255,.16); border-radius:24px;
+        box-shadow:0 20px 48px rgba(39,40,94,.19), inset 0 1px 0 rgba(255,255,255,.13);
+      }
+      .page-header:before { width:340px;height:340px;right:12%;top:-220px;background:rgba(255,255,255,.075); }
+      .page-header:after { width:220px;height:220px;right:-35px;bottom:-155px;border-color:rgba(255,255,255,.24);box-shadow:0 0 0 26px rgba(255,255,255,.035),0 0 0 52px rgba(255,255,255,.025),0 0 0 78px rgba(255,255,255,.018); }
+      .header-icon { background:linear-gradient(145deg,rgba(255,255,255,.23),rgba(255,255,255,.08)); border:1px solid rgba(255,255,255,.24); box-shadow:0 10px 26px rgba(8,12,40,.16),inset 0 1px 0 rgba(255,255,255,.2); }
+      .page-title { text-shadow:0 2px 14px rgba(0,0,0,.12); }
+      .page-subtitle { max-width:600px; }
+      .card { border-radius:20px; padding:25px; box-shadow:0 8px 24px rgba(31,44,83,.045),0 1px 2px rgba(31,44,83,.025); }
+      .card:hover { transform:translateY(-1px); box-shadow:0 15px 34px rgba(31,44,83,.075); }
+      .section-icon { box-shadow:0 5px 12px rgba(85,71,232,.09),inset 0 0 0 1px rgba(85,71,232,.07); }
+      .section-header { position:relative; }
+      .section-header:after { content:""; position:absolute; left:0; bottom:-1px; width:58px; height:2px; border-radius:4px; background:linear-gradient(90deg,#6659f0,#a7a1ff); }
+      input,select,textarea { background:linear-gradient(180deg,#fff 0%,#fbfcff 100%); box-shadow:0 1px 2px rgba(16,24,40,.025); }
+      input:focus,select:focus,textarea:focus { box-shadow:0 0 0 4px rgba(85,71,232,.10),0 2px 5px rgba(16,24,40,.025); }
+      .subform-wrapper { box-shadow:0 3px 10px rgba(31,44,83,.025); }
+      .subform-header { background:linear-gradient(100deg,#f4f5ff,#fbfcff 72%); }
+      .item-row { transition:background .18s ease; }
+      .item-row:hover { background:#fbfbff; }
+      .btn-primary { background:linear-gradient(135deg,#7166f5 0%,#5547e8 48%,#4538cf 100%); box-shadow:0 7px 18px rgba(85,71,232,.22),inset 0 1px 0 rgba(255,255,255,.22); }
+      .btn-primary:hover { box-shadow:0 10px 23px rgba(85,71,232,.29),inset 0 1px 0 rgba(255,255,255,.2); }
+      .btn-secondary { box-shadow:0 2px 4px rgba(16,24,40,.025); }
+      .btn-add { background:linear-gradient(180deg,#fbfbff,#f4f4ff); }
+      .footer { border-top-color:rgba(222,228,241,.9); box-shadow:0 -10px 32px rgba(27,39,78,.06); }
+      .toast { backdrop-filter:blur(14px); }
+      input.error,select.error,textarea.error { background:#fff9fa; box-shadow:0 0 0 3px rgba(220,53,69,.06); }
+      @media(max-width:900px) { .page-header{min-height:unset}.card{padding:19px} }
+      @media(max-width:560px) { .container{padding-top:15px}.page-header{border-radius:18px}.card{padding:15px}.section-header{gap:10px}.section-icon{width:36px;height:36px;border-radius:10px} }
+
+
+
+
+
+      .success-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: #f4f6fb;
+}
+
+.success-card {
+    width: 100%;
+    max-width: 520px;
+    padding: 40px 28px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #e5eaf3;
+    border-radius: 20px;
+    box-shadow: 0 12px 36px rgba(31, 44, 83, 0.08);
+}
+
+.success-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.success-card h1 {
+    font-size: 25px;
+    margin: 0 0 12px;
+    color: #172033;
+}
+
+.success-card p {
+    color: #667085;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.shipment-id-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    background: #f8fafc;
+    border: 1px solid #e5eaf3;
+    border-radius: 12px;
+}
+
+.shipment-id-box span {
+    font-size: 12px;
+    color: #667085;
+}
+
+.shipment-id-box strong {
+    font-size: 16px;
+    color: #172033;
+    overflow-wrap: anywhere;
+}
+
+.success-card .btn {
+    width: 100%;
+}
+    </style>
+
+</head>
+
+
+<body>
+
+<div id="shipmentSuccess" class="success-screen" style="display:none;">
+    <div class="success-card">
+        <div class="success-icon">✓</div>
+
+        <h1>Shipment Created Successfully!</h1>
+        <p>Your shipment has been created successfully in ShipStation.</p>
+
+        <div class="shipment-id-box">
+            <span>Shipment ID</span>
+            <strong id="successShipmentId">—</strong>
+        </div>
+
+        <button type="button" class="btn btn-primary"
+                onclick="openShipStation()">
+            ↗ Open ShipStation
+        </button>
+    </div>
+</div>
+
+
+<div class="container">
+
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+
+    <div class="page-header">
+
+        <div class="header-left">
+
+            <div class="header-icon">
+                🚚
+            </div>
+
+            <div>
+
+                <h1 class="page-title">
+                    Create Shipment
+                </h1>
+
+                <p class="page-subtitle">
+                    Enter shipment details to create an order in ShipStation.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         SHIPMENT INFORMATION
+    ========================================================= -->
+
+    <div class="card">
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                #
+            </div>
+
+            <div>
+
+                <h2 class="section-title">
+                    Shipment Information
+                </h2>
+
+                <p class="section-description">
+                    Basic information about this shipment.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="grid">
+
+            <!-- External Shipment ID -->
+
+            <div class="form-group col-3">
+
+                <label>
+                    External Shipment ID
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    id="external_shipment_id"
+                    type="text"
+                    placeholder="e.g. ORDER-1001"
+                    required
+                >
+
+            </div>
+
+
+            <!-- Shipment Number -->
+
+            <div class="form-group col-3">
+
+                <label>
+                    Shipment Number
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    id="shipment_number"
+                    type="text"
+                    placeholder="e.g. SHIP-1001"
+                    required
+                >
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         SHIP TO + PACKAGE
+    ========================================================= -->
+
+    <div class="two-column">
+        <!-- =====================================================
+             SHIP TO
+        ===================================================== -->
+
+        <div class="card">
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    👤
+                </div>
+
+                <div>
+
+                    <h2 class="section-title">
+                        Ship To
+                    </h2>
+
+                    <p class="section-description">
+                        Receiver / delivery address
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="grid">
+
+
+                <!-- Name -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Name <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_name"
+                        type="text"
+                        placeholder="Receiver name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Phone -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Phone <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_phone"
+                        type="text"
+                        placeholder="+1 123456789"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="form-group col-12">
+
+                    <label>
+                        Email <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_email"
+                        type="email"
+                        placeholder="receiver@example.com"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Company -->
+
+                <div class="form-group col-12">
+
+                    <label>
+                        Company Name
+                    </label>
+
+                    <input
+                        id="to_company"
+                        type="text"
+                        placeholder="Company name"
+                    >
+
+                </div>
+
+
+                <!-- Address 1 -->
+
+                <div class="form-group col-12">
+
+                    <label>
+                        Address Line 1
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_address1"
+                        type="text"
+                        placeholder="Street address"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Address 2 -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Address Line 2
+                    </label>
+
+                    <input
+                        id="to_address2"
+                        type="text"
+                        placeholder="Apartment / area"
+                    >
+
+                </div>
+
+
+
+
+
+                <!-- City -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        City / Locality
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_city"
+                        type="text"
+                        placeholder="City"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- State -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        State / Province
+                    </label>
+
+                    <input
+                        id="to_state"
+                        type="text"
+                        placeholder="State / Province"
+                    >
+
+                </div>
+
+
+                <!-- Postal -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Postal Code
+                        <span class="required">*</span>
+                    </label>
+
+                    <input
+                        id="to_postal"
+                        type="text"
+                        placeholder="Postal code"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Country -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Country
+                        <span class="required">*</span>
+                    </label>
+
+                    <select id="to_country" required>
+                        <option value="">Select Country</option>
+                    </select>
+
+                </div>
+
+                <!-- Residential -->
+
+                <div class="form-group col-12">
+
+                    <label>
+                        Address Residential Indicator
+                    </label>
+
+                    <select id="to_residential">
+
+                        <option value="unknown">
+                            Unknown
+                        </option>
+
+                        <option value="yes">
+                            Yes
+                        </option>
+
+                        <option value="no">
+                            No
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE: CUSTOMS + PACKAGE -->
+        <div class="right-column">
+
+        <!-- =====================================================
+            CUSTOMS
+        ===================================================== -->
+
+        <div class="card">
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    📄
+                </div>
+
+                <div>
+
+                    <h2 class="section-title">
+                        Customs Information
+                    </h2>
+
+                    <p class="section-description">
+                        Required information for international shipments
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="grid">
+
+                <!-- Contents -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Contents
+                        <span class="required">*</span>
+                    </label>
+
+                    <select id="customs_contents">
+
+                        <option value="merchandise">
+                            Merchandise
+                        </option>
+
+                        <option value="gift">
+                            Gift
+                        </option>
+
+                        <option value="documents">
+                            Documents
+                        </option>
+
+                        <option value="sample">
+                            Sample
+                        </option>
+
+                        <option value="Return, Repair, or Warranty">
+                            Return, Repair, or Warranty
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    <option value="E-commerce goods">
+                            E-commerce goods
+                        </option>
+                        
+                        <option value="Commercial sale of goods (B2B)">
+                        Commercial sale of goods (B2B)
+                        </option>
+
+
+                    </select>
+
+                </div>
+
+
+                <!-- Non Delivery -->
+
+                <div class="form-group col-6">
+
+                    <label>
+                        Non-Delivery Option
+                        <span class="required">*</span>
+                    </label>
+
+                    <select id="customs_non_delivery">
+
+                        <option value="return_to_sender">
+                            Return to Sender
+                        </option>
+
+                        <option value="treat_as_abandoned">
+                            Treat as Abandoned
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Customs Item -->
+
+                <div class="col-12">
+
+                    <label style="display:block;margin-bottom:8px">
+                        Customs Item
+                    </label>
+
+                    <div class="subform-wrapper">
+
+                        <div style="padding:16px">
+
+                            <div class="grid">
+
+                                <div class="form-group col-12">
+
+                                    <label>
+                                        Description
+                                        <span class="required">*</span>
+                                    </label>
+
+                                    <input
+                                        id="customs_description"
+                                        type="text"
+                                        placeholder="Item description"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group col-4">
+
+                                    <label>
+                                        Quantity
+                                        <span class="required">*</span>
+                                    </label>
+
+                                    <input
+                                        id="customs_quantity"
+                                        type="number"
+                                        value="1"
+                                        min="1"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group col-4">
+
+                                    <label>
+                                        Value
+                                        <span class="required">*</span>
+                                    </label>
+
+                                    <input
+                                        id="customs_value"
+                                        type="number"
+                                        value="300"
+                                        min="0"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group col-4">
+
+                                    <label>
+                                        Currency
+                                        <span class="required">*</span>
+                                    </label>
+
+                                    <input
+                                        id="customs_currency"
+                                        type="text"
+                                        value="GBP"
+                                        maxlength="3"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group col-12">
+
+                                    <label>
+                                        Country of Origin
+                                        <span class="required">*</span>
+                                    </label>
+                                    <select id="customs_origin" required>
+                                        <option value="">Select Country</option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+            PACKAGE
+        ===================================================== -->
+
+        <div class="card">
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    📦
+                </div>
+
+                <div>
+
+                    <h2 class="section-title">
+                        Package Details
+                    </h2>
+
+                    <p class="section-description">
+                        Weight and dimensions of the shipment
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="subform-wrapper">
+
+                <div class="subform-header">
+
+                    <span class="subform-title">
+                        Package 1
+                    </span>
+
+                </div>
+
+
+                <div style="padding:16px">
+
+                    <div class="grid">
+
+                        <!-- Weight -->
+
+                        <div class="form-group col-6">
+
+                            <label>
+                                Weight
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                id="weight"
+                                type="number"
+                                placeholder="kg"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Weight Unit -->
+
+                <div class="form-group col-6">
+
+                        <label>       &nbsp;
+                        </label>
+
+                        <input
+                            id="weight_unit"
+                            type="number"
+                            min="0"
+                            placeholder="g"
+                        
+                        >
+
+                    </div>
+
+                        <!-- Length -->
+
+                        <div class="form-group col-4">
+
+                            <label>
+                                Length
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                id="length"
+                                type="number"
+                            
+                                min="0"
+                                placeholder="L"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Width -->
+
+                        <div class="form-group col-4">
+
+                            <label>
+                                Width
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                id="width"
+                                type="number"
+                            
+                                min="0"
+                                placeholder="W"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Height -->
+
+                        <div class="form-group col-4">
+
+                            <label>
+                                Height
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                id="height"
+                                type="number"
+                            
+                                min="0"
+                                placeholder="H"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- Dimension Unit -->
+    <!-- 
+                        <div class="form-group col-12">
+
+                            <label>
+                                Dimension Unit
+                            </label>
+
+                            <select id="dimension_unit">
+
+                                <option value="centimeter">
+                                    Centimeter
+                                </option>
+
+                                <option value="meter">
+                                    Meter
+                                </option>
+
+                                <option value="inch">
+                                    Inch
+                                </option>
+
+                            </select>
+
+                        </div> -->
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+            
+        </div>
+
+
+    </div>
+
+
+<!-- =========================================================
+     CUSTOMS + PACKAGE
+========================================================= -->
+
+<!-- <div class="two-column">
+
+
+
+</div> -->
+
+
+    <!-- =========================================================
+         ITEMS SUBFORM
+    ========================================================= -->
+
+    <div class="card">
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                📦
+            </div>
+
+            <div>
+
+                <h2 class="section-title">
+                    Items
+                </h2>
+
+                <p class="section-description">
+                    Add one or more items to this shipment
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="subform-wrapper">
+
+
+            <!-- Subform Header -->
+
+            <div class="subform-header">
+
+                <span class="subform-title">
+                    Shipment Items
+                </span>
+
+                <span
+                    id="itemCount"
+                    style="
+                        font-size:11px;
+                        color:#667085;
+                    "
+                >
+                    1 item
+                </span>
+
+            </div>
+
+
+            <!-- Dynamic Items -->
+
+            <div id="itemsContainer"></div>
+
+
+        </div>
+
+
+        <!-- Add Item -->
+
+        <button
+            type="button"
+            class="btn-add"
+            onclick="addItem()"
+        >
+
+            ＋ Add Another Item
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =============================================================
+     FOOTER
+============================================================= -->
+
+<div class="footer">
+
+    <button
+        type="button"
+        class="btn btn-secondary"
+        onclick="resetForm()"
+    >
+        Reset
+    </button>
+
+
+    <button
+        type="button"
+        class="btn btn-primary"
+        onclick="createShipment()">
+
+        🚀 Create Shipment
+
+    </button>
+
+</div>
+
+
+<!-- Toast -->
+
+<div
+    id="toast"
+    class="toast"
+></div>
+
+
+<script>
+
+const CRM_FUNCTION_URL = "https://www.zohoapis.eu/crm/v7/functions/creating_order_in_shipstation_test_1/actions/execute?auth_type=apikey&zapikey=1003.3cee923177d72801544b9c98f2a86984.833b3aa1b5dbab8dbc65ed955b06c29f";
+
+
+const countries = [
+    { name: "Afghanistan", code: "AF" },
+    { name: "Albania", code: "AL" },
+    { name: "Algeria", code: "DZ" },
+    { name: "Andorra", code: "AD" },
+    { name: "Angola", code: "AO" },
+    { name: "Antigua and Barbuda", code: "AG" },
+    { name: "Argentina", code: "AR" },
+    { name: "Armenia", code: "AM" },
+    { name: "Australia", code: "AU" },
+    { name: "Austria", code: "AT" },
+    { name: "Azerbaijan", code: "AZ" },
+
+    { name: "Bahamas", code: "BS" },
+    { name: "Bahrain", code: "BH" },
+    { name: "Bangladesh", code: "BD" },
+    { name: "Barbados", code: "BB" },
+    { name: "Belarus", code: "BY" },
+    { name: "Belgium", code: "BE" },
+    { name: "Belize", code: "BZ" },
+    { name: "Benin", code: "BJ" },
+    { name: "Bhutan", code: "BT" },
+    { name: "Bolivia", code: "BO" },
+    { name: "Bosnia and Herzegovina", code: "BA" },
+    { name: "Botswana", code: "BW" },
+    { name: "Brazil", code: "BR" },
+    { name: "Brunei", code: "BN" },
+    { name: "Bulgaria", code: "BG" },
+    { name: "Burkina Faso", code: "BF" },
+    { name: "Burundi", code: "BI" },
+
+    { name: "Cabo Verde", code: "CV" },
+    { name: "Cambodia", code: "KH" },
+    { name: "Cameroon", code: "CM" },
+    { name: "Canada", code: "CA" },
+    { name: "Central African Republic", code: "CF" },
+    { name: "Chad", code: "TD" },
+    { name: "Chile", code: "CL" },
+    { name: "China", code: "CN" },
+    { name: "Colombia", code: "CO" },
+    { name: "Comoros", code: "KM" },
+    { name: "Congo", code: "CG" },
+    { name: "Costa Rica", code: "CR" },
+    { name: "Côte d’Ivoire", code: "CI" },
+    { name: "Croatia", code: "HR" },
+    { name: "Cuba", code: "CU" },
+    { name: "Cyprus", code: "CY" },
+    { name: "Czechia", code: "CZ" },
+
+    { name: "Democratic Republic of the Congo", code: "CD" },
+    { name: "Denmark", code: "DK" },
+    { name: "Djibouti", code: "DJ" },
+    { name: "Dominica", code: "DM" },
+    { name: "Dominican Republic", code: "DO" },
+
+    { name: "Ecuador", code: "EC" },
+    { name: "Egypt", code: "EG" },
+    { name: "El Salvador", code: "SV" },
+    { name: "Equatorial Guinea", code: "GQ" },
+    { name: "Eritrea", code: "ER" },
+    { name: "Estonia", code: "EE" },
+    { name: "Eswatini", code: "SZ" },
+    { name: "Ethiopia", code: "ET" },
+
+    { name: "Fiji", code: "FJ" },
+    { name: "Finland", code: "FI" },
+    { name: "France", code: "FR" },
+
+    { name: "Gabon", code: "GA" },
+    { name: "Gambia", code: "GM" },
+    { name: "Georgia", code: "GE" },
+    { name: "Germany", code: "DE" },
+    { name: "Ghana", code: "GH" },
+    { name: "Greece", code: "GR" },
+    { name: "Grenada", code: "GD" },
+    { name: "Guatemala", code: "GT" },
+    { name: "Guinea", code: "GN" },
+    { name: "Guinea-Bissau", code: "GW" },
+    { name: "Guyana", code: "GY" },
+
+    { name: "Haiti", code: "HT" },
+    { name: "Honduras", code: "HN" },
+    { name: "Holy See", code: "VA" },
+    { name: "Hungary", code: "HU" },
+
+    { name: "Iceland", code: "IS" },
+    { name: "India", code: "IN" },
+    { name: "Indonesia", code: "ID" },
+    { name: "Iran", code: "IR" },
+    { name: "Iraq", code: "IQ" },
+    { name: "Ireland", code: "IE" },
+    { name: "Israel", code: "IL" },
+    { name: "Italy", code: "IT" },
+
+    { name: "Jamaica", code: "JM" },
+    { name: "Japan", code: "JP" },
+    { name: "Jordan", code: "JO" },
+
+    { name: "Kazakhstan", code: "KZ" },
+    { name: "Kenya", code: "KE" },
+    { name: "Kiribati", code: "KI" },
+    { name: "Kuwait", code: "KW" },
+    { name: "Kyrgyzstan", code: "KG" },
+
+    { name: "Laos", code: "LA" },
+    { name: "Latvia", code: "LV" },
+    { name: "Lebanon", code: "LB" },
+    { name: "Lesotho", code: "LS" },
+    { name: "Liberia", code: "LR" },
+    { name: "Libya", code: "LY" },
+    { name: "Liechtenstein", code: "LI" },
+    { name: "Lithuania", code: "LT" },
+    { name: "Luxembourg", code: "LU" },
+
+    { name: "Madagascar", code: "MG" },
+    { name: "Malawi", code: "MW" },
+    { name: "Malaysia", code: "MY" },
+    { name: "Maldives", code: "MV" },
+    { name: "Mali", code: "ML" },
+    { name: "Malta", code: "MT" },
+    { name: "Marshall Islands", code: "MH" },
+    { name: "Mauritania", code: "MR" },
+    { name: "Mauritius", code: "MU" },
+    { name: "Mexico", code: "MX" },
+    { name: "Micronesia", code: "FM" },
+    { name: "Moldova", code: "MD" },
+    { name: "Monaco", code: "MC" },
+    { name: "Mongolia", code: "MN" },
+    { name: "Montenegro", code: "ME" },
+    { name: "Morocco", code: "MA" },
+    { name: "Mozambique", code: "MZ" },
+    { name: "Myanmar", code: "MM" },
+
+    { name: "Namibia", code: "NA" },
+    { name: "Nauru", code: "NR" },
+    { name: "Nepal", code: "NP" },
+    { name: "Netherlands", code: "NL" },
+    { name: "New Zealand", code: "NZ" },
+    { name: "Nicaragua", code: "NI" },
+    { name: "Niger", code: "NE" },
+    { name: "Nigeria", code: "NG" },
+    { name: "North Korea", code: "KP" },
+    { name: "North Macedonia", code: "MK" },
+    { name: "Norway", code: "NO" },
+
+    { name: "Oman", code: "OM" },
+
+    { name: "Pakistan", code: "PK" },
+    { name: "Palau", code: "PW" },
+    { name: "Panama", code: "PA" },
+    { name: "Papua New Guinea", code: "PG" },
+    { name: "Paraguay", code: "PY" },
+    { name: "Peru", code: "PE" },
+    { name: "Philippines", code: "PH" },
+    { name: "Poland", code: "PL" },
+    { name: "Portugal", code: "PT" },
+
+    { name: "Qatar", code: "QA" },
+
+    { name: "Romania", code: "RO" },
+    { name: "Russia", code: "RU" },
+    { name: "Rwanda", code: "RW" },
+
+    { name: "Saint Kitts and Nevis", code: "KN" },
+    { name: "Saint Lucia", code: "LC" },
+    { name: "Saint Vincent and the Grenadines", code: "VC" },
+    { name: "Samoa", code: "WS" },
+    { name: "San Marino", code: "SM" },
+    { name: "Sao Tome and Principe", code: "ST" },
+    { name: "Saudi Arabia", code: "SA" },
+    { name: "Senegal", code: "SN" },
+    { name: "Serbia", code: "RS" },
+    { name: "Seychelles", code: "SC" },
+    { name: "Sierra Leone", code: "SL" },
+    { name: "Singapore", code: "SG" },
+    { name: "Slovakia", code: "SK" },
+    { name: "Slovenia", code: "SI" },
+    { name: "Solomon Islands", code: "SB" },
+    { name: "Somalia", code: "SO" },
+    { name: "South Africa", code: "ZA" },
+    { name: "South Korea", code: "KR" },
+    { name: "South Sudan", code: "SS" },
+    { name: "Spain", code: "ES" },
+    { name: "Sri Lanka", code: "LK" },
+    { name: "Sudan", code: "SD" },
+    { name: "Suriname", code: "SR" },
+    { name: "Sweden", code: "SE" },
+    { name: "Switzerland", code: "CH" },
+    { name: "Syria", code: "SY" },
+
+    { name: "Tajikistan", code: "TJ" },
+    { name: "Tanzania", code: "TZ" },
+    { name: "Thailand", code: "TH" },
+    { name: "Timor-Leste", code: "TL" },
+    { name: "Togo", code: "TG" },
+    { name: "Tonga", code: "TO" },
+    { name: "Trinidad and Tobago", code: "TT" },
+    { name: "Tunisia", code: "TN" },
+    { name: "Türkiye", code: "TR" },
+    { name: "Turkmenistan", code: "TM" },
+    { name: "Tuvalu", code: "TV" },
+
+    { name: "Uganda", code: "UG" },
+    { name: "Ukraine", code: "UA" },
+    { name: "United Arab Emirates", code: "AE" },
+    { name: "United Kingdom", code: "GB" },
+    { name: "United States", code: "US" },
+    { name: "Uruguay", code: "UY" },
+    { name: "Uzbekistan", code: "UZ" },
+
+    { name: "Vanuatu", code: "VU" },
+    { name: "Venezuela", code: "VE" },
+    { name: "Vietnam", code: "VN" },
+
+    { name: "Yemen", code: "YE" },
+
+    { name: "Zambia", code: "ZM" },
+    { name: "Zimbabwe", code: "ZW" }
+];
+
+
+    /* =========================================================
+       ITEM SUBFORM
+    ========================================================= */
+
+    let itemCounter = 0;
+
+
+
+    function showShipmentSuccess(shipmentId) {
+    // Hide the existing shipment form and footer.
+    document.querySelector(".container").style.display = "none";
+
+    const footer = document.querySelector(".footer");
+    if (footer) {
+        footer.style.display = "none";
+    }
+
+    // Display the success screen and shipment ID.
+    document.getElementById("successShipmentId").textContent =
+        shipmentId || "Created successfully";
+
+    document.getElementById("shipmentSuccess").style.display = "flex";
+}
+
+    function openShipStation() {
+    if (window.shipStationRecordUrl) {
+        window.open(
+        window.shipStationRecordUrl,
+        "_blank",
+        "noopener"
+        );
+    } else {
+        showToast("ShipStation record URL is not available.", "error");
+    }
+    }
+
+
+
+    function addItem(defaultValues = {}) {
+
+        itemCounter++;
+
+        const itemId = itemCounter;
+
+        const container = document.getElementById(
+                "itemsContainer"
+            );
+
+
+        const row =
+            document.createElement("div");
+
+        row.className = "item-row";
+
+        row.dataset.itemId = itemId;
+
+
+        row.innerHTML = `
+
+            <div class="form-group">
+
+                <label>
+                    Item Name
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    class="item-name"
+                    placeholder="Item name"
+                    value="${escapeHtml(
+                        defaultValues.name || ""
+                    )}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    SKU
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    class="item-sku"
+                    placeholder="SKU"
+                    value="${escapeHtml(
+                        defaultValues.sku || ""
+                    )}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Quantity
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="number"
+                    class="item-quantity"
+                    min="1"
+                    value="${defaultValues.quantity || 1}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Unit Price
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="number"
+                    class="item-price"
+                    min="0"
+                    step="0.01"
+                    placeholder="0.00"
+                    value="${defaultValues.unit_price || ""}"
+                    required
+                >
+
+            </div>
+
+
+            <div class="delete-container">
+
+                <button
+                    type="button"
+                    class="btn-delete"
+                    onclick="removeItem(${itemId})"
+                    title="Remove item"
+                >
+                    🗑
+                </button>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(row);
+
+        updateItemCount();
+    }
+
+
+    function removeItem(itemId) {
+
+        const row =
+            document.querySelector(
+                `[data-item-id="${itemId}"]`
+            );
+
+
+        if (!row) {
+            return;
+        }
+
+
+        const rows =
+            document.querySelectorAll(
+                ".item-row"
+            );
+
+
+        if (rows.length === 1) {
+
+            showToast(
+                "At least one item is required.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        row.remove();
+
+        updateItemCount();
+    }
+
+
+    function updateItemCount() {
+
+        const count =
+            document.querySelectorAll(
+                ".item-row"
+            ).length;
+
+
+        document.getElementById(
+            "itemCount"
+        ).innerText =
+            `${count} ${count === 1 ? "item" : "items"}`;
+    }
+
+
+    /* =========================================================
+       HELPER
+    ========================================================= */
+
+    function value(id) {
+        const field = document.getElementById(id);
+        return field && field.value != null ? String(field.value).trim() : "";
+    }
+
+
+    function escapeHtml(value) {
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+
+    /* =========================================================
+       GET ITEMS
+    ========================================================= */
+
+    function getItems() {
+
+        const rows =
+            document.querySelectorAll(
+                ".item-row"
+            );
+
+        const items = [];
+
+
+        rows.forEach(function(row) {
+
+            items.push({
+
+                quantity:
+                    Number(
+                        row.querySelector(
+                            ".item-quantity"
+                        ).value
+                    ),
+
+                name:
+                    row.querySelector(
+                        ".item-name"
+                    ).value.trim(),
+
+                sku:
+                    row.querySelector(
+                        ".item-sku"
+                    ).value.trim(),
+
+                unit_price:
+                    Number(
+                        row.querySelector(
+                            ".item-price"
+                        ).value
+                    )
+
+            });
+
+        });
+
+
+        return items;
+    }
+
+
+    /* =========================================================
+       BUILD SHIPMENT OBJECT
+    ========================================================= */
+
+    function buildShipmentPayload() {
+
+
+        /* ============================================
+           SHIP TO
+        ============================================ */
+
+        const shipTo = {
+
+            name:
+                value("to_name"),
+
+            phone:
+                value("to_phone"),
+
+            email:
+                value("to_email"),
+
+            company_name:
+                value("to_company"),
+
+            address_line1:
+                value("to_address1"),
+
+            address_line2:
+                value("to_address2"),
+
+            address_line3:
+                value("to_address3"),
+
+            city_locality:
+                value("to_city"),
+
+            state_province:
+                value("to_state"),
+
+            postal_code:
+                value("to_postal"),
+
+            country_code:
+                value("to_country").toUpperCase(),
+
+            address_residential_indicator:
+                value("to_residential")
+
+        };
+
+
+        /* ============================================
+           SHIP FROM
+        ============================================ */
+
+        const shipFrom = {
+
+            name:
+                value("from_name"),
+
+            phone:
+                value("from_phone"),
+
+            email:
+                value("from_email"),
+
+            company_name:
+                value("from_company"),
+
+            address_line1:
+                value("from_address1"),
+
+            address_line2:
+                value("from_address2"),
+
+            city_locality:
+                value("from_city"),
+
+            state_province:
+                value("from_state"),
+
+            postal_code:
+                value("from_postal"),
+
+            country_code:
+                value("from_country").toUpperCase(),
+
+            address_residential_indicator:
+                value("from_residential")
+
+        };
+
+
+        /* ============================================
+           PACKAGE
+        ============================================ */
+
+        const packageData = {
+
+            weight: {
+
+                kg:
+                    Number(
+                        value("weight")
+                    ),
+
+                gram :
+                Number(
+                    value("weight_unit"))
+
+            },
+
+            dimensions: {
+
+                unit:
+                    value("dimension_unit"),
+
+                length:
+                    Number(
+                        value("length")
+                    ),
+
+                width:
+                    Number(
+                        value("width")
+                    ),
+
+                height:
+                    Number(
+                        value("height")
+                    )
+
+            }
+
+        };
+
+
+        /* ============================================
+           CUSTOMS ITEM
+        ============================================ */
+
+        const customsItem = {
+
+            description:
+                value("customs_description"),
+
+            quantity:
+                Number(
+                    value("customs_quantity")
+                ),
+
+            value:
+                Number(
+                    value("customs_value")
+                ),
+
+            value_currency:
+                value("customs_currency")
+                    .toUpperCase(),
+
+            country_of_origin:
+                value("customs_origin")
+                    .toUpperCase()
+
+        };
+
+
+        /* ============================================
+           CUSTOMS
+        ============================================ */
+
+        const customs = {
+
+            contents:
+                value("customs_contents"),
+
+            non_delivery:
+                value("customs_non_delivery"),
+
+            customs_items: [
+                customsItem
+            ]
+
+        };
+
+
+        /* ============================================
+           FINAL PAYLOAD
+        ============================================ */
+
+        const shipment = {
+
+            external_shipment_id:
+                value("external_shipment_id"),
+
+            shipment_number:
+                value("shipment_number"),
+
+            create_sales_order: true,
+
+            service_code: "ups_worldwide_expedited",
+
+            ship_to: shipTo,
+
+            ship_from: shipFrom,
+
+            packages: [
+                packageData
+            ],
+
+            customs: customs,
+
+            items: getItems()
+        };
+
+
+
+        return shipment;
+    }
+
+
+    /* =========================================================
+       VALIDATION
+    ========================================================= */
+
+    function validateForm() {
+
+        const requiredFields =
+            document.querySelectorAll(
+                "input[required], select[required]"
+            );
+
+
+        let valid = true;
+
+
+        requiredFields.forEach(function(field) {
+
+            field.classList.remove(
+                "error"
+            );
+
+
+            if (!field.value.trim()) {
+
+                field.classList.add(
+                    "error"
+                );
+
+                valid = false;
+            }
+
+        });
+
+
+        /* Email validation */
+        /* Email validation */
+        /* Email validation */
+        const emails = ["to_email"];
+
+        emails.forEach(function(id) {
+            const field = document.getElementById(id);
+
+            if (field && field.value && !field.checkValidity()) {
+                field.classList.add("error");
+                valid = false;
+            }
+        });
+
+
+        if (!valid) {
+
+            showToast(
+                "Please complete all required fields.",
+                "error"
+            );
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+
+    /* =========================================================
+       CREATE SHIPMENT
+       CURRENTLY NO API CALL
+    ========================================================= */
+
+    
+async function createShipment() {
+    if (!validateForm()) {
+        return;
+    }
+
+    const shipment = buildShipmentPayload();
+
+    console.log("Shipment payload:");
+    console.log(JSON.stringify(shipment, null, 4));
+
+    showToast("Sending shipment to Zoho CRM...", "success");
+
+
+const request = {
+    url: CRM_FUNCTION_URL,
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: {
+        arguments: JSON.stringify({
+            shipment_data : JSON.stringify(shipment)
+        })
+    }
+};
+
+
+    console.log("Sending request to CRM function...");
+
+    try {
+        const response = await ZOHO.CRM.HTTP.post(request);
+
+        console.log("Full CRM function response:", response);
+
+        const result = typeof response === "string"
+            ? JSON.parse(response)
+            : response;
+
+        let output = result;
+
+        if (result && result.details && result.details.output != null) {
+            output = result.details.output;
+
+            if (typeof output === "string") {
+                try {
+                    output = JSON.parse(output);
+                } catch (e) {
+                    // Keep the output as text if it isn't JSON.
+                }
+            }
+        }
+
+        console.log("Function output:", output);
+        console.log("Formatted output:", JSON.stringify(output, null, 4));
+
+        if ( output && output.has_errors === false &&
+            Array.isArray(output.shipments) &&
+            output.shipments.length > 0 &&
+            output.shipments[0].shipment_id
+        ) {
+        const shipment = output.shipments[0];
+
+        const shipmentId = shipment.shipment_id;
+        const shipmentNumber = shipmentId.replace(/^se-/, "");
+
+        const orderId = shipment.items?.[0]?.sales_order_id;
+
+        if (!orderId) {
+            showToast("Shipment created, but the order ID was not returned.", "error");
+            return;
+        }
+
+        const storeId = "4bf8f4de-44c5-4894-bf51-8477462936b6";
+
+        const recordUrl =
+            `https://ship8.shipstation.com/orders/awaiting-shipment/store/${storeId}/order/${orderId}/active/${shipmentNumber}`;
+
+        console.log("ShipStation record URL:", recordUrl);
+
+        window.shipStationRecordUrl = recordUrl;
+
+        showShipmentSuccess(shipmentId);
+        } else {
+        showToast("Shipment creation was not confirmed.", "error");
+        }
+
+
+
+
+
+    } catch (error) {
+        console.error("CRM function request failed:", error);
+
+        showToast("Failed to call the CRM function. Check the console.", "error");
+    }
+}
+
+
+
+    /* =========================================================
+       RESET
+    ========================================================= */
+
+    function resetForm() {
+
+        if (
+            !confirm(
+                "Are you sure you want to reset the shipment form?"
+            )
+        ) {
+            return;
+        }
+
+
+        document
+            .querySelectorAll(
+                "input"
+            )
+            .forEach(function(input) {
+
+                if (
+                    input.type !== "checkbox"
+                ) {
+                    input.value = "";
+                }
+
+            });
+
+
+        const salesOrderToggle = document.getElementById("create_sales_order");
+        if (salesOrderToggle) salesOrderToggle.checked = true;
+
+
+        document
+            .getElementById(
+                "itemsContainer"
+            )
+            .innerHTML = "";
+
+
+        itemCounter = 0;
+
+        addItem();
+
+
+        const weightUnitField = document.getElementById("weight_unit");
+        if (weightUnitField) weightUnitField.value = "gram";
+
+
+        const dimensionUnitField = document.getElementById("dimension_unit");
+        if (dimensionUnitField) dimensionUnitField.value = "centimeter";
+
+
+        document.getElementById(
+                "customs_contents"
+            )
+            .value = "merchandise";
+
+
+        document
+            .getElementById(
+                "customs_non_delivery"
+            )
+            .value = "return_to_sender";
+
+
+        showToast(
+            "Form has been reset.",
+            "success"
+        );
+    }
+
+
+    /* =========================================================
+       TOAST
+    ========================================================= */
+
+    function showToast(
+        message,
+        type = "success"
+    ) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        toast.innerText =
+            message;
+
+
+        toast.className =
+            `toast ${type} show`;
+
+
+        setTimeout(function() {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        }, 3000);
+    }
+   
+    /* =========================================================
+       Populate country in the dropdown 
+    ========================================================= */
+
+    function populateCountryDropdowns() {
+
+    const dropdowns = [
+        document.getElementById("from_country"),
+        document.getElementById("to_country"),
+        document.getElementById("customs_origin")
+    ];
+
+    dropdowns.forEach(function(dropdown) {
+
+        if (!dropdown) return;
+
+        countries.forEach(function(country) {
+
+            const option = document.createElement("option");
+
+            option.value = country.code;
+
+            option.textContent =
+                `${country.name} (${country.code})`;
+
+            dropdown.appendChild(option);
+
+        });
+
+    });
+
+}
+
+
+
+
+
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            populateCountryDropdowns();
+
+            // addItem({
+            //     name: "Small Decorative Model Car DEC219",
+            //     sku: "ID 200508612 - DEC28 - B",
+            //     quantity: 1,
+            //     unit_price: 300
+            // });
+
+        }
+    );
+
+
+    /* =========================================================
+       SALES ORDER SWITCH
+    ========================================================= */
+
+    const salesOrderSwitch = document.getElementById("create_sales_order");
+    if (salesOrderSwitch) {
+        salesOrderSwitch.addEventListener("change", function() {
+            const salesOrderText = document.getElementById("salesOrderText");
+            if (salesOrderText) salesOrderText.innerText = this.checked ? "Yes" : "No";
+        });
+    }
+
+
+    /* =========================================================
+       ZOHO CRM WIDGET INITIALIZATION
+    ========================================================= */
+
+    ZOHO.embeddedApp.on(
+        "PageLoad",
+        function(data) {
+
+            console.log(
+                "Zoho CRM PageLoad:",
+                data
+            );
+
+        }
+    );
+
+
+    ZOHO.embeddedApp.init()
+        .then(function() {
+
+            console.log(
+                "Zoho CRM Widget initialized successfully."
+            );
+
+        })
+        .catch(function(error) {
+
+            console.error(
+                "Zoho Widget initialization failed:",
+                error
+            );
+
+        });
+
+
+    /* =========================================================
+       INITIAL ITEM
+    ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function() {
+
+            addItem({
+
+                name:
+                    "Small Decorative Model Car DEC219",
+
+                sku:
+                    "ID 200508612 - DEC28 - B",
+
+                quantity:
+                    1,
+
+                unit_price:
+                    300
+
+            });
+
+        }
+    );
+
+</script>
+
+</body>
+
+</html>
