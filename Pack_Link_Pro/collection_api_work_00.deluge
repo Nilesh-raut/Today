@@ -1,0 +1,128 @@
+		// ======================================================
+	// 1. PACKLINK API CONFIGURATION
+	// ======================================================
+	// Replace with your rotated API key if the previous key was real.
+	api_key = "44ae292a26b902f12d71e25ef7a5adc0b6e72b27d12ea4f305bbb8e6fb6588b2";
+	// ======================================================
+	// 2. SELECTED COLLECTION SERVICE
+	// ======================================================
+	// Confirm this is the service ID you selected.
+	service_id = 30221;
+
+	// ======================================================
+	// 3. COLLECTION DATE AND TIME
+	// ======================================================
+	// Must match the service's available_dates response.
+	collection_date = "2026/10/27";
+	collection_time = "09:00-17:00";
+
+	// Unique reference for each test
+	test_reference = "ZOHO-COLLECTION-TEST-003";
+
+	// ======================================================
+	// 4. SENDER ADDRESS
+	// ======================================================
+	from_address = Map();
+	from_address.put("name","Faith");
+	from_address.put("surname","Jenkins");
+	from_address.put("company","Sowena");
+	from_address.put("street1","Old Road");
+	from_address.put("street2","");
+	from_address.put("zip_code","PL14 6DH");
+	from_address.put("city","Liskeard");
+	from_address.put("country","GB");
+	from_address.put("state","");
+	from_address.put("phone","07966 217619");
+	from_address.put("email","faithjenkins58@gmail.com");
+
+	// ======================================================
+	// 5. RECIPIENT ADDRESS
+	// ======================================================
+	to_address = Map();
+	to_address.put("name","Maryam");
+	to_address.put("surname","Gholamhosseini");
+	to_address.put("company","Pars Rug Gallery");
+	to_address.put("street1","Unit 021, Basement Floor");
+	to_address.put("street2","");
+	to_address.put("zip_code","SO15 0HW");
+	to_address.put("city","Southampton");
+	to_address.put("country","GB");
+	to_address.put("state","");
+	to_address.put("phone","07710021726");
+	to_address.put("email","maryam@parsruggallery.co.uk");
+
+	// ======================================================
+	// 6. PACKAGE DETAILS
+	// ======================================================
+	package_details = Map();
+	package_details.put("weight",12);
+	package_details.put("length",60);
+	package_details.put("width",40);
+	package_details.put("height",30);
+
+	packages = List();
+	packages.add(package_details);
+
+	// ======================================================
+	// 7. BUILD DIRECT SHIPMENT PAYLOAD
+	// ======================================================
+	draft_payload = Map();
+
+	draft_payload.put("from",from_address);
+	draft_payload.put("to",to_address);
+	draft_payload.put("packages",packages);
+	draft_payload.put("service_id",service_id);
+
+	// Collection scheduling fields
+	draft_payload.put("collection_date",collection_date);
+	draft_payload.put("collection_time",collection_time);
+
+	// No dropoff_point_id for this collection service
+	draft_payload.put("content","Clothing");
+	draft_payload.put("contentvalue",100);
+	draft_payload.put("contentValue_currency","GBP");
+	draft_payload.put("content_second_hand",false);
+	draft_payload.put("priority",false);
+
+	draft_payload.put("shipment_custom_reference",test_reference);
+	draft_payload.put("source","zoho_crm");
+
+	// ======================================================
+	// 8. LOG REQUEST
+	// ======================================================
+	payload = draft_payload.toString();
+
+	info "======================================";
+	info "PACKLINK COLLECTION TEST";
+	info "======================================";
+	info "Reference: " + test_reference;
+	info "Service ID: " + service_id;
+	info "Collection Date: " + collection_date;
+	info "Collection Time: " + collection_time;
+	info "REQUEST PAYLOAD:";
+	info payload;
+
+	// ======================================================
+	// 9. CREATE SHIPMENT DRAFT
+	// ======================================================
+	response = invokeurl
+	[
+		url :"https://api.packlink.com/v1/shipments"
+		type :POST
+		headers:
+		{
+			"Authorization":api_key,
+			"Content-Type":"application/json"
+		}
+		body:payload
+	];
+
+	// ======================================================
+	// 10. LOG RESPONSE
+	// ======================================================
+	info "======================================";
+	info "PACKLINK RESPONSE:";
+	info response;
+	info "======================================";
+	
+	
