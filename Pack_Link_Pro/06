@@ -1,0 +1,3289 @@
+<!doctype html>
+
+<html lang="en">
+
+  <head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Packlink PRO | Rug & Textile Shipping</title>
+
+    <script src="https://live.zwidgets.com/js-sdk/1.2/ZohoEmbededAppSDK.min.js"></script>
+
+    <style>
+
+      :root {
+
+        --ink: #2d2925;
+
+        --muted: #786d62;
+
+        --terracotta: #a94f35;
+
+        --terracotta-dark: #853b28;
+
+        --cream: #fbf6ee;
+
+        --sand: #efe0ca;
+
+        --line: #e4d4c0;
+
+        --green: #244b3e;
+
+        --white: #fff;
+
+        --blue: #0874c9;
+
+      }
+
+      * {
+
+        box-sizing: border-box;
+
+      }
+
+      html,
+
+      body {
+
+        margin: 0;
+
+        min-height: 100%;
+
+        font-family: Inter, "Segoe UI", Arial, sans-serif;
+
+        color: var(--ink);
+
+        background: #f6f0e7;
+
+      }
+
+      button,
+
+      input,
+
+      select {
+
+        font: inherit;
+
+      }
+
+      .topbar {
+
+        height: 58px;
+
+        background: #fffaf4;
+
+        border-bottom: 1px solid var(--line);
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        padding: 0 20px;
+
+        position: sticky;
+
+        top: 0;
+
+        z-index: 5;
+
+      }
+
+      .brand {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        font-weight: 800;
+
+        font-size: 17px;
+
+      }
+
+      .brand-icon {
+
+        height: 34px;
+
+        width: 34px;
+
+        border-radius: 10px;
+
+        display: grid;
+
+        place-items: center;
+
+        color: #fff;
+
+        background: repeating-linear-gradient(
+
+          45deg,
+
+          #a94f35 0 4px,
+
+          #e5bd8c 4px 8px
+
+        );
+
+        border: 2px solid #fff;
+
+        box-shadow: 0 0 0 1px var(--line);
+
+      }
+
+      .brand small {
+
+        display: block;
+
+        font-size: 10px;
+
+        font-weight: 500;
+
+        color: var(--muted);
+
+        margin-top: 2px;
+
+      }
+
+      .brand-pro {
+
+        color: var(--terracotta);
+
+      }
+
+      .status {
+
+        font-size: 10px;
+
+        font-weight: 800;
+
+        letter-spacing: 0.05em;
+
+        border: 1px solid #e6c88f;
+
+        background: #fff5dd;
+
+        color: #805819;
+
+        border-radius: 20px;
+
+        padding: 7px 10px;
+
+      }
+
+      main {
+
+        max-width: 1100px;
+
+        margin: 0 auto;
+
+        padding: 22px 20px 35px;
+
+      }
+
+      .intro {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: flex-end;
+
+        gap: 16px;
+
+        margin-bottom: 18px;
+
+      }
+
+      .eyebrow {
+
+        font-size: 10px;
+
+        letter-spacing: 0.17em;
+
+        font-weight: 850;
+
+        color: var(--terracotta);
+
+        text-transform: uppercase;
+
+      }
+
+      .intro h1 {
+
+        font-family: Georgia, serif;
+
+        font-size: 29px;
+
+        line-height: 1.15;
+
+        margin: 6px 0;
+
+      }
+
+      .intro p {
+
+        font-size: 13px;
+
+        color: var(--muted);
+
+        margin: 0;
+
+        line-height: 1.5;
+
+      }
+
+      .banner {
+
+        position: relative;
+
+        overflow: hidden;
+
+        border: 1px solid #e0c4a2;
+
+        border-radius: 14px;
+
+        background: linear-gradient(
+
+          110deg,
+
+          #f2dfc4 0%,
+
+          #fff8ee 57%,
+
+          #e8d1b3 100%
+
+        );
+
+        padding: 20px 23px;
+
+        margin-bottom: 21px;
+
+        min-height: 125px;
+
+        display: flex;
+
+        align-items: center;
+
+      }
+
+      .banner:before {
+
+        content: "";
+
+        position: absolute;
+
+        right: 0;
+
+        top: 0;
+
+        width: 43%;
+
+        height: 100%;
+
+        opacity: 0.28;
+
+        background:
+
+          repeating-linear-gradient(
+
+            45deg,
+
+            transparent 0 16px,
+
+            #bd8c62 17px 18px,
+
+            transparent 19px 32px
+
+          ),
+
+          repeating-linear-gradient(
+
+            -45deg,
+
+            transparent 0 16px,
+
+            #bd8c62 17px 18px,
+
+            transparent 19px 32px
+
+          );
+
+      }
+
+      .banner-copy {
+
+        position: relative;
+
+        z-index: 1;
+
+        max-width: 70%;
+
+      }
+
+      .banner h2 {
+
+        font-family: Georgia, serif;
+
+        font-size: 21px;
+
+        margin: 7px 0;
+
+      }
+
+      .banner p {
+
+        font-size: 12px;
+
+        color: #756354;
+
+        margin: 0;
+
+      }
+
+      .rug-art {
+
+        position: absolute;
+
+        right: 27px;
+
+        top: 17px;
+
+        width: 125px;
+
+        height: 86px;
+
+        transform: rotate(-8deg);
+
+        border: 5px solid #a64d34;
+
+        border-radius: 5px;
+
+        background: repeating-linear-gradient(
+
+          0deg,
+
+          #d4a76e 0 7px,
+
+          #873e2b 7px 10px,
+
+          #f0d5a8 10px 16px
+
+        );
+
+        box-shadow: 4px 8px 0 #9e805e55;
+
+      }
+
+      .rug-art:before {
+
+        content: "◇  ◆  ◇";
+
+        position: absolute;
+
+        inset: 13px 8px;
+
+        border: 2px solid #f4d7a3;
+
+        color: #f4d7a3;
+
+        display: grid;
+
+        place-items: center;
+
+        font-size: 17px;
+
+        font-weight: 900;
+
+      }
+
+      .rug-art:after {
+
+        content: "";
+
+        position: absolute;
+
+        left: -13px;
+
+        top: 0;
+
+        width: 12px;
+
+        height: 100%;
+
+        background: repeating-linear-gradient(
+
+          0deg,
+
+          #f5dfb6 0 4px,
+
+          #a94f35 4px 7px
+
+        );
+
+        border-radius: 3px;
+
+      }
+
+      .steps {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        margin: 0 0 16px;
+
+      }
+
+      .step {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        font-size: 12px;
+
+        font-weight: 750;
+
+        color: #9a8b7d;
+
+      }
+
+      .step-num {
+
+        width: 28px;
+
+        height: 28px;
+
+        border-radius: 50%;
+
+        border: 1px solid #d8c8b6;
+
+        background: #fff;
+
+        display: grid;
+
+        place-items: center;
+
+      }
+
+      .step.active {
+
+        color: var(--terracotta);
+
+      }
+
+      .step.active .step-num {
+
+        background: var(--terracotta);
+
+        border-color: var(--terracotta);
+
+        color: white;
+
+      }
+
+      .step.done {
+
+        color: var(--green);
+
+      }
+
+      .step.done .step-num {
+
+        background: var(--green);
+
+        border-color: var(--green);
+
+        color: #fff;
+
+      }
+
+      .step-line {
+
+        width: 55px;
+
+        height: 1px;
+
+        background: #dfcbb4;
+
+      }
+
+      .panel {
+
+        background: #fffdf9;
+
+        border: 1px solid var(--line);
+
+        border-radius: 13px;
+
+        overflow: hidden;
+
+        box-shadow: 0 6px 20px #6b4a2710;
+
+      }
+
+      .panel-head {
+
+        padding: 19px 22px 15px;
+
+        border-bottom: 1px solid #efe4d7;
+
+      }
+
+      .panel-head h2 {
+
+        font-size: 17px;
+
+        margin: 0 0 5px;
+
+      }
+
+      .panel-head p {
+
+        font-size: 12px;
+
+        color: var(--muted);
+
+        margin: 0;
+
+      }
+
+      .panel-body {
+
+        padding: 20px 22px;
+
+      }
+
+      .address-grid {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 16px;
+
+      }
+
+      .address-card {
+
+        padding: 16px;
+
+        border: 1px solid #e8d9c7;
+
+        border-radius: 10px;
+
+        background: #fffefa;
+
+      }
+
+      .address-card h3 {
+
+        font-size: 13px;
+
+        margin: 0 0 14px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+      }
+
+      .address-icon {
+
+        width: 27px;
+
+        height: 27px;
+
+        border-radius: 8px;
+
+        background: #f5e5d2;
+
+        color: var(--terracotta);
+
+        display: grid;
+
+        place-items: center;
+
+      }
+
+      .fields {
+
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 11px;
+
+      }
+
+      .field {
+
+        min-width: 0;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 5px;
+
+      }
+
+      .field.full {
+
+        grid-column: 1/-1;
+
+      }
+
+      .field label {
+
+        font-size: 11px;
+
+        font-weight: 750;
+
+        color: #5e5146;
+
+      }
+
+      .field input,
+
+      .field select {
+
+        width: 100%;
+
+        min-width: 0;
+
+        height: 38px;
+
+        border: 1px solid #dfd0bd;
+
+        border-radius: 6px;
+
+        background: #fff;
+
+        padding: 0 10px;
+
+        font-size: 12px;
+
+        color: var(--ink);
+
+        outline: none;
+
+      }
+
+      .field input:focus,
+
+      .field select:focus {
+
+        border-color: var(--terracotta);
+
+        box-shadow: 0 0 0 3px #a94f3514;
+
+      }
+
+      .divider {
+
+        height: 1px;
+
+        background: #efe4d7;
+
+        margin: 20px 0;
+
+      }
+
+      .parcel-head {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+
+        margin-bottom: 12px;
+
+      }
+
+      .parcel-head h3 {
+
+        font-size: 13px;
+
+        margin: 0;
+
+      }
+
+      .small-link {
+
+        border: 0;
+
+        background: transparent;
+
+        color: var(--terracotta);
+
+        font-size: 11px;
+
+        font-weight: 800;
+
+        cursor: pointer;
+
+      }
+
+      .parcel-grid {
+
+        display: grid;
+
+        grid-template-columns: 1.3fr repeat(4, 1fr);
+
+        gap: 11px;
+
+      }
+
+      .actions {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        gap: 12px;
+
+        margin-top: 20px;
+
+      }
+
+      .hint {
+
+        font-size: 10px;
+
+        color: #8b7d70;
+
+        line-height: 1.4;
+
+      }
+
+      .btn {
+
+        border: 1px solid transparent;
+
+        border-radius: 7px;
+
+        padding: 0 16px;
+
+        min-height: 40px;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 8px;
+
+        font-size: 12px;
+
+        font-weight: 800;
+
+        cursor: pointer;
+
+        transition: 0.15s;
+
+      }
+
+      .btn-primary {
+
+        background: var(--terracotta);
+
+        color: #fff;
+
+      }
+
+      .btn-primary:hover {
+
+        background: var(--terracotta-dark);
+
+      }
+
+      .btn-secondary {
+
+        background: #fffaf4;
+
+        color: #5d4c3e;
+
+        border-color: #ddcbb5;
+
+      }
+
+      .hidden {
+
+        display: none !important;
+
+      }
+
+      .summary {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        gap: 12px;
+
+        flex-wrap: wrap;
+
+        padding: 15px 18px;
+
+      }
+
+      .summary-title {
+
+        font-size: 12px;
+
+        font-weight: 800;
+
+      }
+
+      .summary-sub {
+
+        font-size: 11px;
+
+        color: var(--muted);
+
+        margin-top: 4px;
+
+      }
+
+      .results-head {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: flex-end;
+
+        gap: 12px;
+
+        margin: 19px 0 12px;
+
+      }
+
+      .results-head h2 {
+
+        font-family: Georgia, serif;
+
+        font-size: 23px;
+
+        margin: 0 0 4px;
+
+      }
+
+      .results-head p {
+
+        font-size: 11px;
+
+        color: var(--muted);
+
+        margin: 0;
+
+      }
+
+      .sort {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        font-size: 11px;
+
+        color: var(--muted);
+
+      }
+
+      .sort select {
+
+        border: 1px solid #dfd0bd;
+
+        border-radius: 6px;
+
+        background: #fff;
+
+        padding: 7px;
+
+        font-size: 11px;
+
+      }
+
+      .filters {
+
+        display: flex;
+
+        gap: 7px;
+
+        flex-wrap: wrap;
+
+        margin-bottom: 12px;
+
+      }
+
+      .chip {
+
+        border: 1px solid #ddcbb5;
+
+        background: #fffdf9;
+
+        color: #665547;
+
+        border-radius: 999px;
+
+        padding: 8px 12px;
+
+        font-size: 11px;
+
+        font-weight: 750;
+
+        cursor: pointer;
+
+      }
+
+      .chip.selected {
+
+        background: #f5e2d1;
+
+        border-color: #c98568;
+
+        color: #8b3e29;
+
+      }
+
+      .rate-list {
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 11px;
+
+      }
+
+      .rate-card {
+
+        background: #fffdf9;
+
+        border: 1px solid #dfd0bd;
+
+        border-radius: 10px;
+
+        overflow: hidden;
+
+      }
+
+      .rate-main {
+
+        display: grid;
+
+        grid-template-columns: 66px 120px minmax(110px, 1fr) minmax(
+
+            110px,
+
+            1fr
+
+          ) 125px;
+
+        gap: 13px;
+
+        align-items: center;
+
+        padding: 15px;
+
+      }
+
+      .eta {
+
+        align-self: stretch;
+
+        margin: -15px 0 -15px -15px;
+
+        background: var(--green);
+
+        color: white;
+
+        padding: 12px 8px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        border-radius: 9px 0 0 9px;
+
+      }
+
+      .eta strong {
+
+        font-family: Georgia, serif;
+
+        font-size: 24px;
+
+      }
+
+      .eta span {
+
+        font-size: 9px;
+
+        line-height: 1.5;
+
+        margin-top: 4px;
+
+        letter-spacing: 0.04em;
+
+      }
+
+      .carrier {
+
+        text-align: center;
+
+      }
+
+      .carrier-logo {
+
+        font-weight: 950;
+
+        font-size: 23px;
+
+        letter-spacing: -1px;
+
+        color: #253e55;
+
+      }
+
+      .carrier-logo.ups {
+
+        color: #65421e;
+
+      }
+
+      .carrier-logo.evri {
+
+        font-family: Georgia, serif;
+
+        color: #2b86b9;
+
+        font-size: 27px;
+
+      }
+
+      .carrier-logo.dhl {
+
+        color: #d71920;
+
+        font-style: italic;
+
+      }
+
+      .carrier-logo.fedex {
+
+        color: #4d3788;
+
+      }
+
+      .carrier small {
+
+        display: block;
+
+        color: var(--muted);
+
+        font-size: 10px;
+
+        margin-top: 6px;
+
+      }
+
+      .service-title {
+
+        font-size: 10px;
+
+        font-weight: 850;
+
+        line-height: 1.4;
+
+        margin-bottom: 6px;
+
+      }
+
+      .service-date {
+        font-size: 10px;
+        line-height: 1.4;
+        color: #796c60;
+        margin: -2px 0 6px;
+      }
+
+      .service-desc {
+
+        font-size: 10px;
+
+        line-height: 1.5;
+
+        color: #796c60;
+
+      }
+
+      .price {
+
+        text-align: right;
+
+      }
+
+      .price strong {
+
+        display: block;
+
+        font-size: 24px;
+
+        font-family: Georgia, serif;
+
+        margin-bottom: 10px;
+
+        color: var(--green);
+
+      }
+
+      .price .btn {
+
+        width: 100%;
+
+        padding: 0 8px;
+
+      }
+
+      .rate-meta {
+
+        border-top: 1px solid #efe4d7;
+
+        padding: 9px 14px;
+
+        display: flex;
+
+        align-items: center;
+
+        flex-wrap: wrap;
+
+        gap: 15px;
+
+        font-size: 10px;
+
+        color: #756657;
+
+      }
+
+      .details-toggle {
+
+        margin-left: auto;
+
+        color: var(--terracotta);
+
+        font-weight: 800;
+
+        cursor: pointer;
+
+      }
+
+      .rate-details {
+
+        padding: 12px 15px;
+
+        background: #fbf5ec;
+
+        border-top: 1px solid #efe4d7;
+
+        color: #756657;
+
+        font-size: 11px;
+
+        line-height: 1.7;
+
+      }
+
+      .details-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 24px; }
+      .detail-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; padding: 8px 0; border-bottom: 1px solid #eadfD1; min-width: 0; }
+      .detail-label { color: #756657; }
+      .detail-value { color: var(--ink); font-weight: 700; text-align: right; overflow-wrap: anywhere; }
+      .detail-empty { padding: 8px 0; color: var(--muted); }
+      .empty {
+
+        padding: 25px;
+
+        text-align: center;
+
+        border: 1px dashed #d8c8b6;
+
+        border-radius: 9px;
+
+        background: #fffdf9;
+
+        color: var(--muted);
+
+        font-size: 12px;
+
+      }
+
+      .footer-note {
+
+        text-align: center;
+
+        font-size: 10px;
+
+        color: #948578;
+
+        margin-top: 15px;
+
+      }
+
+      .toast {
+
+        position: fixed;
+
+        left: 50%;
+
+        bottom: 18px;
+
+        transform: translateX(-50%);
+
+        z-index: 20;
+
+        background: #244b3e;
+
+        color: #fff;
+
+        padding: 11px 15px;
+
+        border-radius: 8px;
+
+        font-size: 12px;
+
+        box-shadow: 0 6px 20px #0002;
+
+        max-width: 90%;
+
+        text-align: center;
+
+      }
+
+      .toast.error {
+
+        background: #9b3428;
+
+      }
+
+      @media (max-width: 850px) {
+
+        main {
+
+          padding: 18px 13px;
+
+        }
+
+        .rate-main {
+
+          grid-template-columns: 54px 100px 1fr 1fr;
+
+          gap: 10px;
+
+        }
+
+        .price {
+
+          grid-column: 3/5;
+
+          display: flex;
+
+          justify-content: space-between;
+
+          align-items: center;
+
+          gap: 10px;
+
+        }
+
+        .price strong {
+
+          margin: 0;
+
+        }
+
+        .price .btn {
+
+          width: auto;
+
+        }
+
+        .parcel-grid {
+
+          grid-template-columns: repeat(3, 1fr);
+
+        }
+
+        .rug-art {
+
+          right: 18px;
+
+          width: 100px;
+
+        }
+
+      }
+
+      @media (max-width: 600px) {
+
+        .topbar {
+
+          padding: 0 12px;
+
+        }
+
+        .status {
+
+          font-size: 9px;
+
+        }
+
+        .intro h1 {
+
+          font-size: 25px;
+
+        }
+
+        .intro {
+
+          align-items: flex-start;
+
+          flex-direction: column;
+
+        }
+
+        .banner {
+
+          padding: 17px;
+
+          min-height: 120px;
+
+        }
+
+        .banner-copy {
+
+          max-width: 75%;
+
+        }
+
+        .banner h2 {
+
+          font-size: 18px;
+
+        }
+
+        .rug-art {
+
+          width: 70px;
+
+          height: 65px;
+
+          right: 12px;
+
+          top: 27px;
+
+        }
+
+        .steps {
+
+          gap: 6px;
+
+        }
+
+        .step {
+
+          font-size: 10px;
+
+          gap: 5px;
+
+        }
+
+        .step-line {
+
+          width: 25px;
+
+        }
+
+        .panel-head,
+
+        .panel-body {
+
+          padding: 15px;
+
+        }
+
+        .address-grid {
+
+          grid-template-columns: 1fr;
+
+        }
+
+        .parcel-grid {
+
+          grid-template-columns: 1fr 1fr;
+
+        }
+
+        .rate-main {
+
+          grid-template-columns: 48px 1fr 1fr;
+
+          padding: 12px;
+
+          gap: 10px;
+
+        }
+
+        .eta {
+
+          margin: -12px 0 -12px -12px;
+
+        }
+
+        .eta strong {
+
+          font-size: 20px;
+
+        }
+
+        .carrier {
+
+          grid-column: 2/4;
+
+          display: flex;
+
+          align-items: center;
+
+          gap: 10px;
+
+          text-align: left;
+
+        }
+
+        .carrier small {
+
+          margin: 0;
+
+        }
+
+        .service-block {
+
+          grid-column: 2/4;
+
+        }
+
+        .price {
+
+          grid-column: 2/4;
+
+        }
+
+        .price strong {
+
+          font-size: 22px;
+
+        }
+
+        .rate-meta {
+
+          gap: 9px;
+
+        }
+
+        .details-toggle {
+
+          margin-left: 0;
+
+        }
+
+        .results-head {
+
+          align-items: flex-start;
+
+          flex-direction: column;
+
+        }
+
+        .sort {
+
+          width: 100%;
+
+          justify-content: space-between;
+
+        }
+
+      }
+
+
+      /* Packlink booking details screen */
+      .booking-layout{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,.8fr);gap:18px;align-items:start}
+      .booking-column{display:flex;flex-direction:column;gap:14px}
+      .booking-card{background:#fffdf9;border:1px solid var(--line);border-radius:12px;padding:18px}
+      .booking-card h3{font-size:14px;margin:0 0 14px}
+      .booking-summary-line{font-size:12px;color:var(--muted);line-height:1.7}
+      .booking-price{font-size:24px;font-weight:850;color:var(--blue);margin-top:10px}
+      .booking-step-head{margin:0 0 16px}
+      .booking-step-head h2{font-family:Georgia,serif;font-size:25px;margin:0 0 6px}
+      .booking-step-head p{font-size:12px;color:var(--muted);margin:0}
+      .booking-address-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+      .booking-address-grid .address-card{padding:14px}
+      .booking-address-grid .fields{gap:9px}
+      .booking-conditional{margin-top:14px;border:1px solid #dfd0bd;border-radius:10px;padding:16px;background:#fffaf4}
+      .booking-conditional h3{margin:0 0 6px;font-size:13px}
+      .booking-conditional p{font-size:11px;color:var(--muted);margin:0 0 12px}
+      .pickup-placeholder{padding:13px;border:1px dashed #c98568;border-radius:8px;background:#fffdf9;font-size:12px;line-height:1.6}
+      .booking-actions{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+      .booking-notice{font-size:11px;color:var(--muted);line-height:1.5;margin-top:10px}
+      @media(max-width:760px){.booking-layout,.booking-address-grid{grid-template-columns:1fr}.booking-layout{gap:12px}}
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <header class="topbar">
+
+      <div class="brand">
+
+        <span class="brand-icon">✦</span>
+
+        <div>
+
+          Packlink <span class="brand-pro">PRO</span
+
+          ><small>Rug & textile dispatch workspace</small>
+
+        </div>
+
+      </div>
+
+      <span class="status">LIVE PACKLINK RATES</span>
+
+    </header>
+
+    <main>
+
+      <div class="intro">
+
+        <div>
+
+          <div class="eyebrow">Thoughtful shipping for beautiful things</div>
+
+          <h1>Create a new shipment</h1>
+
+          <p>
+
+            From your showroom to their doorstep — compare shipping services returned by Packlink PRO.
+
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="banner">
+
+        <div class="banner-copy">
+
+          <div class="eyebrow">Made for rugs & home textiles</div>
+
+          <h2>Woven with care. Sent with care.</h2>
+
+          <p>
+
+            Careful handling for rolled rugs, folded rugs and textile samples.
+
+          </p>
+
+        </div>
+
+        <div class="rug-art" aria-hidden="true"></div>
+
+      </div>
+
+      <div class="steps">
+
+        <div class="step active" id="step1">
+
+          <span class="step-num">1</span><span>Shipment details</span>
+
+        </div>
+
+        <div class="step-line"></div>
+
+        <div class="step" id="step2">
+
+          <span class="step-num">2</span><span>Shipping rates</span>
+
+        </div>
+
+      </div>
+
+
+
+      <section class="panel" id="detailsScreen">
+
+        <div class="panel-head">
+
+          <h2>Where are we sending your parcel?</h2>
+
+          <p>
+
+            Enter the sender, recipient and parcel information to retrieve Packlink PRO rates.
+
+          </p>
+
+        </div>
+
+        <div class="panel-body">
+
+          <div class="address-grid">
+
+            <div class="address-card">
+
+              <h3><span class="address-icon">⌂</span> From — sender address</h3>
+
+              <div class="fields">
+
+                <div class="field full">
+
+                  <label for="fromName">Contact name / company *</label
+
+                  ><input id="fromName" value="Rug Showroom" required />
+
+                </div>
+
+                <div class="field full">
+
+                  <label for="fromAddress">Address line *</label
+
+                  ><input id="fromAddress" value="124 Hills Road" required />
+
+                </div>
+
+                <div class="field">
+
+                  <label for="fromCity">City *</label
+
+                  ><input id="fromCity" value="Cambridge" required />
+
+                </div>
+
+                <div class="field">
+
+                  <label for="fromPostcode">Postcode *</label
+
+                  ><input id="fromPostcode" value="CB2 1RE" required />
+
+                </div>
+
+                <div class="field full">
+
+                  <label for="fromCountry">Country *</label
+
+                  ><select id="fromCountry">
+
+                    <option value="GB" selected>United Kingdom</option>
+
+                    <option value="IN">India</option>
+
+                    <option value="US">United States</option>
+
+                    <option value="FR">France</option>
+
+                    <option value="DE">Germany</option>
+
+                    <option value="ES">Spain</option>
+
+                    <option value="IT">Italy</option>
+
+                    <option value="NL">Netherlands</option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="address-card">
+
+              <h3>
+
+                <span class="address-icon">⌖</span> To — recipient address
+
+              </h3>
+
+              <div class="fields">
+
+                <div class="field full">
+
+                  <label for="toName">Contact name / company *</label
+
+                  ><input id="toName" value="Maryam Gholamhosseini" required />
+
+                </div>
+
+                <div class="field full">
+
+                  <label for="toAddress">Address line *</label
+
+                  ><input id="toAddress" value="15 South Street" required />
+
+                </div>
+
+                <div class="field">
+
+                  <label for="toCity">City *</label
+
+                  ><input id="toCity" value="Southampton" required />
+
+                </div>
+
+                <div class="field">
+
+                  <label for="toPostcode">Postcode *</label
+
+                  ><input id="toPostcode" value="SO15 1HW" required />
+
+                </div>
+
+                <div class="field full">
+
+                  <label for="toCountry">Country *</label
+
+                  ><select id="toCountry">
+
+                    <option value="GB" selected>United Kingdom</option>
+
+                    <option value="IN">India</option>
+
+                    <option value="US">United States</option>
+
+                    <option value="FR">France</option>
+
+                    <option value="DE">Germany</option>
+
+                    <option value="ES">Spain</option>
+
+                    <option value="IT">Italy</option>
+
+                    <option value="NL">Netherlands</option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="parcel-head">
+
+            <h3>Parcel details</h3>
+
+            <button class="small-link" id="resetParcel" type="button">
+
+              Reset sample dimensions ↻
+
+            </button>
+
+          </div>
+
+          <div class="parcel-grid">
+
+            <div class="field">
+
+              <label for="parcelType">What are you sending?</label
+
+              ><select id="parcelType">
+
+                <option value="Rolled rug">Rolled rug</option>
+
+                <option value="Folded rug">Folded rug</option>
+
+                <option value="Rug sample">Rug sample</option>
+
+                <option value="Cushion / textile">Cushion / textile</option>
+
+                <option value="Other parcel">Other parcel</option>
+
+              </select>
+
+            </div>
+
+            <div class="field">
+
+              <label for="weight">Weight (kg) *</label
+
+              ><input
+
+                id="weight"
+
+                type="number"
+
+                min="0.1"
+
+                step="0.1"
+
+                value="12"
+
+                required
+
+              />
+
+            </div>
+
+            <div class="field">
+
+              <label for="length">Length (cm) *</label
+
+              ><input id="length" type="number" min="1" value="60" required />
+
+            </div>
+
+            <div class="field">
+
+              <label for="width">Width (cm) *</label
+
+              ><input id="width" type="number" min="1" value="40" required />
+
+            </div>
+
+            <div class="field">
+
+              <label for="height">Height (cm) *</label
+
+              ><input id="height" type="number" min="1" value="30" required />
+
+            </div>
+
+          </div>
+
+          <div class="actions">
+
+            <span class="hint"
+
+              >Live rates are requested through your Zoho CRM function.</span
+
+            ><button class="btn btn-primary" id="searchRatesBtn">
+
+              Search shipping rates →
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+
+      <section id="ratesScreen" class="hidden">
+
+        <div class="panel">
+
+          <div class="summary">
+
+            <div>
+
+              <div class="summary-title">Your shipment</div>
+
+              <div class="summary-sub" id="summaryLine"></div>
+
+              <div class="summary-sub" id="summaryAddress"></div>
+
+            </div>
+
+            <button class="btn btn-secondary" id="editDetailsBtn">
+
+              ← Edit details
+
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="results-head">
+
+          <div>
+
+            <h2>Shipping options</h2>
+
+            <p id="resultCount">No rates loaded yet</p>
+
+          </div>
+
+          <div class="sort">
+
+            <label for="sortRates">Sort by</label
+
+            ><select id="sortRates">
+
+              <option value="relevant">Recommended</option>
+
+              <option value="price">Lowest price</option>
+
+              <option value="fastest">Fastest delivery</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+        <div class="filters" id="filters">
+
+          <button class="chip selected" data-filter="all">All services</button
+
+          ><button class="chip" data-filter="dropoff">Drop-off</button
+
+          ><button class="chip" data-filter="collection">Collection</button
+
+          ><button class="chip" data-filter="home">Home delivery</button
+
+          ><button class="chip" data-filter="fast">24–48h</button>
+
+        </div>
+
+        <div class="rate-list" id="rateList"></div>
+
+        <div class="footer-note">
+
+          Live service information returned by Packlink PRO. Availability and estimates may change.
+
+        </div>
+
+      </section>
+
+      <section id="bookingScreen" class="hidden">
+        <div class="booking-step-head">
+          <div class="eyebrow">Shipment booking</div>
+          <h2>Confirm shipment details</h2>
+          <p>Review the sender and recipient information before continuing with your selected service.</p>
+        </div>
+        <div class="booking-layout">
+          <div class="booking-column">
+            <div class="booking-card">
+              <h3>Sender details</h3>
+              <div class="fields">
+                <div class="field"><label for="bookFromFirst">First name / contact name *</label><input id="bookFromFirst" required></div>
+                <div class="field"><label for="bookFromLast">Last name</label><input id="bookFromLast"></div>
+                <div class="field full"><label for="bookFromStreet">Street address *</label><input id="bookFromStreet" required></div>
+                <div class="field"><label for="bookFromCompany">Company</label><input id="bookFromCompany"></div>
+                <div class="field"><label for="bookFromUnit">Apt / suite</label><input id="bookFromUnit"></div>
+                <div class="field"><label for="bookFromCountry">Country *</label><select id="bookFromCountry"><option value="GB">United Kingdom</option><option value="IN">India</option><option value="US">United States</option><option value="FR">France</option><option value="DE">Germany</option><option value="ES">Spain</option><option value="IT">Italy</option><option value="NL">Netherlands</option></select></div>
+                <div class="field"><label for="bookFromCity">City / postcode *</label><input id="bookFromCity" required></div>
+                <div class="field"><label for="bookFromEmail">Email *</label><input id="bookFromEmail" type="email" required></div>
+                <div class="field"><label for="bookFromPhone">Mobile phone *</label><input id="bookFromPhone" required></div>
+              </div>
+            </div>
+            <div class="booking-card">
+              <h3>Recipient details</h3>
+              <div class="fields">
+                <div class="field"><label for="bookToFirst">First name / contact name *</label><input id="bookToFirst" required></div>
+                <div class="field"><label for="bookToLast">Last name</label><input id="bookToLast"></div>
+                <div class="field full"><label for="bookToStreet">Street address *</label><input id="bookToStreet" required></div>
+                <div class="field"><label for="bookToCompany">Company</label><input id="bookToCompany"></div>
+                <div class="field"><label for="bookToUnit">Apt / suite</label><input id="bookToUnit"></div>
+                <div class="field"><label for="bookToCountry">Country *</label><select id="bookToCountry"><option value="GB">United Kingdom</option><option value="IN">India</option><option value="US">United States</option><option value="FR">France</option><option value="DE">Germany</option><option value="ES">Spain</option><option value="IT">Italy</option><option value="NL">Netherlands</option></select></div>
+                <div class="field"><label for="bookToCity">City / postcode *</label><input id="bookToCity" required></div>
+                <div class="field"><label for="bookToEmail">Email *</label><input id="bookToEmail" type="email" required></div>
+                <div class="field"><label for="bookToPhone">Mobile phone *</label><input id="bookToPhone" required></div>
+              </div>
+            </div>
+            <div id="pickupPointSection" class="booking-conditional hidden">
+              <h3>Pick-up point</h3><p>Select the location where the recipient will collect the parcel.</p>
+              <div class="pickup-placeholder">Pickup-point API is not connected yet. Once you provide the API details, this area will show the available pickup points and let the user select one.</div>
+              <input id="selectedPickupPoint" type="hidden" value="">
+            </div>
+            <div id="collectionSection" class="booking-conditional hidden">
+              <h3>Collection time</h3><p>Select the date when the courier should collect the shipment.</p>
+              <div class="fields">
+                <div class="field"><label for="collectionDate">Collection date *</label><input id="collectionDate" type="date"></div>
+                <div class="field"><label>Pick-up time</label><input id="collectionTime" value="08:00–20:00" readonly></div>
+              </div>
+              <div class="booking-notice">The time window is currently displayed as 08:00–20:00, matching your screenshot. We can replace this with API-provided times if required.</div>
+            </div>
+            <div class="booking-actions">
+              <button type="button" class="btn btn-secondary" id="backToRatesBtn">← Back to shipping rates</button>
+              <button type="button" class="btn btn-primary" id="continueBookingBtn">Continue →</button>
+            </div>
+          </div>
+          <aside class="booking-column">
+            <div class="booking-card">
+              <h3>Shipment summary</h3>
+              <div class="booking-summary-line" id="bookingRouteSummary"></div>
+              <div class="divider"></div>
+              <div class="booking-summary-line" id="bookingParcelSummary"></div>
+              <div class="divider"></div>
+              <strong id="bookingServiceSummary"></strong>
+              <div class="booking-summary-line" id="bookingMethodSummary"></div>
+              <div class="booking-price" id="bookingPriceSummary"></div>
+            </div>
+            <div class="booking-card"><h3>Next step</h3><div class="booking-summary-line">Check the details carefully. The next payment / confirmation stage is not connected yet.</div></div>
+          </aside>
+        </div>
+      </section>
+
+      <div class="footer-note" id="crmStatus">Connecting to Zoho CRM…</div>
+
+    </main>
+
+    <div id="toast" class="toast hidden" role="status"></div>
+
+    <script>
+
+      "use strict";
+
+
+
+      /* =========================================================
+
+   ZOHO CRM WIDGET INITIALIZATION
+
+   - Captures the current Deal ID from PageLoad
+
+   - Requests widget resize
+
+   - Does not make CRM or Packlink API calls
+
+\========================================================= */
+
+      let crmDealId = null;
+
+      let zohoSdkAvailable = false;
+
+
+
+      function setCrmStatus(message) {
+
+        const el = document.getElementById("crmStatus");
+
+        if (el) el.textContent = message;
+
+      }
+
+
+
+      function resizeZohoWidget() {
+
+        if (
+
+          !window.ZOHO ||
+
+          !ZOHO.CRM ||
+
+          !ZOHO.CRM.UI ||
+
+          typeof ZOHO.CRM.UI.Resize !== "function"
+
+        ) {
+
+          console.warn("Zoho CRM resize API is not available in this context.");
+
+          return;
+
+        }
+
+        ZOHO.CRM.UI.Resize({ height: "800", width: "1200" })
+
+          .then(function (response) {
+
+            console.log("Widget resize response:", response);
+
+          })
+
+          .catch(function (error) {
+
+            console.warn("Widget resize request failed:", error);
+
+          });
+
+      }
+
+
+
+      if (window.ZOHO && ZOHO.embeddedApp) {
+
+        zohoSdkAvailable = true;
+
+
+
+        ZOHO.embeddedApp.on("PageLoad", function (data) {
+
+          console.log("Zoho CRM PageLoad data:", data);
+
+
+
+          if (data && Array.isArray(data.EntityId)) {
+
+            crmDealId = data.EntityId.length ? String(data.EntityId[0]) : null;
+
+          } else if (data && data.EntityId != null) {
+
+            crmDealId = String(data.EntityId);
+
+          } else {
+
+            crmDealId = null;
+
+          }
+
+
+
+          console.log("CRM Deal ID:", crmDealId);
+
+          window.crmDealId = crmDealId;
+
+          setCrmStatus(
+
+            crmDealId
+
+              ? "Connected to Zoho CRM · Deal ID: " + crmDealId
+
+              : "Zoho CRM loaded · No Deal ID was supplied in PageLoad data.",
+
+          );
+
+          resizeZohoWidget();
+
+        });
+
+
+
+        ZOHO.embeddedApp.init();
+
+      } else {
+
+        console.warn(
+
+          "Zoho Embedded App SDK not detected. Open this page inside a Zoho CRM widget to receive the Deal ID.",
+
+        );
+
+        setCrmStatus(
+
+          "Standalone preview · Open inside Zoho CRM to receive the current Deal ID.",
+
+        );
+
+      }
+
+
+
+      // Shipping rates are loaded dynamically from the Packlink PRO response.
+
+      let currentRates = [];
+
+      let activeFilter = "all";
+
+
+
+      const $ = (id) => document.getElementById(id);
+
+      function showToast(message, type) {
+
+        const toast = $("toast");
+
+        toast.textContent = message;
+
+        toast.className = "toast" + (type === "error" ? " error" : "");
+
+        toast.classList.remove("hidden");
+
+        window.clearTimeout(showToast.timer);
+
+        showToast.timer = window.setTimeout(
+
+          () => toast.classList.add("hidden"),
+
+          3200,
+
+        );
+
+      }
+
+      function validPositive(id) {
+
+        const el = $(id);
+
+        const number = Number(el.value);
+
+        if (!el.value.trim() || !Number.isFinite(number) || number <= 0) {
+
+          el.focus();
+
+          el.reportValidity && el.reportValidity();
+
+          return false;
+
+        }
+
+        return true;
+
+      }
+
+      function validateShipment() {
+
+        const textIds = [
+
+          "fromName",
+
+          "fromAddress",
+
+          "fromCity",
+
+          "fromPostcode",
+
+          "toName",
+
+          "toAddress",
+
+          "toCity",
+
+          "toPostcode",
+
+        ];
+
+        for (const id of textIds) {
+
+          if (!$(id).value.trim()) {
+
+            $(id).focus();
+
+            showToast(
+
+              "Please complete all required sender and recipient fields.",
+
+              "error",
+
+            );
+
+            return false;
+
+          }
+
+        }
+
+        for (const id of ["weight", "length", "width", "height"]) {
+
+          if (!validPositive(id)) {
+
+            showToast(
+
+              "Weight and dimensions must be greater than zero.",
+
+              "error",
+
+            );
+
+            return false;
+
+          }
+
+        }
+
+        return true;
+
+      }
+
+
+
+      function escapeHtml(value) {
+
+        return String(value == null ? "" : value)
+
+          .replace(/&/g, "&amp;")
+
+          .replace(/</g, "&lt;")
+
+          .replace(/>/g, "&gt;")
+
+          .replace(/"/g, "&quot;")
+
+          .replace(/'/g, "&#39;");
+
+      }
+
+
+
+      function firstValue(obj, keys, fallback) {
+
+        if (!obj || typeof obj !== "object") return fallback;
+
+        for (const key of keys) {
+
+          const value = obj[key];
+
+          if (value !== undefined && value !== null && value !== "") return value;
+
+        }
+
+        return fallback;
+
+      }
+
+
+
+      function parseMaybeJson(value) {
+
+        if (typeof value !== "string") return value;
+
+        const trimmed = value.trim();
+
+        if (!trimmed) return value;
+
+        try { return JSON.parse(trimmed); } catch (_) { return value; }
+
+      }
+
+
+
+      function unwrapFunctionResponse(raw) {
+
+        let value = parseMaybeJson(raw);
+
+        // ZOHO.CRM.HTTP.post may wrap the Deluge string output.
+
+        for (let i = 0; i < 4 && value && typeof value === "object"; i++) {
+
+          if (value.details && value.details.output !== undefined) {
+
+            value = parseMaybeJson(value.details.output);
+
+            continue;
+
+          }
+
+          if (value.response !== undefined && Object.keys(value).length <= 5) {
+
+            value = parseMaybeJson(value.response);
+
+            continue;
+
+          }
+
+          if (value.output !== undefined && Object.keys(value).length <= 5) {
+
+            value = parseMaybeJson(value.output);
+
+            continue;
+
+          }
+
+          break;
+
+        }
+
+        return value;
+
+      }
+
+
+
+      // Detect only an explicit Bad Request response. Valid service arrays such as Array(15) pass through unchanged.
+      function isBadRequestResponse(value) {
+        value = parseMaybeJson(value);
+        if (typeof value === "string") {
+          const text = value.trim();
+          if (/^bad request$/i.test(text)) return true;
+          if ((text.startsWith("{") && text.endsWith("}")) || (text.startsWith("[") && text.endsWith("]"))) {
+            try { return isBadRequestResponse(JSON.parse(text)); } catch (_) { return false; }
+          }
+          return false;
+        }
+        if (Array.isArray(value)) {
+          return value.length > 0 && value.every(item => isBadRequestResponse(item));
+        }
+        if (!value || typeof value !== "object") return false;
+        for (const key of ["message", "error", "statusMessage"]) {
+          if (typeof value[key] === "string" && /^bad request$/i.test(value[key].trim())) return true;
+        }
+        for (const key of ["output", "response", "data", "result", "details"]) {
+          if (value[key] !== undefined && isBadRequestResponse(value[key])) return true;
+        }
+        return false;
+      }
+
+      function showNoShippingOptions(shipment) {
+        currentRates = [];
+        $("summaryLine").textContent = `${shipment.parcel_type} · ${shipment.from_city} → ${shipment.to_city} · ${shipment.weight} kg · ${shipment.length} × ${shipment.width} × ${shipment.height} cm`;
+        $("summaryAddress").textContent = `${shipment.from_postcode}, ${shipment.from_country} → ${shipment.to_postcode}, ${shipment.to_country}`;
+        $("resultCount").textContent = "No shipping services available";
+        $("rateList").innerHTML = '<div class="empty"><strong>No shipping options available</strong><br>Packlink PRO did not return any shipping services for these shipment details. Please check the addresses, postcodes, weight and dimensions, then try again.</div>';
+        $("detailsScreen").classList.add("hidden");
+        $("ratesScreen").classList.remove("hidden");
+        $("step1").classList.remove("active");
+        $("step1").classList.add("done");
+        $("step1").querySelector(".step-num").textContent = "✓";
+        $("step2").classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function findServiceArray(data) {
+
+        if (Array.isArray(data)) return data;
+
+        if (!data || typeof data !== "object") return null;
+
+
+
+        const preferredKeys = [
+
+          "services", "data", "results", "items", "rates",
+
+          "available_services", "availableServices", "shipping_services"
+
+        ];
+
+        for (const key of preferredKeys) {
+
+          if (Array.isArray(data[key])) return data[key];
+
+        }
+
+        for (const value of Object.values(data)) {
+
+          if (Array.isArray(value) && value.length &&
+
+              value.some(item => item && typeof item === "object" &&
+
+                ("base_price" in item || "price" in item || "carrier_name" in item ||
+
+                 "service_name" in item || "transit_time" in item))) {
+
+            return value;
+
+          }
+
+        }
+
+        return null;
+
+      }
+
+
+
+      function asBoolean(value) {
+        if (value === true || value === 1) return true;
+        if (value === false || value === 0 || value == null) return false;
+        const text = String(value).trim().toLowerCase();
+        if (text === "true" || text === "yes" || text === "1") return true;
+        if (text === "false" || text === "no" || text === "0" || text === "") return false;
+        return null;
+      }
+
+      function parseApiBoolean(value) {
+        if (value === true || value === 1) return true;
+        if (value === false || value === 0) return false;
+        if (value == null || value === "") return null;
+        const text = String(value).trim().toLowerCase();
+        if (["true", "yes", "1"].includes(text)) return true;
+        if (["false", "no", "0"].includes(text)) return false;
+        return null;
+      }
+
+      function getShippingMethods(service) {
+        const senderMethod = service.dropoff === true
+          ? "DROP-OFF POINT"
+          : service.dropoff === false
+            ? "COURIER COLLECTION"
+            : "SENDER METHOD NOT SPECIFIED";
+
+        const deliveryMethod = service.parcelShopDelivery === true
+          ? "DELIVERY TO PICK-UP POINT"
+          : service.parcelShopDelivery === false
+            ? "HOME DELIVERY"
+            : "DELIVERY METHOD NOT SPECIFIED";
+
+        return { senderMethod, deliveryMethod };
+      }
+
+      function normalizeService(raw, index) {
+        raw = raw && typeof raw === "object" ? raw : {};
+        const carrierValue = firstValue(raw, ["carrier_name", "carrier", "provider_name", "provider", "company"], null);
+        const serviceValue = firstValue(raw, ["name", "service_name", "service", "product_name"], null);
+        const rawPrice = firstValue(raw, ["base_price", "price", "total_price", "amount"], null);
+        const numericPrice = rawPrice === null ? null : Number(rawPrice);
+        const currencyValue = firstValue(raw, ["currency", "currency_code"], null);
+        const transitValue = firstValue(raw, ["transit_time", "transitTime", "delivery_time", "deliveryTime", "estimated_delivery", "delivery_estimate"], null);
+        // Dates may be returned at the top level or nested inside Packlink's
+        // delivery/collection option objects. Search the actual response keys
+        // recursively so date field naming/nesting does not hide valid dates.
+        function findDateByKeyHints(object, hints, depth) {
+          if (!object || typeof object !== "object" || depth > 5) return null;
+          if (Array.isArray(object)) {
+            for (const item of object) {
+              const found = findDateByKeyHints(item, hints, depth + 1);
+              if (found !== null && found !== undefined && found !== "") return found;
+            }
+            return null;
+          }
+          for (const [key, value] of Object.entries(object)) {
+            const normalizedKey = key.toLowerCase().replace(/[^a-z0-9]/g, "");
+            const isDateKey = /date|day|deliveryestimate|estimateddelivery|eta/.test(normalizedKey);
+            if (isDateKey && hints.some(hint => normalizedKey.includes(hint)) &&
+                (typeof value === "string" || typeof value === "number") && String(value).trim()) {
+              return value;
+            }
+          }
+          for (const value of Object.values(object)) {
+            if (value && typeof value === "object") {
+              const found = findDateByKeyHints(value, hints, depth + 1);
+              if (found !== null && found !== undefined && found !== "") return found;
+            }
+          }
+          return null;
+        }
+        const collectionDateRaw = firstValue(raw, [
+          "collection_date", "collectionDate", "pickup_date", "pickupDate",
+          "courier_collection_date", "courierCollectionDate", "sender_pickup_date",
+          "collection_estimated_date", "pickup_estimated_date", "collection_day", "pickup_day"
+        ], findDateByKeyHints(raw, ["collection", "courierpickup", "senderpickup", "pickup"], 0));
+        const homeDeliveryDateRaw = firstValue(raw, [
+          "home_delivery_date", "homeDeliveryDate", "delivery_date", "deliveryDate",
+          "estimated_delivery_date", "estimatedDeliveryDate", "delivery_estimated_date",
+          "recipient_delivery_date", "arrival_date", "delivery_day", "home_delivery_day"
+        ], findDateByKeyHints(raw, ["homedelivery", "recipientdelivery", "deliverydate", "estimateddelivery", "arrival"], 0));
+        const parcelShopDateRaw = firstValue(raw, [
+          "parcelshop_delivery_date", "parcelShopDeliveryDate", "parcel_shop_delivery_date",
+          "pickup_point_delivery_date", "pickupPointDeliveryDate", "dropoff_point_delivery_date",
+          "delivery_to_parcelshop_date", "delivery_to_pickup_point_date", "parcelshop_delivery_day"
+        ], findDateByKeyHints(raw, ["parcelshop", "pickuppoint", "deliverytopickup", "deliverytoparcelshop", "accesspoint"], 0));
+
+        // Packlink may return a delivery window as separate FROM/TO dates.
+        // Read those exact fields as well as common API naming variants.
+        const dateFromRaw = firstValue(raw, [
+          "from_date", "fromDate", "date_from", "dateFrom", "delivery_date_from",
+          "deliveryDateFrom", "estimated_delivery_from", "estimatedDeliveryFrom",
+          "delivery_from_date", "deliveryFromDate", "date_start", "dateStart",
+          "delivery_date_start", "deliveryDateStart", "start_date", "startDate"
+        ], findDateByKeyHints(raw, ["deliverydatefrom", "estimateddeliveryfrom", "deliveryfromdate", "deliverydatestart", "startdate", "datefrom"], 0));
+        const dateToRaw = firstValue(raw, [
+          "to_date", "toDate", "date_to", "dateTo", "delivery_date_to",
+          "deliveryDateTo", "estimated_delivery_to", "estimatedDeliveryTo",
+          "delivery_to_date", "deliveryToDate", "date_end", "dateEnd",
+          "delivery_date_end", "deliveryDateEnd", "end_date", "endDate"
+        ], findDateByKeyHints(raw, ["deliverydateto", "estimateddeliveryto", "deliverytodate", "deliverydateend", "enddate", "dateto"], 0));
+
+        const dropoffRaw = firstValue(raw, ["dropoff", "drop_off", "dropoff_available", "drop_off_available"], null);
+        const collectionRaw = firstValue(raw, ["collection", "pickup", "pickup_available", "collection_available"], null);
+        const homeRaw = firstValue(raw, ["home_delivery", "delivery_to_address", "door_delivery"], null);
+        const parcelShopRaw = firstValue(raw, ["delivery_to_parcelshop", "delivery_to_parcel_shop", "parcelshop_delivery"], null);
+        const dropoff = parseApiBoolean(dropoffRaw);
+        const collection = parseApiBoolean(collectionRaw);
+        const homeDelivery = parseApiBoolean(homeRaw);
+        const parcelShopDelivery = parseApiBoolean(parcelShopRaw);
+
+        // Only infer filter tags from explicit API fields or the actual service/carrier name.
+        const nameText = String((carrierValue || "") + " " + (serviceValue || "")).toLowerCase();
+        const tags = [];
+        if (dropoff === true || /drop.?off|parcel.?shop|access point|locker/.test(nameText)) tags.push("dropoff");
+        if (dropoff === false || collection === true || /collection|pickup from sender|door.?to.?door/.test(nameText)) tags.push("collection");
+        if (parcelShopDelivery === false || homeDelivery === true) tags.push("home");
+        if (parcelShopDelivery === true) tags.push("parcelshop");
+        // Only apply the 24–48h filter when the API explicitly returns a numeric hour/day estimate.
+        if (transitValue != null) {
+          const transitText = String(transitValue).toLowerCase();
+          const numberMatch = transitText.match(/\d+(?:\.\d+)?/);
+          if (numberMatch) {
+            const n = Number(numberMatch[0]);
+            if ((/hour|hr|\bh\b/.test(transitText) && n <= 48) || (/day|days/.test(transitText) && n <= 2)) tags.push("fast");
+          }
+        }
+
+        const labelsRequired = firstValue(raw, ["labels_required", "label_required"], null);
+        const printerRequired = firstValue(raw, ["printer_required", "requires_printer", "label_printer_required"], null);
+        const insurance = firstValue(raw, ["insurance", "compensation", "compensation_limit", "cover"], null);
+        // Some Packlink responses use only a generic delivery_date. Route it to
+        // the displayed destination column based on the method flags.
+        const genericDeliveryDate = firstValue(raw, ["delivery_date", "deliveryDate", "estimated_delivery_date", "estimatedDeliveryDate", "delivery_day"], null);
+
+        // Packlink's live response supplies its actual date options as an object:
+        // available_dates: { "2026/10/26": "[08:00 , 20:30]", ... }.
+        // These are date-keyed values, not fields named delivery_date, so extract
+        // the keys directly. Transit time determines which available date is the
+        // estimated destination date (e.g. 1 DAYS => second available date).
+        const availableDatesObject = firstValue(raw, ["available_dates", "availableDates", "delivery_dates", "deliveryDates"], null);
+        const availableDateKeys = availableDatesObject && typeof availableDatesObject === "object" && !Array.isArray(availableDatesObject)
+          ? Object.keys(availableDatesObject).filter(key => /^\d{4}[/-]\d{2}[/-]\d{2}$/.test(key)).sort((a, b) => {
+              const parse = value => new Date(value.replace(/\//g, "-") + "T00:00:00").getTime();
+              return parse(a) - parse(b);
+            })
+          : [];
+        const transitMatch = String(transitValue == null ? "" : transitValue).match(/(\d+(?:\.\d+)?)/);
+        const transitDays = transitMatch ? Math.max(0, Math.ceil(Number(transitMatch[1]))) : 0;
+        const estimatedAvailableDate = availableDateKeys.length
+          ? availableDateKeys[Math.min(transitDays, availableDateKeys.length - 1)]
+          : null;
+        const availableDateFrom = availableDateKeys.length ? availableDateKeys[0] : null;
+        const availableDateTo = availableDateKeys.length ? availableDateKeys[availableDateKeys.length - 1] : null;
+
+        const resolvedParcelShopDate = parcelShopDateRaw != null ? parcelShopDateRaw : (parcelShopDelivery === true ? (genericDeliveryDate || estimatedAvailableDate) : null);
+        const resolvedHomeDeliveryDate = homeDeliveryDateRaw != null ? homeDeliveryDateRaw : (parcelShopDelivery === false || homeDelivery === true ? (genericDeliveryDate || estimatedAvailableDate) : null);
+
+        return {
+          id: String(firstValue(raw, ["id", "service_id", "serviceId", "code"], index + 1)),
+          raw,
+          carrier: carrierValue == null ? null : String(carrierValue),
+          logo: carrierValue == null ? null : String(carrierValue),
+          logoClass: /ups/i.test(String(carrierValue || "")) ? "ups" : (/evri/i.test(String(carrierValue || "")) ? "evri" : (/dhl/i.test(String(carrierValue || "")) ? "dhl" : (/fedex/i.test(String(carrierValue || "")) ? "fedex" : ""))),
+          service: serviceValue == null ? null : String(serviceValue),
+          eta: transitValue == null ? null : String(transitValue),
+          etaSort: (() => { const m = String(transitValue == null ? "" : transitValue).match(/\d+(?:\.\d+)?/); return m ? Number(m[0]) : Infinity; })(),
+          price: Number.isFinite(numericPrice) ? numericPrice : null,
+          currency: currencyValue == null ? null : String(currencyValue),
+          dropoff, collection, homeDelivery, parcelShopDelivery,
+          collectionDate: collectionDateRaw == null ? null : String(collectionDateRaw),
+          homeDeliveryDate: resolvedHomeDeliveryDate == null ? null : String(resolvedHomeDeliveryDate),
+          parcelShopDate: resolvedParcelShopDate == null ? null : String(resolvedParcelShopDate),
+          deliveryDateFrom: dateFromRaw == null ? (estimatedAvailableDate || null) : String(dateFromRaw),
+          deliveryDateTo: dateToRaw == null ? (estimatedAvailableDate || null) : String(dateToRaw),
+          availableDateFrom: availableDateFrom,
+          availableDateTo: availableDateTo,
+          availableDates: availableDatesObject,
+          labelsRequired: asBoolean(labelsRequired),
+          printerRequired: asBoolean(printerRequired),
+          insurance,
+          tags
+        };
+      }
+
+      function formatServiceDate(value) {
+        if (value === undefined || value === null || value === "") return "";
+        const text = String(value).trim();
+        if (!text) return "";
+        // Preserve non-standard date text; format ISO/date values for readability.
+        const match = text.match(/^(\d{4})-(\d{2})-(\d{2})(?:[T\s].*)?$/);
+        if (match) {
+          const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+          if (!Number.isNaN(date.getTime())) {
+            return new Intl.DateTimeFormat("en-GB", {
+              weekday: "short", day: "numeric", month: "long"
+            }).format(date);
+          }
+        }
+        return text;
+      }
+
+      function formatDeliveryWindow(service, fallbackDate) {
+        const from = service && service.deliveryDateFrom;
+        const to = service && service.deliveryDateTo;
+        if (from && to) {
+          const fromText = formatServiceDate(from);
+          const toText = formatServiceDate(to);
+          return fromText === toText ? fromText : `${fromText} – ${toText}`;
+        }
+        if (from) return `From ${formatServiceDate(from)}`;
+        if (to) return `Until ${formatServiceDate(to)}`;
+        return fallbackDate ? formatServiceDate(fallbackDate) : "";
+      }
+
+      function displayApiValue(value) {
+        if (value === undefined || value === null || value === "") return "";
+        if (typeof value === "boolean") return value ? "Yes" : "No";
+        if (typeof value === "number" || typeof value === "string") return String(value);
+        return "";
+      }
+
+      function detailRow(label, value) {
+        const rendered = displayApiValue(value);
+        if (rendered === "") return "";
+        return `<div class="detail-row"><span class="detail-label">${escapeHtml(label)}</span><span class="detail-value">${escapeHtml(rendered)}</span></div>`;
+      }
+
+      function insuranceRows(insurance) {
+        if (insurance == null) return "";
+        if (typeof insurance !== "object" || Array.isArray(insurance)) return detailRow("Insurance / cover", insurance);
+        const labels = {
+          base_insurance: "Base insurance", additional_insurance: "Additional insurance available",
+          max_insurance: "Maximum insurance", compensation_limit: "Compensation limit", currency: "Insurance currency"
+        };
+        return Object.keys(labels).map(key => detailRow(labels[key], insurance[key])).join("");
+      }
+
+      function showDetailsScreenError(message) {
+
+        $("detailsScreen").classList.remove("hidden");
+
+        $("ratesScreen").classList.add("hidden");
+
+        showToast(message, "error");
+
+      }
+
+
+
+      // Replace the placeholder with a NEW CRM function API key after rotating the exposed key.
+
+      // Keep in mind: a key embedded in frontend HTML is visible to users; use a server-side proxy/connection for production.
+
+      // IMPORTANT: This is the Zoho EU data-center endpoint pattern from your working ShipStation widget.
+
+      // Replace the placeholder with a NEW API key after revoking the exposed old key.
+
+      const PACKLINK_CRM_FUNCTION_URL = "https://www.zohoapis.eu/crm/v7/functions/packlinkpro_search_address/actions/execute?auth_type=apikey&zapikey=1003.3cee923177d72801544b9c98f2a86984.833b3aa1b5dbab8dbc65ed955b06c29f";
+
+
+
+      async function searchRates() {
+
+        if (!validateShipment()) return;
+
+
+
+        if (!window.ZOHO || !ZOHO.CRM || !ZOHO.CRM.HTTP ||
+
+            typeof ZOHO.CRM.HTTP.post !== "function") {
+
+          showToast("Open this widget inside Zoho CRM to search live Packlink rates.", "error");
+
+          return;
+
+        }
+
+
+
+        const btn = $("searchRatesBtn");
+
+        const originalText = btn.textContent;
+
+        btn.disabled = true;
+
+        btn.textContent = "Searching Packlink PRO…";
+
+
+
+        const shipment = {
+
+          from_country: $("fromCountry").value,
+
+          from_postcode: $("fromPostcode").value.trim(),
+
+          to_country: $("toCountry").value,
+
+          to_postcode: $("toPostcode").value.trim(),
+
+          weight: Number($("weight").value),
+
+          length: Number($("length").value),
+
+          width: Number($("width").value),
+
+          height: Number($("height").value),
+
+          parcel_type: $("parcelType").value,
+
+          from_name: $("fromName").value.trim(),
+
+          from_address: $("fromAddress").value.trim(),
+
+          from_city: $("fromCity").value.trim(),
+
+          to_name: $("toName").value.trim(),
+
+          to_address: $("toAddress").value.trim(),
+
+          to_city: $("toCity").value.trim()
+
+        };
+
+
+
+        try {
+
+          // Match the working ShipStation widget's CRM custom-function API pattern.
+
+          // The Deluge function reads body -> arguments -> shipment_data.
+
+          const request = {
+
+            url: PACKLINK_CRM_FUNCTION_URL,
+
+            headers: {
+
+              "Content-Type": "application/json"
+
+            },
+
+            body: {
+
+              arguments: JSON.stringify({
+
+                shipment_data: JSON.stringify(shipment)
+
+              })
+
+            }
+
+          };
+
+
+
+          // ========== STEP 1: SHIPMENT PARAMETERS ==========
+
+          console.log("========== STEP 1: SHIPMENT PARAMETERS ==========");
+
+          console.log("Shipment object:", shipment);
+
+          console.log("Shipment JSON:", JSON.stringify(shipment, null, 2));
+
+
+
+          // ========== STEP 2: CRM REQUEST ==========
+
+          console.log("========== STEP 2: CRM REQUEST ==========");
+
+          console.log("Request URL:", request.url);
+
+          console.log("Request headers:", request.headers);
+
+          console.log("Complete request object:", request);
+
+
+
+          // ========== STEP 3: REQUEST BODY ==========
+
+          console.log("========== STEP 3: REQUEST BODY ==========");
+
+          console.log("Request body:", request.body);
+
+          console.log("Arguments value:", request.body.arguments);
+
+
+
+          // ========== STEP 4: PARSED ARGUMENTS ==========
+
+          console.log("========== STEP 4: PARSED ARGUMENTS ==========");
+
+
+
+          const debugArguments = JSON.parse(request.body.arguments);
+
+
+
+          console.log("Parsed arguments:", debugArguments);
+
+          console.log("shipment_data value:", debugArguments.shipment_data);
+
+          console.log(
+
+              "Parsed shipment_data:",
+
+              JSON.parse(debugArguments.shipment_data)
+
+          );
+
+
+
+          console.log("========== END OF REQUEST DEBUG ==========");
+
+
+
+          const rawResponse = await ZOHO.CRM.HTTP.post(request);
+
+          console.log("Packlink CRM function raw response:", rawResponse);
+
+
+
+          const data = unwrapFunctionResponse(rawResponse);
+
+          console.log("Packlink function output after unwrapping:", data);
+
+          // Show the no-rates screen only for a Bad Request response.
+          // Valid service arrays continue through the existing rendering logic.
+          if (isBadRequestResponse(data) || isBadRequestResponse(rawResponse)) {
+            showNoShippingOptions(shipment);
+            return;
+          }
+
+
+
+          // CRM API may return an error envelope even when the HTTP call resolves.
+
+          if (data && typeof data === "object" &&
+
+              (data.success === false || data.error || data.code === "error" ||
+
+               data.status === "error" || data.code === "INVALID_DATA")) {
+
+            const details = firstValue(data, ["message", "error", "details", "statusMessage"], "Packlink returned an error.");
+
+            throw new Error(typeof details === "object" ? JSON.stringify(details) : String(details));
+
+          }
+
+
+
+          const services = findServiceArray(data);
+
+          if (!services) {
+
+            console.error("Unexpected Packlink response structure:", data);
+
+            throw new Error("Packlink response received, but no services array was found. Check the console and the Deluge response.");
+
+          }
+
+
+
+          currentRates = services.map(normalizeService);
+          if (!currentRates.length) {
+            showNoShippingOptions(shipment);
+            return;
+          }
+
+
+
+          $("summaryLine").textContent =
+
+            `${shipment.parcel_type} · ${shipment.from_city} → ${shipment.to_city} · ${shipment.weight} kg · ${shipment.length} × ${shipment.width} × ${shipment.height} cm`;
+
+          $("summaryAddress").textContent =
+
+            `${shipment.from_postcode}, ${shipment.from_country} → ${shipment.to_postcode}, ${shipment.to_country}`;
+
+
+
+          $("detailsScreen").classList.add("hidden");
+
+          $("ratesScreen").classList.remove("hidden");
+
+          $("step1").classList.remove("active");
+
+          $("step1").classList.add("done");
+
+          $("step1").querySelector(".step-num").textContent = "✓";
+
+          $("step2").classList.add("active");
+
+          activeFilter = "all";
+
+          document.querySelectorAll(".chip").forEach(button =>
+
+            button.classList.toggle("selected", button.dataset.filter === "all")
+
+          );
+
+          renderRates();
+
+          window.scrollTo({ top: 0, behavior: "smooth" });
+
+        } catch (error) {
+
+          console.error("Packlink rate search failed:", error);
+
+          showToast(error && error.message ? error.message : "Unable to retrieve Packlink rates.", "error");
+
+        } finally {
+
+          btn.disabled = false;
+
+          btn.textContent = originalText;
+
+        }
+
+      }
+
+
+
+      function backToDetails() {
+
+        $("ratesScreen").classList.add("hidden");
+
+        $("detailsScreen").classList.remove("hidden");
+
+        $("step1").classList.remove("done");
+
+        $("step1").classList.add("active");
+
+        $("step1").querySelector(".step-num").textContent = "1";
+
+        $("step2").classList.remove("active");
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+      }
+
+
+
+      function formatPrice(service) {
+        if (service.price === null || !Number.isFinite(service.price)) return "";
+        try {
+          return new Intl.NumberFormat(undefined, {
+            style: "currency",
+            currency: service.currency || "GBP"
+          }).format(service.price);
+        } catch (_) {
+          return `${service.currency ? service.currency + " " : ""}${service.price.toFixed(2)}`;
+        }
+      }
+
+      function renderRates() {
+        let list = [...currentRates];
+        if (activeFilter === "dropoff") list = list.filter(s => s.tags.includes("dropoff"));
+        else if (activeFilter === "collection") list = list.filter(s => s.tags.includes("collection"));
+        else if (activeFilter === "home") list = list.filter(s => s.tags.includes("home"));
+        else if (activeFilter === "fast") list = list.filter(s => s.tags.includes("fast"));
+
+        const sort = $("sortRates").value;
+        if (sort === "price") list.sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
+        if (sort === "fastest") list.sort((a, b) => a.etaSort - b.etaSort);
+        $("resultCount").textContent = `${list.length} live service${list.length === 1 ? "" : "s"} found`;
+        const root = $("rateList");
+        if (!list.length) {
+          root.innerHTML = '<div class="empty">No services match this filter. Try another option.</div>';
+          return;
+        }
+
+        root.innerHTML = list.map((service, index) => {
+          const safeId = "rate-" + index;
+          const methods = getShippingMethods(service);
+          const etaHtml = service.eta ? `<div class="eta"><strong>${escapeHtml(service.eta)}</strong><span>TRANSIT<br>ESTIMATE</span></div>` : "";
+          const carrierHtml = service.carrier ? `<div class="carrier"><div class="carrier-logo ${escapeHtml(service.logoClass)}">${escapeHtml(service.logo)}</div>${service.service ? `<small>${escapeHtml(service.service)}</small>` : ""}</div>` : "";
+          const fromBits = [
+            service.collection === true ? detailRow("Collection", "Available") : detailRow("Collection", service.collection === false ? "Not available" : null),
+            service.dropoff === true ? detailRow("Drop-off", "Available") : detailRow("Drop-off", service.dropoff === false ? "Not available" : null)
+          ].join("");
+          const toBits = [
+            service.homeDelivery === true ? detailRow("Home delivery", "Available") : detailRow("Home delivery", service.homeDelivery === false ? "Not available" : null),
+            service.parcelShopDelivery === true ? detailRow("ParcelShop delivery", "Available") : detailRow("ParcelShop delivery", service.parcelShopDelivery === false ? "Not available" : null)
+          ].join("");
+          const details = [
+            detailRow("Service ID", service.id),
+            detailRow("Labels required", service.labelsRequired),
+            detailRow("Printer required", service.printerRequired),
+            insuranceRows(service.insurance)
+          ].join("");
+          const metaBits = [
+            service.labelsRequired !== null ? `<span>Label required: ${service.labelsRequired ? "Yes" : "No"}</span>` : "",
+            service.printerRequired !== null ? `<span>Printer required: ${service.printerRequired ? "Yes" : "No"}</span>` : "",
+            service.insurance && typeof service.insurance === "object" && service.insurance.base_insurance != null ? `<span>Base insurance: ${escapeHtml(service.insurance.base_insurance)}</span>` : "",
+            `<button type="button" class="details-toggle" data-details="${safeId}" aria-expanded="false">Details</button>`
+          ].filter(Boolean).join("");
+
+          return `<article class="rate-card">
+            <div class="rate-main">
+              ${etaHtml}
+              ${carrierHtml}
+              <div class="service-block">
+                <div class="service-title">${escapeHtml(methods.senderMethod)}</div>
+                ${service.dropoff === true ? '' : (service.collectionDate && (service.collection === true || service.dropoff === false) ? `<div class="service-date">${escapeHtml(formatServiceDate(service.collectionDate))}</div>` : '')}
+                <div class="service-desc">${service.dropoff === true ? 'The sender drops off the parcel at a drop-off point.' : service.dropoff === false ? 'The courier collects the parcel from the sender address.' : 'Packlink did not specify the sender handover method.'}</div>
+              </div>
+              <div class="service-block">
+                <div class="service-title">${escapeHtml(methods.deliveryMethod)}</div>
+                ${((service.parcelShopDelivery === true) ? formatDeliveryWindow(service, service.parcelShopDate) : ((service.parcelShopDelivery === false || service.homeDelivery === true) ? formatDeliveryWindow(service, service.homeDeliveryDate) : formatDeliveryWindow(service, service.parcelShopDate || service.homeDeliveryDate))) ? `<div class="service-date">${escapeHtml((service.parcelShopDelivery === true) ? formatDeliveryWindow(service, service.parcelShopDate) : ((service.parcelShopDelivery === false || service.homeDelivery === true) ? formatDeliveryWindow(service, service.homeDeliveryDate) : formatDeliveryWindow(service, service.parcelShopDate || service.homeDeliveryDate)))}</div>` : ''}
+                <div class="service-desc">${service.parcelShopDelivery === true ? 'The parcel is delivered to a pick-up point.' : service.parcelShopDelivery === false ? 'The parcel is delivered to the recipient address.' : 'Packlink did not specify the destination delivery method.'}</div>
+              </div>
+              <div class="price">
+                <strong>${escapeHtml(formatPrice(service))}</strong>
+                <button type="button" class="btn btn-primary select-service" data-index="${index}">Select service</button>
+              </div>
+            </div>
+            ${metaBits ? `<div class="rate-meta">${metaBits}</div>` : ""}
+            <div class="rate-details hidden" id="rate-details-${safeId}">
+              <div class="details-grid">${details || '<div class="detail-empty">No additional service details were returned by Packlink.</div>'}</div>
+            </div>
+          </article>`;
+        }).join("");
+
+        root.querySelectorAll(".select-service").forEach(button => {
+          button.addEventListener("click", () => {
+            const selected = list[Number(button.dataset.index)];
+            if (!selected) return;
+            window.selectedPacklinkService = selected.raw;
+            window.selectedPacklinkNormalizedService = selected;
+            console.log("Selected Packlink service:", { crmDealId, service: selected.raw });
+            openBookingScreen(selected);
+          });
+        });
+        root.querySelectorAll(".details-toggle").forEach(button => {
+          button.addEventListener("click", () => {
+            const details = $("rate-details-" + button.dataset.details);
+            if (!details) return;
+            details.classList.toggle("hidden");
+            const expanded = !details.classList.contains("hidden");
+            button.textContent = expanded ? "Hide details" : "Details";
+            button.setAttribute("aria-expanded", String(expanded));
+          });
+        });
+      }
+
+      function copyInputValue(sourceId, targetId) {
+        const source = $(sourceId), target = $(targetId);
+        if (source && target) target.value = source.value || "";
+      }
+
+      function splitContactName(value) {
+        const parts = String(value || "").trim().split(/\s+/).filter(Boolean);
+        return { first: parts.shift() || "", last: parts.join(" ") };
+      }
+
+      function openBookingScreen(service) {
+        // Prefill the booking form from the existing shipment details.
+        const fromName = splitContactName($("fromName").value);
+        const toName = splitContactName($("toName").value);
+        $("bookFromFirst").value = fromName.first;
+        $("bookFromLast").value = fromName.last;
+        $("bookFromStreet").value = $("fromAddress").value;
+        $("bookFromCity").value = `${$("fromCity").value} ${$("fromPostcode").value}`.trim();
+        $("bookFromCountry").value = $("fromCountry").value;
+        $("bookToFirst").value = toName.first;
+        $("bookToLast").value = toName.last;
+        $("bookToStreet").value = $("toAddress").value;
+        $("bookToCity").value = `${$("toCity").value} ${$("toPostcode").value}`.trim();
+        $("bookToCountry").value = $("toCountry").value;
+
+        const pickupDelivery = service.parcelShopDelivery === true;
+        const courierCollection = service.collection === true || service.dropoff === false;
+        $("pickupPointSection").classList.toggle("hidden", !pickupDelivery);
+        $("collectionSection").classList.toggle("hidden", !courierCollection);
+        $("selectedPickupPoint").value = "";
+        const dateInput = $("collectionDate");
+        if (dateInput && !dateInput.value) {
+          const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
+          dateInput.min = new Date().toISOString().slice(0, 10);
+          dateInput.value = tomorrow.toISOString().slice(0, 10);
+        }
+
+        $("bookingRouteSummary").textContent = `Ship from: ${$("fromPostcode").value}, ${$("fromCountry").selectedOptions[0]?.text || ""}\nShip to: ${$("toPostcode").value}, ${$("toCountry").selectedOptions[0]?.text || ""}`;
+        $("bookingParcelSummary").textContent = `Parcel dimensions: ${$("weight").value} kg · ${$("length").value} × ${$("width").value} × ${$("height").value} cm`;
+        $("bookingServiceSummary").textContent = `${service.carrier || "Carrier"}${service.service ? " — " + service.service : ""}`;
+        $("bookingMethodSummary").textContent = `${getShippingMethods(service).senderMethod} → ${getShippingMethods(service).deliveryMethod}`;
+        $("bookingPriceSummary").textContent = formatPrice(service);
+
+        $("detailsScreen").classList.add("hidden");
+        $("ratesScreen").classList.add("hidden");
+        $("bookingScreen").classList.remove("hidden");
+        $("step1").classList.remove("active"); $("step1").classList.add("done");
+        $("step2").classList.remove("active"); $("step2").classList.add("done");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function returnToRates() {
+        $("bookingScreen").classList.add("hidden");
+        $("detailsScreen").classList.add("hidden");
+        $("ratesScreen").classList.remove("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function validateBookingForm() {
+        const ids = ["bookFromFirst", "bookFromStreet", "bookFromCity", "bookFromEmail", "bookFromPhone", "bookToFirst", "bookToStreet", "bookToCity", "bookToEmail", "bookToPhone"];
+        for (const id of ids) {
+          const input = $(id);
+          if (!input.value.trim() || (input.type === "email" && !input.checkValidity())) {
+            input.focus(); showToast("Please complete all required sender and recipient details with a valid email."); return false;
+          }
+        }
+        const service = window.selectedPacklinkNormalizedService;
+        if (service && service.parcelShopDelivery === true && !$("selectedPickupPoint").value) {
+          showToast("Pickup-point selection will be required here. The pickup-point API has not been connected yet.");
+          return false;
+        }
+        if (service && (service.collection === true || service.dropoff === false) && !$("collectionDate").value) {
+          showToast("Please select a collection date."); $("collectionDate").focus(); return false;
+        }
+        return true;
+      }
+
+      $("backToRatesBtn").addEventListener("click", returnToRates);
+      $("continueBookingBtn").addEventListener("click", () => {
+        if (!validateBookingForm()) return;
+        const bookingData = {
+          service: window.selectedPacklinkService,
+          sender: { firstName: $("bookFromFirst").value, lastName: $("bookFromLast").value, street: $("bookFromStreet").value, company: $("bookFromCompany").value, unit: $("bookFromUnit").value, country: $("bookFromCountry").value, cityPostcode: $("bookFromCity").value, email: $("bookFromEmail").value, phone: $("bookFromPhone").value },
+          recipient: { firstName: $("bookToFirst").value, lastName: $("bookToLast").value, street: $("bookToStreet").value, company: $("bookToCompany").value, unit: $("bookToUnit").value, country: $("bookToCountry").value, cityPostcode: $("bookToCity").value, email: $("bookToEmail").value, phone: $("bookToPhone").value },
+          pickupPoint: $("selectedPickupPoint").value || null,
+          collectionDate: $("collectionDate").value || null,
+          collectionTime: $("collectionTime").value || null
+        };
+        window.packlinkBookingDraft = bookingData;
+        console.log("Packlink booking draft ready:", bookingData);
+        showToast("Details validated and saved in the widget. Next booking/payment step is not connected yet.");
+      });
+
+      $("searchRatesBtn").addEventListener("click", searchRates);
+
+      $("editDetailsBtn").addEventListener("click", backToDetails);
+
+      $("sortRates").addEventListener("change", renderRates);
+
+      $("resetParcel").addEventListener("click", () => {
+
+        $("weight").value = "12";
+
+        $("length").value = "60";
+
+        $("width").value = "40";
+
+        $("height").value = "30";
+
+        $("parcelType").value = "Rolled rug";
+
+        showToast("Sample rug parcel dimensions restored.");
+
+      });
+
+      document.querySelectorAll(".chip").forEach((button) => {
+
+        button.addEventListener("click", () => {
+
+          activeFilter = button.dataset.filter;
+
+          document
+
+            .querySelectorAll(".chip")
+
+            .forEach((item) =>
+
+              item.classList.toggle("selected", item === button),
+
+            );
+
+          renderRates();
+
+        });
+
+      });
+
+    </script>
+
+  </body>
+
+</html>
