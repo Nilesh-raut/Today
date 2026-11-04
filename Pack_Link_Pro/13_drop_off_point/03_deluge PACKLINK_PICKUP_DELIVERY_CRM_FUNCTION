@@ -1,0 +1,248 @@
+string standalone.PACKLINK_PICKUP_DELIVERY_CRM_FUNCTION(Map crmAPIRequest)
+{
+body = crmAPIRequest.get("body");
+shipmnt_data = body.get("arguments").get("shipment_data");
+
+
+
+
+
+
+try 
+{
+	// info "hello from crm ----";
+	// info crmAPIRequest;
+	// return "";
+	// ======================================================
+	// 1. PACKLINK API CONFIGURATION
+	// ======================================================
+	api_key = "44ae292a26b902f12d71e25ef7a5adc0b6e72b27d12ea4f305bbb8e6fb6588b2";
+	// ======================================================
+	// 2. GET PAYLOAD FROM WIDGET REQUEST
+	// ======================================================
+	body = crmAPIRequest.get("body");
+	arguments_map = body.get("arguments");
+	shipment_data = arguments_map.get("shipment_data");
+	// ======================================================
+	// 3. SENDER ADDRESS - DYNAMIC MAPPING
+	// ======================================================
+	from_data = shipment_data.get("from");
+	from_address = Map();
+	from_address.put("name",from_data.get("name"));
+	from_address.put("surname",from_data.get("surname"));
+	from_address.put("company",from_data.get("company"));
+	from_address.put("street1",from_data.get("street1"));
+	from_address.put("street2",from_data.get("street2"));
+	from_address.put("zip_code",from_data.get("zip_code"));
+	from_address.put("city",from_data.get("city"));
+	from_address.put("country",from_data.get("country"));
+	from_address.put("state",from_data.get("state"));
+	from_address.put("phone",from_data.get("phone"));
+	from_address.put("email",from_data.get("email"));
+	// ======================================================
+	// 4. RECIPIENT ADDRESS - DYNAMIC MAPPING
+	// ======================================================
+	to_data = shipment_data.get("to");
+	to_address = Map();
+	to_address.put("name",to_data.get("name"));
+	to_address.put("surname",to_data.get("surname"));
+	to_address.put("company",to_data.get("company"));
+	to_address.put("street1",to_data.get("street1"));
+	to_address.put("street2",to_data.get("street2"));
+	to_address.put("zip_code",to_data.get("zip_code"));
+	to_address.put("city",to_data.get("city"));
+	to_address.put("country",to_data.get("country"));
+	to_address.put("state",to_data.get("state"));
+	to_address.put("phone",to_data.get("phone"));
+	to_address.put("email",to_data.get("email"));
+	// ======================================================
+	// 5. PACKAGE DETAILS - DYNAMIC MAPPING
+	// ======================================================
+	packages = List();
+	incoming_packages = shipment_data.get("packages");
+	for each  package_data in incoming_packages
+	{
+		package_details = Map();
+		package_details.put("weight",package_data.get("weight"));
+		package_details.put("length",package_data.get("length"));
+		package_details.put("width",package_data.get("width"));
+		package_details.put("height",package_data.get("height"));
+		packages.add(package_details);
+	}
+	// ======================================================
+	// 6. BUILD DIRECT SHIPMENT PAYLOAD
+	// ======================================================
+	draft_payload = Map();
+	draft_payload.put("from",from_address);
+	draft_payload.put("to",to_address);
+	draft_payload.put("packages",packages);
+	draft_payload.put("service_id",shipment_data.get("service_id").toString());
+	draft_payload.put("dropoff_point_id",shipment_data.get("dropoff_point_id")  );
+	// Collection date and time
+// 	draft_payload.put("collection_date",shipment_data.get("collection_date"));
+// 	// 	Time parsing
+// 	collection_time = shipment_data.get("collection_time");
+// 	collection_time = collection_time.subString(1,collection_time.length() - 1);
+// 	time_list = collection_time.toList(",");
+// 	start_time = time_list.get(0).trim();
+// 	end_time = time_list.get(1).trim();
+// 	formatted_time = start_time + "-" + end_time;
+// 	draft_payload.put("collection_time","09:00-17:00");
+// 	// 	-----------
+	// Shipment details
+	draft_payload.put("content",shipment_data.get("content"));
+	draft_payload.put("contentvalue",shipment_data.get("contentvalue"));
+	draft_payload.put("contentValue_currency",shipment_data.get("contentValue_currency"));
+	draft_payload.put("content_second_hand",shipment_data.get("content_second_hand"));
+	draft_payload.put("priority",shipment_data.get("priority"));
+	draft_payload.put("shipment_custom_reference",shipment_data.get("shipment_custom_reference"));
+	draft_payload.put("source",shipment_data.get("source"));
+	// ======================================================
+	// 7. CREATE SHIPMENT DRAFT IN PACKLINK
+	// ======================================================
+	payload = draft_payload.toString();
+	response = invokeurl
+	[
+		url :"https://api.packlink.com/v1/shipments"
+		type :POST
+		body:payload
+		headers:{"Authorization":api_key,"Content-Type":"application/json"}
+		detailed:true
+	];
+	// 	======================================================
+	// 	8. RETURN PACKLINK RESPONSE
+	// 	======================================================
+	info "PACKLINK RESPONSE:";
+	info response;
+	
+	
+	
+		if(response.get("responseText") != null)
+		{
+			pack_lin_pro_id = response.get("responseText").get("reference");
+// 			map_v.put("shipment_reference",pack_lin_pro_id);
+			link_1 = "https://pro.packlink.com/app/checkout/" + pack_lin_pro_id.toString() + "/payment";
+			info link_1;
+			response.put("link",link_1);
+		}
+	if(response.get("responseCode") == 201)
+	{
+		info "nile1";
+		map_v = Map();
+		map_v.put("Name",shipment_data.get("shipment_name"));
+		map_v.put("Service_id",shipment_data.get("service_id").toString());
+		// 				map_v.put("Service_id",shipment_data.get("service_id"));
+		map_v.put("Content",shipment_data.get("content"));
+		map_v.put("shipment_custom_reference",shipment_data.get("shipment_custom_reference"));
+		map_v.put("Deal",shipment_data.get("deal_id"));
+		// 	map_v.put("Collection_date",shipment_data.get("collection_date").toDate("dd/mm/yyyy"));
+// 		collection_date_str = shipment_data.get("collection_date");
+// 		collection_date_value = collection_date_str.toDate("yyyy/MM/dd");
+// 		map_v.put("Collection_date",collection_date_value.toDate("dd/MM/yyyy"));
+// 		map_v.put("Collection_Time",shipment_data.get("collection_time"));
+		// 	packages
+		map_v.put("weight",shipment_data.get("packages").get(0).get("weight"));
+		map_v.put("length",shipment_data.get("packages").get(0).get("length"));
+		map_v.put("width",shipment_data.get("packages").get(0).get("width"));
+		map_v.put("width",shipment_data.get("packages").get(0).get("height"));
+		// 	Ship From
+		map_v.put("name1",shipment_data.get("from").get("name"));
+		map_v.put("surname",shipment_data.get("from").get("surname"));
+		map_v.put("company_name",shipment_data.get("from").get("company"));
+		map_v.put("zip_code",shipment_data.get("from").get("zip_code"));
+		map_v.put("city",shipment_data.get("from").get("city"));
+		map_v.put("Street_1",shipment_data.get("from").get("street1"));
+		map_v.put("Street_2",shipment_data.get("from").get("street2"));
+		map_v.put("phone",shipment_data.get("from").get("phone"));
+		map_v.put("Email_1",shipment_data.get("from").get("email"));
+		map_v.put("state",shipment_data.get("from").get("state"));
+		map_v.put("country",shipment_data.get("from").get("country"));
+		// 	Ship To
+		map_v.put("name2",shipment_data.get("to").get("name"));
+		map_v.put("surname2",shipment_data.get("to").get("surname"));
+		map_v.put("company_name1",shipment_data.get("to").get("company"));
+		map_v.put("zip_code1",shipment_data.get("to").get("zip_code"));
+		map_v.put("city1",shipment_data.get("to").get("city"));
+		map_v.put("Street_11",shipment_data.get("to").get("street1"));
+		map_v.put("Street_21",shipment_data.get("to").get("street2"));
+		map_v.put("phone1",shipment_data.get("to").get("phone"));
+		map_v.put("Email_2",shipment_data.get("to").get("email"));
+		map_v.put("state",shipment_data.get("to").get("state1"));
+		map_v.put("country1",shipment_data.get("to").get("country"));
+		map_v.put("Layout",{"id":"808731000010861017"});
+		if(response.get("responseText") != null)
+		{
+			pack_lin_pro_id = response.get("responseText").get("reference");
+			map_v.put("shipment_reference",pack_lin_pro_id);
+			link_1 = "https://pro.packlink.com/app/checkout/" + pack_lin_pro_id.toString() + "/payment";
+			map_v.put("URL",link_1);
+		}
+		// 		Pickup point
+		map_v.put("Commerce_name",shipment_data.get("pickup_point").get("commerce_name"));		
+		map_v.put("city_locality",shipment_data.get("pickup_point").get("city"));
+		map_v.put("address",shipment_data.get("pickup_point").get("address"));
+		map_v.put("zip",shipment_data.get("pickup_point").get("zip"));
+		map_v.put("state_province",shipment_data.get("pickup_point").get("state"));
+		map_v.put("country_code",shipment_data.get("pickup_point").get("country"));
+		map_v.put("lat",shipment_data.get("pickup_point").get("lat").toString());
+		map_v.put("long",shipment_data.get("pickup_point").get("long").toString());	
+		map_v.put("carrier1",shipment_data.get("pickup_point").get("carrier"));
+		map_v.put("carrier_ID",shipment_data.get("pickup_point").get("id"));
+		map_v.put("Phone_2",shipment_data.get("pickup_point").get("phone"));
+		info shipment_data.get("pickup_point").get("phone");
+		
+// 		info shipment_data.get("pickup_point").get("opening_times").get("opening_times");
+		if(shipment_data.get("pickup_point").get("opening_times")!=null){
+// 			info "Hola1-------";
+// 			if(shipment_data.get("pickup_point").get("opening_times").get("opening_times")!=null){
+// 							info "Hola2-------";
+				map_v.put("Opening_Times",shipment_data.get("pickup_point").get("opening_times").get("opening_times"));
+								
+
+		}
+// 		}
+		
+		
+		
+
+
+		
+		
+		test_map = Map();
+		resp_came = zoho.crm.createRecord("Shipments",map_v,test_map);
+		info resp_came;
+
+				sendmail
+				[
+					from :zoho.loginuserid
+					to :"maxaw36594@digeros.com"
+					subject :"Test 44.01"
+					message :resp_came
+				]
+				
+		// ------------------------------------------
+		// GET ONE SHIPMENT
+		// ------------------------------------------
+		// 	response2 = invokeurl
+		// 	[
+		// 		url :"https://api.packlink.com/v1/shipments/" + shipment_reference
+		// 		type :GET
+		// 		headers:{"Authorization":api_key,"Content-Type":"application/json"}
+		// 	];
+	}
+}
+catch (e)
+{
+	sendmail
+	[
+		from :zoho.loginuserid
+		to :"maxaw36594@digeros.com"
+		subject :"Test 9.35"
+		message :e
+	]
+	return e;
+}
+
+
+return response;
+}
